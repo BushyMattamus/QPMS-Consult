@@ -1,0 +1,17 @@
+{
+  "name": "TEST Error Detection Scenario",
+  "description": "Simulates invalid formula input to verify error capturing",
+  "inputs": [
+    {
+      "sheet": "Sheet1",
+      "cell": "A2",
+      "value": "invalid_number"
+    },
+    {
+      "sheet": "Sheet1",
+      "cell": "B2",
+      "value": "=A2/0"
+    }
+  ]
+}
+

@@ -1,0 +1,29 @@
+{
+  "name": "TEST CalculateDiscount Verification",
+  "description": "Tests CalculateDiscount VBA sub by feeding quantity and unit price, then asserting discounted total.",
+  "inputs": [
+    {
+      "sheet": "Sheet1",
+      "cell": "A1",
+      "value": 20
+    },
+    {
+      "sheet": "Sheet1",
+      "cell": "B1",
+      "value": 10
+    }
+  ],
+  "macros": [
+    {
+      "name": "CalculateDiscount"
+    }
+  ],
+  "assertions": [
+    {
+      "sheet": "Sheet1",
+      "cell": "C1",
+      "expected": 180
+    }
+  ]
+}
+

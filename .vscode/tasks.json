@@ -1,0 +1,40 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Excel AI: Test Last Modified Workbook",
+      "type": "shell",
+      "command": "python PythonCodebase/excel_test_runner.py",
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Excel AI: Detect Last Modified Workbook",
+      "type": "shell",
+      "command": "python PythonCodebase/excel_test_runner.py --detect-only",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Excel AI: Sync VBA to Excel",
+      "type": "shell",
+      "command": "python PythonCodebase/write_macros.py",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    }
+  ]
+}
+
