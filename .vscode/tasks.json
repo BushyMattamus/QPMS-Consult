@@ -26,7 +26,7 @@
       "problemMatcher": []
     },
     {
-      "label": "Excel AI: Sync VBA to Excel",
+      "label": "Excel AI: Stage Latest Changed VBA",
       "type": "shell",
       "command": "python PythonCodebase/write_macros.py",
       "presentation": {
@@ -37,4 +37,3 @@
     }
   ]
 }
-

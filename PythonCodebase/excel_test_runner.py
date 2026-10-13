@@ -6,7 +6,8 @@ Can be triggered manually via CLI or VS Code tasks.
 
 Features:
 - Auto-detects the most recently modified workbook or VBA module.
-- Creates an isolated temporary copy in a sandbox (`.test_runs/`).
+- Creates an isolated temporary workbook copy outside the repository.
+- Saves human- and machine-readable test reports in `.test_runs/`.
 - Inspects worksheet structure, named ranges, formulas, and cells into Markdown/JSON.
 - Injects test inputs, evaluates formulas, and executes VBA macros.
 - Captures runtime errors, formula errors (#VALUE!, #REF!, etc.), and unexpected outputs.
@@ -16,6 +17,7 @@ Features:
 import sys
 import os
 import json
+import hashlib
 import shutil
 import tempfile
 import traceback
@@ -33,6 +35,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 EXCEL_DIR = REPO_ROOT / "ExcelFiles"
 VBA_DIR = REPO_ROOT / "VBAFiles"
 SANDBOX_DIR = REPO_ROOT / ".test_runs"
+SANDBOX_WORKBOOK_DIR = Path(tempfile.gettempdir()) / "QPMS-Consult-test-runs"
 SCENARIO_DIR = REPO_ROOT / "TestScenarios"
 
 
@@ -44,6 +47,15 @@ def ensure_excel_com():
     except ImportError:
         print("[ERROR] pywin32 is not installed. Please run: pip install pywin32")
         sys.exit(1)
+
+
+def sha256_file(file_path):
+    """Return the SHA-256 digest of a file without loading it all into memory."""
+    digest = hashlib.sha256()
+    with open(file_path, "rb") as file:
+        for chunk in iter(lambda: file.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
 
 
 def find_latest_target():
@@ -89,10 +101,10 @@ class ExcelSession:
         self.active_path = None
 
     def __enter__(self):
-        SANDBOX_DIR.mkdir(parents=True, exist_ok=True)
+        SANDBOX_WORKBOOK_DIR.mkdir(parents=True, exist_ok=True)
         if self.sandbox:
-            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-            sandbox_wb = SANDBOX_DIR / f"{self.original_path.stem}_test_{timestamp}{self.original_path.suffix}"
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S_%f")
+            sandbox_wb = SANDBOX_WORKBOOK_DIR / f"{self.original_path.stem}_test_{timestamp}{self.original_path.suffix}"
             shutil.copy2(self.original_path, sandbox_wb)
             self.active_path = sandbox_wb
         else:
@@ -250,6 +262,7 @@ def generate_markdown_report(report_data):
     md.append(f"# Excel AI Test Report: `{report_data.get('target')}`")
     md.append(f"**Timestamp:** {report_data.get('timestamp')}")
     md.append(f"**Sandbox Copy (deleted after test):** `{report_data.get('sandbox_path')}`\n")
+    md.append(f"**Result:** {'PASSED' if report_data.get('passed') else 'FAILED'}\n")
 
     if report_data.get("scenario"):
         md.append(f"## Test Scenario: `{report_data['scenario']}`")
@@ -295,21 +308,31 @@ def generate_markdown_report(report_data):
     return "\n".join(md)
 
 
-def run_test_scenario(workbook_path, scenario_path=None):
+def run_test_scenario(workbook_path, scenario_path=None, json_report_path=None):
     """
     Executes a test scenario against the workbook.
     If no scenario is specified, performs a general health check and macro test.
     """
+    workbook_path = Path(workbook_path).resolve()
+    scenario_file = Path(scenario_path).resolve() if scenario_path else None
+    initial_workbook_hash = sha256_file(workbook_path)
+
     scenario_data = None
-    if scenario_path and Path(scenario_path).exists():
-        with open(scenario_path, "r", encoding="utf-8") as f:
+    if scenario_file:
+        if not scenario_file.is_file():
+            raise FileNotFoundError(f"Test scenario not found: {scenario_file}")
+        with open(scenario_file, "r", encoding="utf-8") as f:
             scenario_data = json.load(f)
 
     results = {
-        "target": Path(workbook_path).name,
+        "target": workbook_path.name,
+        "target_path": str(workbook_path),
+        "target_sha256": initial_workbook_hash,
         "timestamp": datetime.now().isoformat(),
         "passed": True,
         "scenario": scenario_data.get("name", "Default Inspection & Health Check") if scenario_data else "Default Inspection",
+        "scenario_path": str(scenario_file) if scenario_file else None,
+        "scenario_sha256": sha256_file(scenario_file) if scenario_file else None,
         "macro_results": [],
         "errors": [],
         "sheets": []
@@ -369,6 +392,21 @@ def run_test_scenario(workbook_path, scenario_path=None):
                 results["passed"] = False
                 results["errors"].extend(sheet_inspection["errors"])
 
+    sandbox_path = Path(results["sandbox_path"])
+    sandbox_path.unlink(missing_ok=True)
+    if sandbox_path.exists():
+        raise OSError(f"Could not remove temporary test workbook: {sandbox_path}")
+
+    final_workbook_hash = sha256_file(workbook_path)
+    results["target_sha256"] = final_workbook_hash
+    if final_workbook_hash != initial_workbook_hash:
+        results["passed"] = False
+        results["errors"].append({
+            "cell": "Workbook file",
+            "text": "The workbook changed while the test was running; test evidence is invalid.",
+            "formula": None
+        })
+
     # Output report
     SANDBOX_DIR.mkdir(parents=True, exist_ok=True)
     report_file = SANDBOX_DIR / "last_test_report.md"
@@ -376,8 +414,17 @@ def run_test_scenario(workbook_path, scenario_path=None):
     with open(report_file, "w", encoding="utf-8") as f:
         f.write(report_md)
 
+    result_file = Path(json_report_path).resolve() if json_report_path else SANDBOX_DIR / "last_test_results.json"
+    result_file.parent.mkdir(parents=True, exist_ok=True)
+    with open(result_file, "w", encoding="utf-8") as f:
+        json.dump(results, f, indent=2)
+
     print(f"\n[REPORT GENERATED] Saved to: {report_file}")
+    print(f"[RESULTS SAVED] Saved to: {result_file}")
     print(report_md)
+    sandbox_path.unlink(missing_ok=True)
+    if sandbox_path.exists():
+        raise OSError(f"Could not remove temporary test workbook: {sandbox_path}")
     return results
 
 
@@ -386,6 +433,7 @@ def main():
     parser = argparse.ArgumentParser(description="AI Excel Test Runner & Inspector")
     parser.add_argument("workbook", nargs="?", help="Path to .xlsm workbook (optional, defaults to last modified)")
     parser.add_argument("--scenario", help="Path to JSON test scenario file")
+    parser.add_argument("--json-report", help="Path for machine-readable test results")
     parser.add_argument("--detect-only", action="store_true", help="Only detect and display the latest changed target")
 
     args = parser.parse_args()
@@ -401,10 +449,11 @@ def main():
         print(f"[DETECTED] Target: {wb_path.name} (Triggered by {src_type}, last modified {mtime_str})")
 
     if args.detect_only:
-        return
+        return 0
 
-    run_test_scenario(wb_path, args.scenario)
+    results = run_test_scenario(wb_path, args.scenario, args.json_report)
+    return 0 if results["passed"] else 1
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

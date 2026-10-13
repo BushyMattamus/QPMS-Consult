@@ -21,25 +21,17 @@ This repository enables modern source control and IDE-based development (using V
 ### Bidirectional Workflow
 
 ```
-┌─────────────────────────────────┐
-│     ExcelFiles/*.xlsm           │
-│  (Binary Excel Workbooks)       │
-└────────────────┬────────────────┘
-                 │
-                 │  python PythonBase\extract_macros.py (Extract / Pull)
-                 ▼
-┌─────────────────────────────────┐
-│    VBAFiles/<WorkbookName>/     │
-│   ├── microsoft excel objects/  │ ◄── Edit and refactor cleanly
-│   └── modules/                  │     in VS Code with git tracking
-└────────────────┬────────────────┘
-                 │
-                 │  python PythonBase\write_macros.py (Inject / Push)
-                 ▼
-┌─────────────────────────────────┐
-│     ExcelFiles/*.xlsm           │
-│  (Updated Workbooks + Backups)  │
-└─────────────────────────────────┘
+ExcelFiles/*.xlsm --extract_macros.py--> VBAFiles/<WorkbookName>/
+                                              |
+                                     edit VBA in VS Code
+                                              |
+ExcelFiles/*.xlsm <--promote after pass-- StagedExcelFiles/*.xlsm
+                                              ^
+                              write_macros.py / workbook_release.py
+                                              |
+                                      inject VBA source
+
+StagedExcelFiles/*.xlsm --excel_test_runner.py--> isolated .test_runs copy
 ```
 
 ---
@@ -54,15 +46,19 @@ CPMU QH/
 │   ├── R4 Stock Management.xlsm
 │   └── ...
 │
+├── StagedExcelFiles/             # Unverified workbook builds; promote only after passing tests
+│
 ├── VBAFiles/                     # Extracted and version-controlled VBA code
 │   ├── <WorkbookName>/           # Named matching the source Excel file stem (without extension)
 │   │   ├── microsoft excel objects/ # Document modules (Worksheets, ThisWorkbook) as *.cls
 │   │   └── modules/              # Procedural modules as *.bas
 │   └── ...
 │
-├── PythonBase/                   # Python automation tooling
+├── PythonCodebase/               # Python automation tooling
 │   ├── extract_macros.py         # OLE-based macro extractor (oletools)
-│   └── write_macros.py           # COM-based macro injector (win32com)
+│   ├── write_macros.py           # Staged COM-based VBA injector (win32com)
+│   ├── excel_test_runner.py      # Isolated workbook scenario and health tests
+│   └── workbook_release.py       # Stage, test, and guarded promotion commands
 │
 └── PROJECT_GUIDE.md              # System specification and LLM instruction manual
 ```
@@ -95,54 +91,54 @@ All scripts should be executed from PowerShell or Command Prompt with the worksp
 ### 4.1 Extracting Macros (Excel $\rightarrow$ VS Code)
 Extracts all macros from `ExcelFiles/` into structured folders in `VBAFiles/`:
 ```powershell
-python PythonBase\extract_macros.py
+python PythonCodebase\extract_macros.py
 ```
+- Macro extraction requires `oletools` in the active Python environment. Set up the workspace environment with `python -m pip install -r requirements.txt`; when running from the project `.venv`, use that interpreter so VS Code's Run in Terminal can import the dependency.
 - **Single File Override:**
   ```powershell
-  python PythonBase\extract_macros.py "ExcelFiles\R3 Goods Issuing.xlsm"
+  python PythonCodebase\extract_macros.py "ExcelFiles\R3 Goods Issuing.xlsm"
   ```
 - **Key Behaviors:**
   - Uses `oletools.olevba` to read macro streams directly.
   - Strips null bytes and normalizes line endings to prevent spurious blank lines (`\r\r\n`).
   - Ignores temporary Excel lock files (`~$*`).
+  - Stops with a nonzero exit code when the dependency is missing or any workbook fails extraction.
 
-### 4.2 Writing / Pushing Macros (VS Code $\rightarrow$ Excel)
-Pushes all edited `.bas` and `.cls` code from `VBAFiles/` back into the corresponding workbooks in `ExcelFiles/`:
+### 4.2 Building Staged Workbooks (VBA source $\rightarrow$ staging)
+Builds fresh workbook copies under `StagedExcelFiles/` from production workbooks and injects the matching VBA source. The writer must not modify files in `ExcelFiles/`:
 ```powershell
-python PythonBase\write_macros.py
+python PythonCodebase\write_macros.py
 ```
-- **Single Workbook / Folder Override:**
+- **Single workbook:**
   ```powershell
-  python PythonBase\write_macros.py "VBAFiles\R3 Goods Issuing"
-  # or
-  python PythonBase\write_macros.py "ExcelFiles\R3 Goods Issuing.xlsm"
+  python PythonCodebase\write_macros.py "ExcelFiles\R3 Goods Issuing.xlsm"
   ```
-- **Key Behaviors & Safety Guards:**
-  - **Automated Backup:** Automatically creates a timestamped backup in `ExcelFiles/Backups/` before modifying any workbook.
-  - **Registry Configuration:** Verifies `AccessVBOM = 1` in the Windows registry so Excel permits programmatic VBA project modifications.
-  - **Event Suppression:** Suppresses Excel application events (`EnableEvents = False`) during import to prevent `Workbook_Open` procedures from executing and locking files.
+- Running without arguments stages every workbook whose VBA source files differ from the source snapshot recorded at its last stage. A workbook without prior staging metadata is staged as an initial baseline. Unchanged workbooks are left alone. Each changed workbook starts from a fresh copy of production, so prior unverified staged edits are not carried forward.
+- To explicitly select one workbook, pass its production workbook path/name or VBA source folder. Use `--all` only when intentionally staging every matching workbook.
+- **Requirements and safety:** Install project dependencies in the active environment with `python -m pip install -r requirements.txt`. The writer requires Windows, desktop Excel, and `pywin32`; it rejects direct writes to `ExcelFiles/` and disables Excel events during VBA import. Staged workbooks are separate from production and may be replaced by a later staging build.
 
 ### 4.3 Testing Excel Workbooks
 Use `PythonCodebase\excel_test_runner.py` to inspect and test a workbook through Excel automation. It requires Windows, desktop Excel, and `pywin32`:
 ```powershell
-python PythonCodebase\excel_test_runner.py "ExcelFiles\R3 Goods Issuing.xlsm"
+python PythonCodebase\excel_test_runner.py "StagedExcelFiles\R3 Goods Issuing.xlsm" --scenario "TestScenarios\R3 Goods Issuing.json"
 ```
-- **Run a scenario:**
-  ```powershell
-  python PythonCodebase\excel_test_runner.py "ExcelFiles\R3 Goods Issuing.xlsm" --scenario "TestScenarios\R3 Goods Issuing.json"
-  ```
 - **Scenario format:** JSON may include a `name`, `inputs` (`sheet`, `cell`, `value`), `macros` (`name`, optional `args`), and `assertions` (`sheet`, `cell`, `expected`). Inputs and macros run before assertions; assertion values must match exactly.
-  ```json
-  {
-    "name": "Example calculation",
-    "inputs": [{"sheet": "Sheet1", "cell": "A1", "value": 10}],
-    "macros": [{"name": "Module1.MyMacro", "args": []}],
-    "assertions": [{"sheet": "Sheet1", "cell": "B1", "expected": 20}]
-  }
-  ```
-- **Target selection:** Pass the workbook path to test that workbook deterministically. If omitted, the runner selects the most recently modified workbook or VBA module's corresponding workbook. Use `--detect-only` to display the selected target without running tests.
-- **Safety and outputs:** The runner copies the workbook to `.test_runs/` and tests that sandbox copy; it does not save changes to the original. It writes `.test_runs\last_test_report.md` (overwritten on each run). Without a scenario, it inspects sheets and reports detected formula errors; it does not run macros. Inspection is limited to 30 rows by 15 columns per sheet. Check the report for pass/fail and errors; a failed test does not cause the runner to exit with a failure status.
-- **Testing changed VBA:** The runner tests the workbook contents, not unsynchronized files in `VBAFiles/`. To test VBA edits, first push them into the target workbook with `PythonBase\write_macros.py` (which backs up and modifies the original workbook), then run the test runner against that workbook.
+- The runner tests an isolated temporary copy outside the repository and removes it after each run; reports stay in `.test_runs\`. It writes `.test_runs\last_test_report.md` and `.test_runs\last_test_results.json` by default. A failed test returns a nonzero process exit code. Use `--json-report` to choose a separate machine-readable result file.
+- Tests without a scenario perform a workbook health inspection only; **release promotion requires a passing scenario-based test**.
+
+### 4.4 Promoting a Verified Workbook
+Use the release helper to build, test, and explicitly promote a single workbook:
+```powershell
+python PythonCodebase\workbook_release.py stage "R3 Goods Issuing.xlsm"
+python PythonCodebase\workbook_release.py test "R3 Goods Issuing.xlsm" --scenario "TestScenarios\R3 Goods Issuing.json"
+python PythonCodebase\workbook_release.py promote "R3 Goods Issuing.xlsm"
+```
+- `stage` copies the current production workbook to `StagedExcelFiles/` and writes the matching `VBAFiles/` source into that copy.
+- `test` requires a scenario and runs it against the staged workbook. Test evidence records the tested file hash and is invalidated if the candidate changes.
+- `promote` requires passing scenario results for that exact staged workbook and verifies that the production workbook has not changed since staging. It creates a timestamped backup in `ExcelFiles/Backups/` and atomically replaces the production workbook.
+- If production changes after staging, rebuild and retest. If a workbook is open or promotion fails, the production file remains in place and the error must be resolved before retrying.
+
+`PythonCodebase\write_macros.py` remains available for batch builds; it also writes only to `StagedExcelFiles/`. Do not use a direct writer call to change a production workbook.
 
 ---
 
@@ -152,8 +148,8 @@ When assisting in this codebase, adhere strictly to the following protocols:
 
 1. **Never attempt to edit binary `.xlsm` files directly.**
    - All code adjustments, bug fixes, and feature developments must be performed on the text files in `VBAFiles/<WorkbookName>/modules/` or `VBAFiles/<WorkbookName>/microsoft excel objects/`.
-2. **Execute Write-Back After Modifications:**
-   - After editing VBA files, run `python PythonBase\write_macros.py "<target>"` to ensure the binary Excel file reflects the latest changes.
+2. **Build and Verify Before Release:**
+   - After editing VBA files, run the `workbook_release.py stage`, `test`, and `promote` commands in order. Never write untested VBA changes directly into `ExcelFiles/`.
 3. **Preserve Line Endings & Encoding:**
    - Maintain UTF-8 encoding and standard CRLF line endings without introducing double carriage returns.
 4. **Header Attribute Integrity:**
@@ -161,4 +157,4 @@ When assisting in this codebase, adhere strictly to the following protocols:
 5. **Ensure Target Workbooks are Closed:**
    - Excel workbooks cannot be overwritten if they are currently locked or open in an external Excel window. If a write-back error occurs, verify that no orphaned background `EXCEL.EXE` process is holding a file lock.
 6. **Test Workbook Changes:**
-   - After writing changed VBA into a workbook, run `python PythonCodebase\excel_test_runner.py "<workbook path>"`; use a scenario JSON when the change needs input, macro execution, or explicit expected-value checks. Review `.test_runs\last_test_report.md` for failures.
+   - Run a scenario against the staged workbook and require a zero exit code before promotion. Review its report and machine-readable test results; do not promote a failed or untested workbook.

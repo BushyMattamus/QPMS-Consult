@@ -1,7 +1,14 @@
 import sys
+import hashlib
+import json
 import shutil
 from pathlib import Path
 from datetime import datetime
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+PRODUCTION_DIR = PROJECT_ROOT / "ExcelFiles"
+STAGING_DIR = PROJECT_ROOT / "StagedExcelFiles"
+TEST_RUNS_DIR = PROJECT_ROOT / ".test_runs"
 
 # Ensure UTF-8 output encoding for Windows terminal compatibility
 if sys.platform == 'win32' and hasattr(sys.stdout, 'reconfigure'):
@@ -69,6 +76,43 @@ def create_backup(excel_path):
     return backup_file
 
 
+def sha256_file(file_path):
+    """Return the SHA-256 digest of a file without loading it all into memory."""
+    digest = hashlib.sha256()
+    with open(file_path, "rb") as file:
+        for chunk in iter(lambda: file.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def vba_source_files(source_dir):
+    """Return source files that are consumed by the VBA writer."""
+    source_dir = Path(source_dir)
+    files = []
+    for subdirectory in ("microsoft excel objects", "modules"):
+        source_subdirectory = source_dir / subdirectory
+        if source_subdirectory.is_dir():
+            files.extend(
+                source_file
+                for source_file in source_subdirectory.iterdir()
+                if source_file.is_file() and source_file.suffix.lower() in {".bas", ".cls"}
+            )
+    return sorted(files, key=lambda path: str(path.relative_to(source_dir)).casefold())
+
+
+def sha256_vba_source(source_dir):
+    """Hash all VBA files consumed by the writer, including their relative paths."""
+    source_dir = Path(source_dir)
+    digest = hashlib.sha256()
+    for source_file in vba_source_files(source_dir):
+        relative_path = source_file.relative_to(source_dir).as_posix().casefold()
+        digest.update(relative_path.encode("utf-8"))
+        digest.update(b"\0")
+        digest.update(sha256_file(source_file).encode("ascii"))
+        digest.update(b"\0")
+    return digest.hexdigest()
+
+
 def write_vba_to_workbook(excel_path, vba_source_dir, backup=True):
     """
     Writes extracted/edited VBA files from vba_source_dir back into excel_path.
@@ -88,20 +132,24 @@ def write_vba_to_workbook(excel_path, vba_source_dir, backup=True):
     try:
         import win32com.client
     except ImportError:
-        print("[ERROR] Missing required library 'pywin32'.")
-        print("Please install it using: pip install pywin32")
-        return (0, 0)
+        raise RuntimeError(
+            "Missing required library 'pywin32'. Install it using: pip install pywin32"
+        )
 
     excel_file = Path(excel_path).resolve()
     vba_dir = Path(vba_source_dir).resolve()
 
+    if excel_file.parent == PRODUCTION_DIR.resolve():
+        raise ValueError(
+            "Direct writes to ExcelFiles are disabled. Build the workbook under "
+            "StagedExcelFiles and promote it only after successful tests."
+        )
+
     if not excel_file.exists():
-        print(f"[ERROR] Target Excel file not found: {excel_file}")
-        return (0, 0)
+        raise FileNotFoundError(f"Target Excel file not found: {excel_file}")
 
     if not vba_dir.exists() or not vba_dir.is_dir():
-        print(f"[ERROR] Source VBA folder not found: {vba_dir}")
-        return (0, 0)
+        raise FileNotFoundError(f"Source VBA folder not found: {vba_dir}")
 
     print('=' * 80)
     print('VBA WRITE / INJECTION PROCESS')
@@ -200,6 +248,7 @@ def write_vba_to_workbook(excel_path, vba_source_dir, backup=True):
         print(f"\n[ERROR] Failed to write VBA back to {excel_file.name}: {e}")
         import traceback
         traceback.print_exc()
+        raise
     finally:
         if workbook is not None:
             try:
@@ -255,8 +304,8 @@ def find_default_directories():
 def write_all_from_folder(vba_parent_dir, excel_dir):
     """
     Iterates through each source-file folder in vba_parent_dir,
-    locates the corresponding Excel workbook in excel_dir,
-    and updates its VBA macros.
+    locates the corresponding production workbook in excel_dir,
+    and writes a fresh VBA-updated copy to staging.
     """
     vba_path = Path(vba_parent_dir).resolve()
     excel_path = Path(excel_dir).resolve()
@@ -277,10 +326,11 @@ def write_all_from_folder(vba_parent_dir, excel_dir):
         return {}
 
     print('=' * 80)
-    print('BATCH VBA WRITE-BACK PROCESS')
+    print('BATCH STAGED WORKBOOK BUILD')
     print('=' * 80)
     print(f"VBA Source Directory:  {vba_path}")
-    print(f"Excel Target Directory: {excel_path}")
+    print(f"Production Source Directory: {excel_path}")
+    print(f"Staging Target Directory: {STAGING_DIR}")
     print(f"Found {len(source_folders)} workbook folder(s) to process:")
     for d in source_folders:
         print(f"  - {d.name}")
@@ -289,54 +339,209 @@ def write_all_from_folder(vba_parent_dir, excel_dir):
     results = {}
     for folder in source_folders:
         # Match Excel file in ExcelFiles with same stem
-        target_excel = None
+        source_excel = None
         for ext in ('.xlsm', '.xls', '.xlsb', '.xlam'):
             candidate = excel_path / f"{folder.name}{ext}"
             if candidate.exists():
-                target_excel = candidate
+                source_excel = candidate
                 break
 
-        if not target_excel:
+        if not source_excel:
             print(f"[WARNING] No matching Excel workbook found in {excel_path.name} for folder '{folder.name}'")
             continue
 
-        obj_cnt, mod_cnt = write_vba_to_workbook(target_excel, folder)
+        target_excel = stage_single_workbook(source_excel, folder)
+        print(f"[STAGED] {target_excel}")
+        with open(target_excel.with_suffix(".release.json"), "r", encoding="utf-8") as file:
+            metadata = json.load(file)
+        obj_cnt = metadata["objects_updated"]
+        mod_cnt = metadata["modules_updated"]
         results[folder.name] = (obj_cnt, mod_cnt)
 
     print('=' * 80)
-    print('ALL WORKBOOKS UPDATED SUCCESSFULLY!')
+    print('ALL MATCHING WORKBOOKS STAGED SUCCESSFULLY!')
     print('=' * 80)
     for name, (o_cnt, m_cnt) in results.items():
-        print(f"  {name}: {o_cnt} object(s), {m_cnt} module(s) pushed.")
+        print(f"  {name}: {o_cnt} object(s), {m_cnt} module(s) injected.")
     print('=' * 80)
 
     return results
 
 
-if __name__ == "__main__":
-    default_excel_dir, default_vba_dir = find_default_directories()
+def find_changed_vba_targets(vba_parent_dir, excel_dir, staging_dir=STAGING_DIR):
+    """Find workbooks whose VBA source differs from the last staged source snapshot."""
+    vba_path = Path(vba_parent_dir).resolve()
+    excel_path = Path(excel_dir).resolve()
+    stage_path = Path(staging_dir).resolve()
+    changed_targets = []
+    for source_dir in sorted(vba_path.iterdir(), key=lambda path: path.name.casefold()):
+        if not source_dir.is_dir() or not vba_source_files(source_dir):
+            continue
 
-    # Allow command line overrides
-    if len(sys.argv) > 1:
-        arg = Path(sys.argv[1]).resolve()
-        if arg.is_file():
-            # If user provided a specific Excel file: find its VBA folder
-            folder = default_vba_dir / arg.stem
-            write_vba_to_workbook(arg, folder)
-            sys.exit(0)
-        elif arg.is_dir():
-            # If user provided a folder inside VBAFiles
-            if (arg / "microsoft excel objects").exists() or (arg / "modules").exists():
-                # Locate corresponding Excel file
-                for ext in ('.xlsm', '.xls', '.xlsb', '.xlam'):
-                    cand = default_excel_dir / f"{arg.name}{ext}"
-                    if cand.exists():
-                        write_vba_to_workbook(cand, arg)
-                        sys.exit(0)
-                print(f"[ERROR] Could not find Excel workbook matching '{arg.name}' in {default_excel_dir}")
-                sys.exit(1)
+        workbook_stem = source_dir.name
+        production_file = None
+        for extension in (".xlsm", ".xls", ".xlsb", ".xlam"):
+            candidate = excel_path / f"{workbook_stem}{extension}"
+            if candidate.is_file():
+                production_file = candidate
+                break
+        if production_file is None:
+            continue
+
+        staged_path = stage_path / production_file.name
+        metadata_path = staged_path.with_suffix(".release.json")
+        if not metadata_path.is_file():
+            changed_targets.append((production_file, source_dir))
+            continue
+
+        with open(metadata_path, "r", encoding="utf-8") as file:
+            metadata = json.load(file)
+        if metadata.get("vba_source_sha256") != sha256_vba_source(source_dir):
+            changed_targets.append((production_file, source_dir))
+
+    return changed_targets
+
+
+def stage_changed_workbooks(vba_parent_dir, excel_dir):
+    """Stage every workbook whose VBA source changed since its previous stage."""
+    targets = find_changed_vba_targets(vba_parent_dir, excel_dir)
+    if not targets:
+        print("[UNCHANGED] No VBA source changes found since the last staging build.")
+        return []
+
+    print(f"[DETECTED] VBA source changes for {len(targets)} workbook(s):")
+    staged_paths = []
+    for source_excel, source_dir in targets:
+        print(f"  - {source_excel.name}")
+        staged_path = stage_single_workbook(source_excel, source_dir)
+        staged_paths.append(staged_path)
+        print(f"[STAGED] Built unverified workbook: {staged_path}")
+
+    return staged_paths
+
+
+def stage_single_workbook(source_excel, vba_source_dir, staging_dir=STAGING_DIR):
+    """Create a fresh staged copy of a production workbook and inject VBA into it."""
+    source_path = Path(source_excel).resolve()
+    source_dir = Path(vba_source_dir).resolve()
+    stage_dir = Path(staging_dir).resolve()
+    if source_path.parent != PRODUCTION_DIR.resolve():
+        raise ValueError(f"Source workbook must be directly inside {PRODUCTION_DIR}")
+    if not source_path.is_file():
+        raise FileNotFoundError(f"Production workbook not found: {source_path}")
+    if not source_dir.is_dir():
+        raise FileNotFoundError(f"Source VBA folder not found: {source_dir}")
+
+    stage_dir.mkdir(parents=True, exist_ok=True)
+    staged_path = stage_dir / source_path.name
+    evidence_path = staged_path.with_suffix(".release.json")
+    test_results = TEST_RUNS_DIR / f"{staged_path.name}_test_results.json"
+    source_hash = sha256_file(source_path)
+    vba_source_hash = sha256_vba_source(source_dir)
+    for stale_evidence in (evidence_path, test_results):
+        if stale_evidence.exists():
+            stale_evidence.unlink()
+
+    shutil.copy2(source_path, staged_path)
+    objects_updated, modules_updated = write_vba_to_workbook(staged_path, source_dir, backup=False)
+    if sha256_file(source_path) != source_hash:
+        raise RuntimeError("Production workbook changed while it was being staged; rebuild the candidate.")
+    if sha256_vba_source(source_dir) != vba_source_hash:
+        raise RuntimeError("VBA source changed while the workbook was being staged; rebuild the candidate.")
+
+    metadata = {
+        "production_path": str(source_path),
+        "production_sha256": source_hash,
+        "staged_path": str(staged_path.resolve()),
+        "staged_sha256": sha256_file(staged_path),
+        "vba_source_path": str(source_dir),
+        "vba_source_sha256": vba_source_hash,
+        "built_at": datetime.now().isoformat(),
+        "objects_updated": objects_updated,
+        "modules_updated": modules_updated,
+    }
+    with open(evidence_path, "w", encoding="utf-8") as file:
+        json.dump(metadata, file, indent=2)
+    return staged_path
+
+
+def resolve_production_workbook(argument, production_dir=PRODUCTION_DIR):
+    """Resolve a workbook name or path to a workbook in the production directory."""
+    requested = Path(argument)
+    candidate = requested if requested.is_absolute() else Path.cwd() / requested
+    production_path = Path(production_dir).resolve()
+    if candidate.is_file():
+        candidate = candidate.resolve()
+    else:
+        candidate = production_path / requested.name
+        if not candidate.is_file() and not requested.suffix:
+            candidate = next(
+                (
+                    production_path / f"{requested.name}{extension}"
+                    for extension in (".xlsm", ".xls", ".xlsb", ".xlam")
+                    if (production_path / f"{requested.name}{extension}").is_file()
+                ),
+                candidate,
+            )
+        candidate = candidate.resolve()
+    if candidate.parent != production_path:
+        raise ValueError(f"Workbook must be directly inside {Path(production_dir).resolve()}")
+    if not candidate.is_file():
+        raise FileNotFoundError(f"Production workbook not found: {candidate}")
+    return candidate
+
+
+def main():
+    import argparse
+
+    parser = argparse.ArgumentParser(
+        description="Build staged Excel workbooks from production files and VBA source."
+    )
+    parser.add_argument(
+        "target",
+        nargs="?",
+        help="Production workbook path/name or VBA source folder; omit to stage all workbooks with VBA changes since the last stage.",
+    )
+    parser.add_argument(
+        "--all",
+        action="store_true",
+        help="Stage every production workbook with a matching VBA source folder.",
+    )
+    args = parser.parse_args()
+
+    try:
+        production_dir, vba_dir = find_default_directories()
+        if args.all:
+            if args.target:
+                parser.error("TARGET cannot be combined with --all")
+            results = write_all_from_folder(vba_dir, production_dir)
+            return 0 if results else 1
+
+        if args.target:
+            target = Path(args.target).resolve()
+            if target.is_file():
+                source_excel = resolve_production_workbook(target, production_dir)
+                source_dir = vba_dir / source_excel.stem
+            elif target.is_dir():
+                if (target / "microsoft excel objects").exists() or (target / "modules").exists():
+                    source_dir = target
+                    source_excel = resolve_production_workbook(target.name, production_dir)
+                else:
+                    parser.error("Target must be a production workbook or a workbook's VBA source folder")
             else:
-                default_vba_dir = arg
+                source_excel = resolve_production_workbook(args.target, production_dir)
+                source_dir = vba_dir / source_excel.stem
+            staged_path = stage_single_workbook(source_excel, source_dir)
+            print(f"[STAGED] Built unverified workbook: {staged_path}")
+        else:
+            staged_paths = stage_changed_workbooks(vba_dir, production_dir)
+            if not staged_paths:
+                return 0
+        return 0
+    except (FileNotFoundError, RuntimeError, ValueError) as error:
+        print(f"[ERROR] {error}", file=sys.stderr)
+        return 1
 
-    write_all_from_folder(default_vba_dir, default_excel_dir)
 
+if __name__ == "__main__":
+    raise SystemExit(main())

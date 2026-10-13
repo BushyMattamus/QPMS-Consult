@@ -1,0 +1,28 @@
+{
+  "name": "TEST2 Module Import Verification",
+  "description": "Verifies that test2.bas is imported as the test2 module and its macro runs.",
+  "inputs": [
+    {
+      "sheet": "Sheet1",
+      "cell": "A2",
+      "value": 30
+    },
+    {
+      "sheet": "Sheet1",
+      "cell": "B2",
+      "value": 10
+    }
+  ],
+  "macros": [
+    {
+      "name": "test2.CalculateDiscount"
+    }
+  ],
+  "assertions": [
+    {
+      "sheet": "Sheet1",
+      "cell": "C2",
+      "expected": 255
+    }
+  ]
+}

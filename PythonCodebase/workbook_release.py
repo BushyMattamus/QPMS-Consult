@@ -1,0 +1,177 @@
+"""Build, test, and promote Excel workbooks through a staging directory."""
+
+import argparse
+import json
+import os
+import shutil
+import subprocess
+import sys
+from datetime import datetime
+from pathlib import Path
+from uuid import uuid4
+
+from write_macros import (
+    PRODUCTION_DIR,
+    STAGING_DIR,
+    resolve_production_workbook,
+    sha256_file,
+    stage_single_workbook,
+)
+
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+TEST_RUNS_DIR = PROJECT_ROOT / ".test_runs"
+TEST_RUNNER = Path(__file__).resolve().parent / "excel_test_runner.py"
+
+
+def resolve_staged_workbook(argument, production_dir=PRODUCTION_DIR, staging_dir=STAGING_DIR):
+    """Resolve a workbook name or path to its staged workbook."""
+    production_path = resolve_production_workbook(argument, production_dir)
+    staged_path = Path(staging_dir) / production_path.name
+    if not staged_path.is_file():
+        raise FileNotFoundError(f"Staged workbook not found; run the stage command first: {staged_path}")
+    return production_path, staged_path.resolve()
+
+
+def state_path(staged_path):
+    return staged_path.with_suffix(".release.json")
+
+
+def test_results_path(staged_path, test_runs_dir=TEST_RUNS_DIR):
+    return Path(test_runs_dir) / f"{staged_path.name}_test_results.json"
+
+
+def stage_workbook(argument):
+    production_path = resolve_production_workbook(argument)
+    staged_path = stage_single_workbook(
+        production_path,
+        PRODUCTION_DIR.parent / "VBAFiles" / production_path.stem,
+    )
+    print(f"[STAGED] {staged_path}")
+    print("[NEXT] Run workbook_release.py test with a scenario before promotion.")
+
+
+def test_workbook(argument, scenario_argument):
+    production_path, staged_path = resolve_staged_workbook(argument)
+    result_file = test_results_path(staged_path)
+    if result_file.exists():
+        result_file.unlink()
+
+    with open(state_path(staged_path), "r", encoding="utf-8") as file:
+        metadata = json.load(file)
+
+    if metadata.get("production_sha256") != sha256_file(production_path):
+        raise RuntimeError("Production workbook changed after staging; rebuild the staged workbook.")
+    if metadata.get("staged_sha256") != sha256_file(staged_path):
+        raise RuntimeError("Staged workbook changed after it was built; rebuild it before testing.")
+
+    scenario_path = Path(scenario_argument).resolve()
+    if not scenario_path.is_file():
+        raise FileNotFoundError(f"Test scenario not found: {scenario_path}")
+
+    command = [
+        sys.executable,
+        str(TEST_RUNNER),
+        str(staged_path),
+        "--scenario",
+        str(scenario_path),
+        "--json-report",
+        str(result_file),
+    ]
+    completed = subprocess.run(command, cwd=PROJECT_ROOT, check=False)
+    if completed.returncode != 0:
+        result_file.unlink(missing_ok=True)
+        raise SystemExit(completed.returncode)
+
+
+def promote_workbook(
+    argument,
+    production_dir=PRODUCTION_DIR,
+    staging_dir=STAGING_DIR,
+    test_runs_dir=TEST_RUNS_DIR,
+):
+    production_dir = Path(production_dir).resolve()
+    production_path, staged_path = resolve_staged_workbook(
+        argument, production_dir, staging_dir
+    )
+    metadata_file = state_path(staged_path)
+    results_file = test_results_path(staged_path, test_runs_dir)
+    if not metadata_file.is_file() or not results_file.is_file():
+        raise RuntimeError("Missing build or test evidence; stage and successfully test this workbook first.")
+
+    with open(metadata_file, "r", encoding="utf-8") as file:
+        metadata = json.load(file)
+    with open(results_file, "r", encoding="utf-8") as file:
+        results = json.load(file)
+
+    if metadata.get("production_path") != str(production_path):
+        raise RuntimeError("Staging metadata does not match the requested production workbook.")
+    if metadata.get("staged_path") != str(staged_path):
+        raise RuntimeError("Staging metadata does not match the staged workbook.")
+    if metadata.get("production_sha256") != sha256_file(production_path):
+        raise RuntimeError("Production workbook changed after staging; rebuild and retest before promotion.")
+    staged_hash = sha256_file(staged_path)
+    if metadata.get("staged_sha256") != staged_hash:
+        raise RuntimeError("Staged workbook changed after it was built; rebuild and retest before promotion.")
+    if results.get("target_path") != str(staged_path):
+        raise RuntimeError("Passing test results are not for this staged workbook.")
+    if results.get("target_sha256") != staged_hash:
+        raise RuntimeError("Staged workbook changed after testing; rerun tests before promotion.")
+    scenario_path = Path(results.get("scenario_path", "")).resolve()
+    if results.get("passed") is not True or not results.get("scenario_path"):
+        raise RuntimeError("Promotion requires a passing scenario-based test.")
+    if not scenario_path.is_file() or results.get("scenario_sha256") != sha256_file(scenario_path):
+        raise RuntimeError("The test scenario changed or is missing; rerun the test before promotion.")
+
+    backup_dir = production_dir / "Backups"
+    backup_dir.mkdir(parents=True, exist_ok=True)
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S_%f")
+    backup_path = backup_dir / f"{production_path.stem}_{timestamp}{production_path.suffix}"
+    shutil.copy2(production_path, backup_path)
+
+    temporary_path = production_path.with_name(
+        f".{production_path.stem}.promote-{uuid4().hex}{production_path.suffix}"
+    )
+    try:
+        shutil.copy2(staged_path, temporary_path)
+        if metadata.get("production_sha256") != sha256_file(production_path):
+            raise RuntimeError("Production workbook changed during promotion; the staged copy was not installed.")
+        os.replace(temporary_path, production_path)
+    finally:
+        if temporary_path.exists():
+            temporary_path.unlink()
+
+    print(f"[PROMOTED] {staged_path} -> {production_path}")
+    print(f"[BACKUP] {backup_path}")
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Stage, test, and promote Excel workbook changes.")
+    commands = parser.add_subparsers(dest="command", required=True)
+
+    stage_parser = commands.add_parser("stage", help="Build a fresh staged workbook and inject VBA source.")
+    stage_parser.add_argument("workbook", help="Workbook filename or path inside ExcelFiles.")
+
+    test_parser = commands.add_parser("test", help="Run a required scenario against a staged workbook.")
+    test_parser.add_argument("workbook", help="Workbook filename or path inside ExcelFiles.")
+    test_parser.add_argument("--scenario", required=True, help="JSON test scenario to execute.")
+
+    promote_parser = commands.add_parser("promote", help="Install a tested staged workbook into ExcelFiles.")
+    promote_parser.add_argument("workbook", help="Workbook filename or path inside ExcelFiles.")
+
+    args = parser.parse_args()
+    try:
+        if args.command == "stage":
+            stage_workbook(args.workbook)
+        elif args.command == "test":
+            test_workbook(args.workbook, args.scenario)
+        else:
+            promote_workbook(args.workbook)
+    except (FileNotFoundError, RuntimeError, ValueError) as error:
+        print(f"[ERROR] {error}", file=sys.stderr)
+        return 1
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

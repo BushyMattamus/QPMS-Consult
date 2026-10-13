@@ -31,6 +31,17 @@ def is_excel_object(vba_code, stream_path, vba_filename):
     return False
 
 
+def get_vba_parser():
+    try:
+        from oletools.olevba import VBA_Parser
+        return VBA_Parser
+    except ImportError as exc:
+        raise RuntimeError(
+            "Missing required library 'oletools'. Install project dependencies with: "
+            "python -m pip install -r requirements.txt"
+        ) from exc
+
+
 def extract_macros_oletools(file_path, output_dir=None, verbose=False):
     """
     Extract macro code from VBA projects using oletools.VBA_Parser.
@@ -46,12 +57,7 @@ def extract_macros_oletools(file_path, output_dir=None, verbose=False):
     Returns:
         list[dict]: Extracted macro items with metadata and code.
     """
-    try:
-        from oletools.olevba import VBA_Parser
-    except ImportError:
-        print("[ERROR] Missing required library 'oletools'.")
-        print("Please install it using: pip install oletools")
-        return []
+    VBA_Parser = get_vba_parser()
 
     target_path = Path(file_path).resolve()
     
@@ -62,8 +68,7 @@ def extract_macros_oletools(file_path, output_dir=None, verbose=False):
     print('=' * 80)
     
     if not target_path.exists():
-        print(f"[ERROR] Target file does not exist: {target_path}")
-        return []
+        raise FileNotFoundError(f"Target file does not exist: {target_path}")
     
     results = []
     
@@ -149,6 +154,7 @@ def extract_macros_oletools(file_path, output_dir=None, verbose=False):
         print(f'\n[ERROR] Failed to extract macros: {e}')
         import traceback
         traceback.print_exc()
+        raise RuntimeError(f"Failed to extract macros from {target_path}") from e
         
     return results
 
@@ -174,7 +180,9 @@ def extract_all_from_folder(excel_dir, vba_parent_dir):
     
     if not excel_path.exists() or not excel_path.is_dir():
         print(f"[ERROR] Excel files folder does not exist: {excel_path}")
-        return {}
+        raise FileNotFoundError(f"Excel files folder does not exist: {excel_path}")
+
+    get_vba_parser()
     
     # Supported Excel macro extensions
     extensions = ('*.xlsm', '*.xls', '*.xlsb', '*.xlam')
@@ -195,19 +203,28 @@ def extract_all_from_folder(excel_dir, vba_parent_dir):
     print()
     
     summary = {}
+    failures = []
     for excel_file in excel_files:
         # Create folder reflecting the original source file's name
         source_folder = vba_path / excel_file.stem
-        macros = extract_macros_oletools(excel_file, output_dir=source_folder)
-        summary[excel_file.name] = len(macros)
+        try:
+            macros = extract_macros_oletools(excel_file, output_dir=source_folder)
+            summary[excel_file.name] = len(macros)
+        except Exception as exc:
+            failures.append((excel_file.name, exc))
         
     print('=' * 80)
-    print('ALL EXTRACTIONS COMPLETED!')
+    print('EXTRACTION SUMMARY')
     print('=' * 80)
     for fname, count in summary.items():
         print(f"  {fname}: {count} macro item(s) extracted")
+    for fname, error in failures:
+        print(f"  [FAILED] {fname}: {error}")
     print('=' * 80)
-    
+
+    if failures:
+        raise RuntimeError(f"Failed to extract {len(failures)} of {len(excel_files)} workbook(s).")
+
     return summary
 
 
@@ -250,17 +267,23 @@ def find_default_directories():
 
 
 if __name__ == "__main__":
-    default_excel_dir, default_vba_dir = find_default_directories()
-    
-    # Allow command line overrides if specified
-    if len(sys.argv) > 1:
-        target = Path(sys.argv[1]).resolve()
-        if target.is_file():
-            # Process single file into VBAFiles / <Source File Name>
-            dest_folder = default_vba_dir / target.stem
-            extract_macros_oletools(target, output_dir=dest_folder)
-            sys.exit(0)
-        elif target.is_dir():
-            default_excel_dir = target
-            
-    extract_all_from_folder(default_excel_dir, default_vba_dir)
+    try:
+        default_excel_dir, default_vba_dir = find_default_directories()
+
+        # Allow command line overrides if specified
+        if len(sys.argv) > 1:
+            target = Path(sys.argv[1]).resolve()
+            if target.is_file():
+                # Process single file into VBAFiles / <Source File Name>
+                dest_folder = default_vba_dir / target.stem
+                extract_macros_oletools(target, output_dir=dest_folder)
+                sys.exit(0)
+            elif target.is_dir():
+                default_excel_dir = target
+            else:
+                raise FileNotFoundError(f"Input path does not exist: {target}")
+
+        extract_all_from_folder(default_excel_dir, default_vba_dir)
+    except (FileNotFoundError, RuntimeError, ValueError) as exc:
+        print(f"[ERROR] {exc}", file=sys.stderr)
+        sys.exit(1)
