@@ -38,6 +38,8 @@ StagedExcelFiles/*.xlsm --excel_test_runner.py--> isolated .test_runs copy
 
 ## 2. Directory Structure & Conventions
 
+- Name all newly created folders using `snake_case` (lowercase words separated by underscores).
+
 ```text
 CPMU QH/
 ├── ExcelFiles/                   # Macro-enabled source workbooks (.xlsm, .xlsb, .xls)
@@ -146,6 +148,8 @@ python PythonCodebase\workbook_release.py promote "R3 Goods Issuing.xlsm"
 
 When assisting in this codebase, adhere strictly to the following protocols:
 
+0. **Suggest Job Notes for Notable Work:**
+   - After finding or completing a notable item or task, suggest that Matt use “make note” to consider adding it to the daily job notes. Do not create a note unless asked.
 1. **Never attempt to edit binary `.xlsm` files directly.**
    - All code adjustments, bug fixes, and feature developments must be performed on the text files in `VBAFiles/<WorkbookName>/modules/` or `VBAFiles/<WorkbookName>/microsoft excel objects/`.
 2. **Build and Verify Before Release:**

@@ -1,3 +1,4 @@
 ﻿Date,Description,Start,End,Duration,DurationSeconds,DurationHours,Type
 2026-10-14,Importing,2026-10-14T19:57:16,2026-10-14T20:20:58,00:23:42,1422,0.395000,Timed
-2026-10-14,CSV assessment,2026-10-14T20:21:10,,,,,Timed
+2026-10-14,CSV assessment,2026-10-14T20:21:10,2026-10-14T21:09:10,00:48:00,2880,0.800000,Timed
+2026-10-14,Baseline VBA extraction and refactoring to work in new environment,2026-10-14T21:10:02,,,,,Timed
