@@ -4,7 +4,12 @@ import unittest
 from pathlib import Path
 
 from write_macros import find_changed_vba_targets, sha256_vba_source
-from workbook_release import promote_workbook, sha256_file, state_path, test_results_path
+from workbook_release import (
+    promote_workbook,
+    sha256_file,
+    state_path,
+    test_results_path as get_test_results_path,
+)
 
 
 class PromoteWorkbookTests(unittest.TestCase):
@@ -39,7 +44,7 @@ class PromoteWorkbookTests(unittest.TestCase):
             "scenario_sha256": sha256_file(self.scenario_path),
             "passed": True,
         }
-        with open(test_results_path(self.staged_path, self.test_runs_dir), "w", encoding="utf-8") as file:
+        with open(get_test_results_path(self.staged_path, self.test_runs_dir), "w", encoding="utf-8") as file:
             json.dump(self.results, file)
 
     def tearDown(self):
@@ -54,7 +59,7 @@ class PromoteWorkbookTests(unittest.TestCase):
         )
 
     def write_results(self):
-        with open(test_results_path(self.staged_path, self.test_runs_dir), "w", encoding="utf-8") as file:
+        with open(get_test_results_path(self.staged_path, self.test_runs_dir), "w", encoding="utf-8") as file:
             json.dump(self.results, file)
 
     def test_promotes_passing_candidate_and_preserves_backup(self):

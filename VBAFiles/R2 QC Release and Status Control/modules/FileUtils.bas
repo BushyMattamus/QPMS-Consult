@@ -114,13 +114,6 @@ Public Function GetFieldValue(ByVal rs As Object, ByVal expectedName As String) 
     On Error GoTo 0
 End Function
 
-' --- Helper: Resolve a folder path based on workbook drive ---
-Public Function GetFolderDrivePath(ByVal folderPath As String) As String
-    Dim driveLetter As String
-    driveLetter = GetWorkbookDrive()
-    GetFolderDrivePath = driveLetter & folderPath
-End Function
-
 ' ========================================================================
 ' Create a temporary copy of a source file for processing
 ' ========================================================================
@@ -130,6 +123,7 @@ Public Function CreateTemporaryFileCopy(ByVal sourceFileConstant As String, Opti
     Dim sourcePath As String
     Dim tempPath As String
     Dim tempFileName As String
+    Dim tempFolder As String
     Dim copyAttempt As Integer
     Dim copySuccess As Boolean
     Dim fso As Object
@@ -139,7 +133,9 @@ Public Function CreateTemporaryFileCopy(ByVal sourceFileConstant As String, Opti
     If sourceFolderPath = "" Then
         sourcePath = GetWorkbookTableFilePath(sourceFileConstant)
     Else
-        sourcePath = GetFolderDrivePath(sourceFolderPath) & "\" & sourceFileConstant
+        sourcePath = sourceFolderPath
+        If Right$(sourcePath, 1) <> "\" Then sourcePath = sourcePath & "\"
+        sourcePath = sourcePath & sourceFileConstant
     End If
     
     If Not fso.FileExists(sourcePath) Then
@@ -148,10 +144,12 @@ Public Function CreateTemporaryFileCopy(ByVal sourceFileConstant As String, Opti
     End If
     
     tempFileName = GenerateUniqueTempFileName(sourceFileConstant)
-    tempPath = GetWorkbookPath() & "\Tables\temp\" & tempFileName
+    tempFolder = GetTempFolderPath()
+    tempPath = tempFolder & tempFileName
     
-    If Not fso.FolderExists(GetWorkbookPath() & "\Tables\temp\") Then
-        fso.CreateFolder GetWorkbookPath() & "\Tables\temp\"
+    If Not EnsureFolderExists(tempFolder) Then
+        CreateTemporaryFileCopy = ""
+        GoTo CleanExit
     End If
     
     copySuccess = False
@@ -268,37 +266,4 @@ CleanExit:
     If Not fso Is Nothing Then Set fso = Nothing
 End Function
 
-' ========================================================================
-' ENVIRONMENT DETECTION
-' ========================================================================
-' Detects whether the workbook is in a "DATA" or "DEV" folder path
-' and returns "PROD" for DATA environments or "DEV" for DEV environments.
-' ========================================================================
-Public Function GetEnvironmentFromPath() As String
-    On Error GoTo ErrHandler
-    
-    Dim wbPath As String
-    Dim upperPath As String
-    
-    wbPath = ThisWorkbook.Path
-    
-    If Len(wbPath) = 0 Then
-        GetEnvironmentFromPath = "DEV"
-        Exit Function
-    End If
-    
-    upperPath = UCase$(wbPath)
-    
-    If InStr(1, upperPath, "\DEV\", vbTextCompare) > 0 Then
-        GetEnvironmentFromPath = "DEV"
-    ElseIf InStr(1, upperPath, "\DATA\", vbTextCompare) > 0 Then
-        GetEnvironmentFromPath = "PROD"
-    Else
-        GetEnvironmentFromPath = "DEV"
-    End If
-    
-    Exit Function
-    
-ErrHandler:
-    GetEnvironmentFromPath = "DEV"
-End Function
+' Environment detection (GetEnvironmentFromPath) lives in PathResolver.

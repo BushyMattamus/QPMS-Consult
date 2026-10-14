@@ -112,7 +112,7 @@ Public Sub FGMasterDataLoad()
     Dim importSuccess As Boolean
     Dim sourceFolderPath As String
 
-    sourceFolderPath = FG_MASTER_DATA_PATH & FOLDER_TABLES
+    sourceFolderPath = GetMasterDataTablesPath()
     fgMasterCSVPath = FILE_FG_MASTER_DATA
     Set wsDest = ThisWorkbook.Worksheets("FG_Master")
 

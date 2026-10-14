@@ -86,7 +86,7 @@ Public Function ExportNewLabelPrints()
     Application.EnableEvents = False
 
     ' Path to the CSV file
-    strCSVPath = "G:\Pharmacy\2.MFG\DATA\Material Management\Tables\Label_Prints.csv"
+    strCSVPath = GetWorkbookTableFilePath(FILE_LABEL_DETAILS)
 
     Set dictCSVIDs = CreateObject("Scripting.Dictionary")
 

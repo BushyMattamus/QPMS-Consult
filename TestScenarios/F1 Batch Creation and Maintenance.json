@@ -1,0 +1,9 @@
+{
+  "name": "F1 PathResolver startup loads",
+  "description": "Verifies workbook startup loads finished-goods master and batch references from their separate sandboxed data roots.",
+  "assertions": [
+    { "sheet": "MasterRef", "cell": "A1", "expected": "PMI_Code" },
+    { "sheet": "MasterRef", "cell": "C1", "expected": "Product_Description" },
+    { "sheet": "BatchRef", "cell": "A1", "expected": "Batch_Number" }
+  ]
+}

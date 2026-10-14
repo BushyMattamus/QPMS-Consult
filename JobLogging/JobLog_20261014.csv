@@ -1,4 +1,5 @@
 ﻿Date,Description,Start,End,Duration,DurationSeconds,DurationHours,Type
 2026-10-14,Importing,2026-10-14T19:57:16,2026-10-14T20:20:58,00:23:42,1422,0.395000,Timed
 2026-10-14,CSV assessment,2026-10-14T20:21:10,2026-10-14T21:09:10,00:48:00,2880,0.800000,Timed
-2026-10-14,Baseline VBA extraction and refactoring to work in new environment,2026-10-14T21:10:02,,,,,Timed
+2026-10-14,Baseline VBA extraction and refactoring to work in new environment,2026-10-14T21:10:02,2026-10-14T23:24:27,02:14:25,8065,2.240278,Timed
+2026-10-14,Phone call with William Mulligan (13:00-13:15) to discuss issues and requirements,,,00:15:00,900,0.250000,Manual

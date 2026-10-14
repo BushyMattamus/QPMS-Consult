@@ -785,7 +785,7 @@ Public Sub SaveVendorList()
     Set wsMaintain = ThisWorkbook.Worksheets("Maintain Vendor")
     
     ' Get the destination file path
-    filePath = BuildFilePath(ThisWorkbook.Path, FOLDER_TABLES, FILE_VENDOR_LIST)
+    filePath = GetWorkbookTableFilePath(FILE_VENDOR_LIST)
     
     ' Find last row with data (starting from B5)
     lastRow = wsMaintain.Cells(10000, 2).End(xlUp).row
@@ -868,7 +868,7 @@ Public Sub SaveManufacturerList()
     Set wsMaintain = ThisWorkbook.Worksheets("Maintain Manufacturer")
     
     ' Get the destination file path
-    filePath = BuildFilePath(ThisWorkbook.Path, FOLDER_TABLES, FILE_MANUFACTURER_LIST)
+    filePath = GetWorkbookTableFilePath(FILE_MANUFACTURER_LIST)
     
     ' Find last row with data (starting from B5)
     lastRow = wsMaintain.Cells(10000, 2).End(xlUp).row

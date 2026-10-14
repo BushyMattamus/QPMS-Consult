@@ -17,11 +17,15 @@ Features:
 import sys
 import os
 import json
+import csv
 import hashlib
+import multiprocessing
+import queue
 import shutil
 import tempfile
 import traceback
 from datetime import datetime
+from decimal import Decimal, InvalidOperation
 from pathlib import Path
 
 # Ensure UTF-8 output encoding for Windows terminal
@@ -36,7 +40,281 @@ EXCEL_DIR = REPO_ROOT / "ExcelFiles"
 VBA_DIR = REPO_ROOT / "VBAFiles"
 SANDBOX_DIR = REPO_ROOT / ".test_runs"
 SANDBOX_WORKBOOK_DIR = Path(tempfile.gettempdir()) / "QPMS-Consult-test-runs"
+DATA_DIR = REPO_ROOT / "DataFiles"
+DATA_ROOT_ENV_VAR = "QPMS_DATA_ROOT"
 SCENARIO_DIR = REPO_ROOT / "TestScenarios"
+
+
+def validate_dialog_rules(dialog_rules):
+    """Validate expected Excel message-box responses configured by a scenario."""
+    if not isinstance(dialog_rules, list):
+        raise ValueError("Macro 'dialogs' must be a list.")
+
+    for rule in dialog_rules:
+        if (
+            not isinstance(rule, dict)
+            or not isinstance(rule.get("title"), str)
+            or not rule["title"].strip()
+            or rule.get("button") not in {"OK", "Yes", "No", "Cancel"}
+            or not isinstance(rule.get("count", 1), int)
+            or isinstance(rule.get("count", 1), bool)
+            or rule.get("count", 1) < 1
+        ):
+            raise ValueError(
+                "Each macro dialog rule must include a title, an OK/Yes/No/Cancel "
+                "button, and a positive integer count."
+            )
+    return dialog_rules
+
+
+def validate_csv_assertions(assertions):
+    """Validate scenario assertions against CSV files in the sandbox data copy."""
+    if not isinstance(assertions, list):
+        raise ValueError("Scenario 'csv_assertions' must be a list.")
+
+    for assertion in assertions:
+        if not isinstance(assertion, dict):
+            raise ValueError("Each CSV assertion must be an object.")
+        file_name = assertion.get("file")
+        if not isinstance(file_name, str) or not file_name.strip():
+            raise ValueError("Each CSV assertion must include a safe relative 'file'.")
+        relative_path = Path(file_name)
+        match = assertion.get("match")
+        numeric_match = assertion.get("numeric_match", {})
+        expected_count = assertion.get("count", 1)
+        encoding = assertion.get("encoding", "utf-8-sig")
+        if (
+            relative_path.is_absolute()
+            or ".." in relative_path.parts
+            or not isinstance(match, dict)
+            or not match
+            or not all(isinstance(key, str) for key in match)
+            or not isinstance(numeric_match, dict)
+            or not isinstance(expected_count, int)
+            or isinstance(expected_count, bool)
+            or expected_count < 0
+            or not isinstance(encoding, str)
+            or encoding not in ("utf-8-sig", "cp1252")
+        ):
+            raise ValueError(
+                "Each CSV assertion must include a safe relative 'file', a non-empty "
+                "'match' object, a non-negative integer 'count', and a supported encoding."
+            )
+        for column, expected in numeric_match.items():
+            if (
+                not isinstance(column, str)
+                or not isinstance(expected, dict)
+                or not isinstance(expected.get("expected"), (int, float))
+                or isinstance(expected.get("expected"), bool)
+                or not isinstance(expected.get("tolerance", 0), (int, float))
+                or isinstance(expected.get("tolerance", 0), bool)
+                or expected.get("tolerance", 0) < 0
+            ):
+                raise ValueError(
+                    "CSV numeric matches must map column names to numeric expected "
+                    "values and non-negative tolerances."
+                )
+    return assertions
+
+
+def evaluate_csv_assertion(data_root, assertion):
+    """Count rows matching a scenario assertion in a sandbox CSV file."""
+    if data_root is None:
+        raise RuntimeError("CSV assertions require a sandbox copy of DataFiles.")
+    data_root = Path(data_root).resolve()
+    csv_path = (data_root / assertion["file"]).resolve()
+    if data_root not in csv_path.parents:
+        raise ValueError(f"CSV assertion path escapes the sandbox data folder: {assertion['file']}")
+    if not csv_path.is_file():
+        raise FileNotFoundError(f"CSV assertion file not found in sandbox: {assertion['file']}")
+
+    with csv_path.open(
+        "r",
+        encoding=assertion.get("encoding", "utf-8-sig"),
+        newline="",
+    ) as csv_file:
+        matched_count = 0
+        for row in csv.DictReader(csv_file):
+            if not all(
+                row.get(key) == str(value)
+                for key, value in assertion["match"].items()
+            ):
+                continue
+            numeric_matches = assertion.get("numeric_match", {})
+            try:
+                numeric_values_match = all(
+                    abs(Decimal(row[column]) - Decimal(str(expected["expected"])))
+                    <= Decimal(str(expected.get("tolerance", 0)))
+                    for column, expected in numeric_matches.items()
+                )
+            except (KeyError, InvalidOperation, TypeError) as error:
+                raise ValueError(
+                    f"CSV assertion for {assertion['file']} has a missing or "
+                    f"non-numeric column value: {error}"
+                ) from error
+            if numeric_values_match:
+                matched_count += 1
+
+    expected_count = assertion.get("count", 1)
+    return {
+        "file": assertion["file"],
+        "match": assertion["match"],
+        "expected_count": expected_count,
+        "matched_count": matched_count,
+        "passed": matched_count == expected_count,
+    }
+
+
+def watch_excel_dialogs(excel_pid, dialog_rules, stop_event, result_queue):
+    """Dismiss Excel message boxes from a separate process while COM is blocked."""
+    import ctypes
+    import win32gui
+    import win32process
+
+    button_ids = {"OK": 1, "Cancel": 2, "Yes": 6, "No": 7}
+    user32 = ctypes.WinDLL("user32", use_last_error=True)
+    post_message = user32.PostMessageW
+    post_message.argtypes = [
+        ctypes.c_void_p,
+        ctypes.c_uint,
+        ctypes.c_size_t,
+        ctypes.c_ssize_t,
+    ]
+    post_message.restype = ctypes.c_int
+    handled_counts = [0] * len(dialog_rules)
+    seen_dialogs = set()
+
+    while not stop_event.is_set():
+        dialogs = []
+
+        def collect(hwnd, result):
+            if not win32gui.IsWindow(hwnd):
+                return True
+            if win32gui.GetClassName(hwnd) != "#32770":
+                return True
+            process_id = win32process.GetWindowThreadProcessId(hwnd)[1]
+            if process_id == excel_pid:
+                result.append((hwnd, win32gui.GetWindowText(hwnd)))
+            return True
+
+        win32gui.EnumWindows(collect, dialogs)
+        active_handles = {hwnd for hwnd, _ in dialogs}
+        seen_dialogs.intersection_update(active_handles)
+
+        for hwnd, title in dialogs:
+            if hwnd in seen_dialogs:
+                continue
+
+            rule_index = next(
+                (
+                    index for index, rule in enumerate(dialog_rules)
+                    if rule["title"] == title
+                    and handled_counts[index] < rule["count"]
+                ),
+                None,
+            )
+            if rule_index is not None:
+                buttons = (dialog_rules[rule_index]["button"],)
+                expected = True
+                handled_counts[rule_index] += 1
+            else:
+                buttons = ("No", "Cancel", "Abort", "OK")
+                expected = False
+            button_ids.setdefault("Abort", 3)
+            button = buttons[0] if expected else "No/Cancel/Abort/OK fallback"
+            result_queue.put({
+                "type": "dialog",
+                "title": title,
+                "button": button,
+                "expected": expected,
+            })
+            for response in buttons:
+                if not post_message(hwnd, 0x0111, button_ids[response], 0):
+                    result_queue.put({
+                        "type": "error",
+                        "message": (
+                            f"Could not post {response} to Excel dialog '{title}': "
+                            f"{ctypes.get_last_error()}."
+                        ),
+                    })
+            seen_dialogs.add(hwnd)
+
+        stop_event.wait(0.05)
+
+
+class ExcelModalDialogWatcher:
+    """Run a separate Windows process to handle Excel message boxes."""
+
+    def __init__(self, excel_hwnd, dialog_rules):
+        import win32process
+
+        self.excel_pid = win32process.GetWindowThreadProcessId(excel_hwnd)[1]
+        self.dialog_rules = [dict(rule, count=rule.get("count", 1)) for rule in dialog_rules]
+        self.stop_event = multiprocessing.Event()
+        self.result_queue = multiprocessing.Queue()
+        self.process = None
+        self.events = []
+        self.errors = []
+
+    def start(self):
+        self.process = multiprocessing.Process(
+            target=watch_excel_dialogs,
+            args=(self.excel_pid, self.dialog_rules, self.stop_event, self.result_queue),
+            daemon=True,
+        )
+        self.process.start()
+
+    def stop(self):
+        self.stop_event.set()
+        if self.process:
+            self.process.join(timeout=5)
+            if self.process.is_alive():
+                self.process.terminate()
+                self.process.join(timeout=2)
+                self.errors.append("Excel dialog watcher did not stop within five seconds.")
+
+        while True:
+            try:
+                result = self.result_queue.get_nowait()
+            except queue.Empty:
+                break
+            if result["type"] == "dialog":
+                self.events.append({
+                    "title": result["title"],
+                    "button": result["button"],
+                    "expected": result["expected"],
+                })
+            else:
+                self.errors.append(result["message"])
+
+        if self.process and self.process.exitcode not in (0, None):
+            self.errors.append(
+                f"Excel dialog watcher exited with code {self.process.exitcode}."
+            )
+        self.result_queue.close()
+
+    def validation_errors(self):
+        errors = list(self.errors)
+        for rule in self.dialog_rules:
+            handled_count = sum(
+                1 for event in self.events
+                if event["expected"]
+                and event["title"] == rule["title"]
+                and event["button"] == rule["button"]
+            )
+            missing_count = rule["count"] - handled_count
+            if missing_count:
+                errors.append(
+                    f"Expected Excel dialog '{rule['title']}' with {rule['button']} "
+                    f"{missing_count} more time(s), but it did not appear."
+                )
+        errors.extend(
+            f"Unexpected Excel dialog '{event['title']}' was dismissed with "
+            f"{event['button']}."
+            for event in self.events
+            if not event["expected"]
+        )
+        return errors
 
 
 def ensure_excel_com():
@@ -99,6 +377,9 @@ class ExcelSession:
         self.excel = None
         self.wb = None
         self.active_path = None
+        self.sandbox_data_dir = None
+        self.previous_data_root = None
+        self.dialog_rules = []
 
     def __enter__(self):
         SANDBOX_WORKBOOK_DIR.mkdir(parents=True, exist_ok=True)
@@ -107,12 +388,20 @@ class ExcelSession:
             sandbox_wb = SANDBOX_WORKBOOK_DIR / f"{self.original_path.stem}_test_{timestamp}{self.original_path.suffix}"
             shutil.copy2(self.original_path, sandbox_wb)
             self.active_path = sandbox_wb
+            # The sandboxed workbook lives outside the repo, so give it a private
+            # copy of DataFiles and point the VBA PathResolver at it.
+            if DATA_DIR.is_dir():
+                self.sandbox_data_dir = SANDBOX_WORKBOOK_DIR / f"data_{timestamp}"
+                shutil.copytree(DATA_DIR, self.sandbox_data_dir)
+                self.previous_data_root = os.environ.get(DATA_ROOT_ENV_VAR)
+                os.environ[DATA_ROOT_ENV_VAR] = str(self.sandbox_data_dir)
         else:
             self.active_path = self.original_path
 
         try:
-            # Dispatch Excel Application
-            self.excel = self.win32.gencache.EnsureDispatch('Excel.Application')
+            # A dedicated Excel instance inherits the environment set above
+            # and never touches an Excel window the user already has open.
+            self.excel = self.win32.DispatchEx('Excel.Application')
             self.excel.Visible = self.visible
             self.excel.DisplayAlerts = False
             self.excel.ScreenUpdating = True
@@ -127,8 +416,18 @@ class ExcelSession:
                 self.excel = None
             if self.sandbox and self.active_path:
                 self.active_path.unlink(missing_ok=True)
+            self._cleanup_sandbox_data()
             raise
         return self
+
+    def _cleanup_sandbox_data(self):
+        if self.sandbox_data_dir:
+            shutil.rmtree(self.sandbox_data_dir, ignore_errors=True)
+            self.sandbox_data_dir = None
+            if self.previous_data_root is None:
+                os.environ.pop(DATA_ROOT_ENV_VAR, None)
+            else:
+                os.environ[DATA_ROOT_ENV_VAR] = self.previous_data_root
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         if self.wb:
@@ -145,6 +444,7 @@ class ExcelSession:
             self.excel = None
         if self.sandbox and self.active_path:
             self.active_path.unlink(missing_ok=True)
+        self._cleanup_sandbox_data()
 
     def get_sheet(self, sheet_name=None):
         if sheet_name:
@@ -203,11 +503,35 @@ class ExcelSession:
 
     def run_macro(self, macro_name, *args):
         """Executes a VBA macro in the open workbook."""
+        watcher = None
+        macro_result = None
+        macro_error = None
+        success = False
         try:
+            if self.dialog_rules:
+                watcher = ExcelModalDialogWatcher(self.excel.Hwnd, self.dialog_rules)
+                watcher.start()
             res = self.excel.Run(macro_name, *args)
-            return {"success": True, "result": res, "error": None}
+            macro_result = res
+            success = True
         except Exception as e:
-            return {"success": False, "result": None, "error": str(e)}
+            macro_error = str(e)
+        finally:
+            if watcher:
+                watcher.stop()
+
+        dialogs = watcher.events if watcher else []
+        if watcher:
+            dialog_errors = watcher.validation_errors()
+            if dialog_errors:
+                success = False
+                macro_error = "; ".join(filter(None, [macro_error, *dialog_errors]))
+        return {
+            "success": success,
+            "result": macro_result,
+            "error": macro_error,
+            "dialogs": dialogs,
+        }
 
     def format_range(self, sheet_name, cell_ref, bg_color=None, font_color=None, bold=None, italic=None, font_size=None):
         """
@@ -278,6 +602,24 @@ def generate_markdown_report(report_data):
                 md.append(f"  - Return Value: `{m['result']}`")
             if m.get("error"):
                 md.append(f"  - **Error:** `{m['error']}`")
+            for dialog in m.get("dialogs", []):
+                md.append(
+                    f"  - Dialog `{dialog['title']}`: "
+                    f"{'expected' if dialog['expected'] else 'unexpected'}; "
+                    f"clicked **{dialog['button']}**."
+                )
+        md.append("")
+
+    csv_assertions = report_data.get("csv_assertions", [])
+    if csv_assertions:
+        md.append("### CSV Data Assertions")
+        for assertion in csv_assertions:
+            status_icon = "✅" if assertion["passed"] else "❌"
+            md.append(
+                f"- `{assertion['file']}`: {status_icon} matched "
+                f"{assertion['matched_count']} row(s); expected "
+                f"{assertion['expected_count']}."
+            )
         md.append("")
 
     # Formula/Cell Errors
@@ -289,6 +631,13 @@ def generate_markdown_report(report_data):
         md.append("")
     else:
         md.append("### ✅ Errors Detected: 0\n")
+
+    ignored_formula_errors = report_data.get("ignored_formula_errors", [])
+    if ignored_formula_errors:
+        md.append(f"### Ignored Formula Errors ({len(ignored_formula_errors)})")
+        for err in ignored_formula_errors:
+            md.append(f"- **{err['cell']}**: `{err['text']}` (Formula: `{err.get('formula')}`)")
+        md.append("")
 
     # Sheet Inspection Snapshot
     if "sheets" in report_data:
@@ -308,6 +657,14 @@ def generate_markdown_report(report_data):
     return "\n".join(md)
 
 
+def is_ignored_formula_error(sheet_name, error, ignore_rules):
+    return any(
+        rule["sheet"].casefold() == sheet_name.casefold()
+        and rule["error"] == error["text"]
+        for rule in ignore_rules
+    )
+
+
 def run_test_scenario(workbook_path, scenario_path=None, json_report_path=None):
     """
     Executes a test scenario against the workbook.
@@ -324,6 +681,25 @@ def run_test_scenario(workbook_path, scenario_path=None, json_report_path=None):
         with open(scenario_file, "r", encoding="utf-8") as f:
             scenario_data = json.load(f)
 
+    ignore_formula_errors = scenario_data.get("ignore_formula_errors", []) if scenario_data else []
+    if not isinstance(ignore_formula_errors, list):
+        raise ValueError("Scenario 'ignore_formula_errors' must be a list.")
+    for rule in ignore_formula_errors:
+        if (
+            not isinstance(rule, dict)
+            or not isinstance(rule.get("sheet"), str)
+            or not isinstance(rule.get("error"), str)
+        ):
+            raise ValueError(
+                "Each 'ignore_formula_errors' rule must include string 'sheet' and 'error' values."
+            )
+    csv_assertions = validate_csv_assertions(
+        scenario_data.get("csv_assertions", []) if scenario_data else []
+    )
+    if scenario_data and "active_sheet" in scenario_data:
+        if not isinstance(scenario_data["active_sheet"], str) or not scenario_data["active_sheet"]:
+            raise ValueError("Scenario 'active_sheet' must be a non-empty string.")
+
     results = {
         "target": workbook_path.name,
         "target_path": str(workbook_path),
@@ -335,11 +711,16 @@ def run_test_scenario(workbook_path, scenario_path=None, json_report_path=None):
         "scenario_sha256": sha256_file(scenario_file) if scenario_file else None,
         "macro_results": [],
         "errors": [],
+        "ignored_formula_errors": [],
+        "csv_assertions": [],
         "sheets": []
     }
 
     with ExcelSession(workbook_path, sandbox=True) as session:
         results["sandbox_path"] = str(session.active_path)
+
+        if scenario_data and scenario_data.get("active_sheet"):
+            session.get_sheet(scenario_data["active_sheet"]).Activate()
 
         # 1. Apply inputs if provided in scenario
         if scenario_data and "inputs" in scenario_data:
@@ -355,8 +736,12 @@ def run_test_scenario(workbook_path, scenario_path=None, json_report_path=None):
             for m in scenario_data["macros"]:
                 m_name = m["name"]
                 m_args = m.get("args", [])
+                session.dialog_rules = validate_dialog_rules(m.get("dialogs", []))
                 print(f"[TEST] Executing macro: {m_name}")
-                m_res = session.run_macro(m_name, *m_args)
+                try:
+                    m_res = session.run_macro(m_name, *m_args)
+                finally:
+                    session.dialog_rules = []
                 m_res["name"] = m_name
                 results["macro_results"].append(m_res)
                 if not m_res["success"]:
@@ -364,6 +749,20 @@ def run_test_scenario(workbook_path, scenario_path=None, json_report_path=None):
 
         # Recalculate
         session.calculate()
+
+        for assertion in csv_assertions:
+            csv_result = evaluate_csv_assertion(session.sandbox_data_dir, assertion)
+            results["csv_assertions"].append(csv_result)
+            if not csv_result["passed"]:
+                results["passed"] = False
+                results["errors"].append({
+                    "cell": assertion["file"],
+                    "text": (
+                        f"Expected {csv_result['expected_count']} matching CSV row(s), "
+                        f"found {csv_result['matched_count']}."
+                    ),
+                    "formula": None,
+                })
 
         # 3. Check assertions if defined
         if scenario_data and "assertions" in scenario_data:
@@ -388,9 +787,12 @@ def run_test_scenario(workbook_path, scenario_path=None, json_report_path=None):
             sheet_name = session.wb.Sheets(i).Name
             sheet_inspection = session.inspect_sheet(sheet_name)
             results["sheets"].append(sheet_inspection)
-            if sheet_inspection["errors"]:
-                results["passed"] = False
-                results["errors"].extend(sheet_inspection["errors"])
+            for error in sheet_inspection["errors"]:
+                if is_ignored_formula_error(sheet_name, error, ignore_formula_errors):
+                    results["ignored_formula_errors"].append(error)
+                else:
+                    results["passed"] = False
+                    results["errors"].append(error)
 
     sandbox_path = Path(results["sandbox_path"])
     sandbox_path.unlink(missing_ok=True)
@@ -417,7 +819,7 @@ def run_test_scenario(workbook_path, scenario_path=None, json_report_path=None):
     result_file = Path(json_report_path).resolve() if json_report_path else SANDBOX_DIR / "last_test_results.json"
     result_file.parent.mkdir(parents=True, exist_ok=True)
     with open(result_file, "w", encoding="utf-8") as f:
-        json.dump(results, f, indent=2)
+        json.dump(results, f, indent=2, default=str)
 
     print(f"\n[REPORT GENERATED] Saved to: {report_file}")
     print(f"[RESULTS SAVED] Saved to: {result_file}")

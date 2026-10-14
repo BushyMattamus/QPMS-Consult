@@ -78,7 +78,7 @@ Public Sub GenerateBalancesReport()
         GoTo CleanExit
     End If
     
-    sourceFolderPath = MASTER_DATA_PATH & FOLDER_TABLES
+    sourceFolderPath = GetMasterDataTablesPath()
     Debug.Print "DEBUG 5: sourceFolderPath=" & sourceFolderPath
     tempRMMasterPath = CreateTemporaryFileCopy(FILE_RM_MASTER, sourceFolderPath)
     Debug.Print "DEBUG 6: tempRMMasterPath=" & tempRMMasterPath

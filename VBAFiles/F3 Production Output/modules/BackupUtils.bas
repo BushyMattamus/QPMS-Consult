@@ -48,7 +48,7 @@ Public Sub BackupDataTables()
     Dim currentDay As Integer
     
     Set fso = CreateObject("Scripting.FileSystemObject")
-    tablesPath = ThisWorkbook.Path & "\Tables"
+    tablesPath = GetWorkbookTablesPath()
     backupFolder = ThisWorkbook.Path & "\Backups\Data"
     previousBackupsFolder = backupFolder & "\Previous Backups"
     

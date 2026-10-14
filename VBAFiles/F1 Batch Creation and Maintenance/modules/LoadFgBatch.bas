@@ -23,7 +23,7 @@ Sub ImportFgBatchSelectedCSVColumns()
     On Error GoTo ErrHandler
 
     ' --- Create temporary copy of CSV ---
-    tempCsvPath = CreateTemporaryFileCopy(FILE_FINISHED_GOODS_BATCH_NUMBER_MASTER, PATH_MATERIAL_MANAGEMENT_TABLES)
+    tempCsvPath = CreateTemporaryFileCopy(FILE_FINISHED_GOODS_BATCH_NUMBER_MASTER, GetMaterialManagementTablesPath())
     If tempCsvPath = "" Then
         MsgBox "Unable to create temporary copy of source file.", vbExclamation, "Import Error"
         GoTo CleanExit

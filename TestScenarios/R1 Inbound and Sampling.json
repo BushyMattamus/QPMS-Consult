@@ -1,0 +1,14 @@
+{
+  "name": "R1 PathResolver auto-detection",
+  "description": "Verifies workbook startup loads master and material-management tables from the sandboxed DataFiles tree through PathResolver.",
+  "assertions": [
+    { "sheet": "RM_Master", "cell": "A1", "expected": "RM_Code" },
+    { "sheet": "RM_Master", "cell": "A2", "expected": "0010" },
+    { "sheet": "QC_Number", "cell": "A1", "expected": "QC_Number" },
+    { "sheet": "QC_Number", "cell": "A2", "expected": "230084" },
+    { "sheet": "Vendor_List", "cell": "A1", "expected": "Vendor_Name" },
+    { "sheet": "Vendor_List", "cell": "A2", "expected": "ACE CHEMICAL CO" },
+    { "sheet": "Manufacturer_List", "cell": "A1", "expected": "Manufacturer_Name" },
+    { "sheet": "Manufacturer_List", "cell": "A2", "expected": "ACE CHEMICALS 119A MOORINGE AVE CAMDEN PARK SA 5038" }
+  ]
+}

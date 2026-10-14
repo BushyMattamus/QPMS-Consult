@@ -97,7 +97,7 @@ Public Sub LoadRMMasterData()
     Set wsStart = ActiveSheet
 
     ' --- Fixed source path using constants ---
-    rmCSVPath = GetMasterDataPath(FOLDER_TABLES & "\" & FILE_RM_MASTER)
+    rmCSVPath = GetWorkbookTableFilePath(FILE_RM_MASTER)
 
     ' --- Check if file exists ---
     If Not FileExists(rmCSVPath) Then
@@ -319,7 +319,7 @@ Public Sub FGMasterDataLoad()
     Dim lastRow As Long
     Dim sourceFolderPath As String
 
-    sourceFolderPath = FG_MASTER_DATA_PATH & FOLDER_TABLES
+    sourceFolderPath = GetMasterDataTablesPath()
     fgMasterCSVPath = FILE_FG_MASTER_DATA
     Set wsDest = ThisWorkbook.Worksheets("FG_Master")
 

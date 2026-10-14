@@ -1,0 +1,10 @@
+{
+  "name": "F2 PathResolver startup loads",
+  "description": "Verifies workbook startup loads finished-goods master and batch tables from their separate sandboxed data roots.",
+  "assertions": [
+    { "sheet": "FG_Master", "cell": "A1", "expected": "PMI_Code" },
+    { "sheet": "FG_Master", "cell": "A2", "expected": "ALC-002" },
+    { "sheet": "Batch_Details", "cell": "A1", "expected": "Batch_Number" },
+    { "sheet": "Batch_Details", "cell": "A2", "expected": "G190126" }
+  ]
+}

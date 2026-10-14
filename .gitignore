@@ -1,4 +1,5 @@
 /StagedExcelFiles/
 /.test_runs/
+/DataFiles/**/temp/
 __pycache__/
 *.py[cod]

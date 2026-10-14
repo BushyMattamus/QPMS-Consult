@@ -87,7 +87,7 @@ Public Sub LoadRMMasterData()
     Dim r As Long
     Dim s As String
 
-    sourceFolderPath = MASTER_DATA_PATH & FOLDER_TABLES
+    sourceFolderPath = GetMasterDataTablesPath()
     rmCSVPath = FILE_RM_MASTER
     Set wsDest = ThisWorkbook.Worksheets("RM_Master")
 

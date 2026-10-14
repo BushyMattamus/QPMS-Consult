@@ -154,7 +154,7 @@ Public Function ExportCSVToExcel(ByVal csvName As String, ByVal exportPrefix As 
     
     On Error GoTo Cleanup
     
-    srcPath = BuildFilePath(GetWorkbookPath(), FOLDER_TABLES, csvName)
+    srcPath = GetWorkbookTableFilePath(csvName)
     destPath = BuildExportPath(exportPrefix & GenerateTimestamp() & ".xlsx")
     
     EnsureFolderExists BuildFilePath(GetWorkbookPath(), FOLDER_EXPORTS)

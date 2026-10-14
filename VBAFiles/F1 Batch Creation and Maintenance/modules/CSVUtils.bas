@@ -174,7 +174,7 @@ Public Function UpdateFinishedGoodsBatchRecord( _
     End If
     
     Set fso = CreateObject("Scripting.FileSystemObject")
-    filePath = GetDataFilePath(FOLDER_MATERIAL_MANAGEMENT & "\" & FOLDER_TABLES, FILE_FINISHED_GOODS_BATCH_NUMBER_MASTER)
+    filePath = GetDataFilePath(FILE_FINISHED_GOODS_BATCH_NUMBER_MASTER)
     tempFilePath = filePath & ".tmp"
     
     If IsFileLocked(filePath) Then
@@ -309,7 +309,7 @@ Public Function UpdateFinishedGoodsBatchRecord( _
     fso.DeleteFile filePath
     fso.MoveFile tempFilePath, filePath
     
-    auditFilePath = GetDataFilePath(FOLDER_MATERIAL_MANAGEMENT & "\" & FOLDER_TABLES, FILE_FINISHED_GOODS_BATCH_NUMBER_AUDIT)
+    auditFilePath = GetDataFilePath(FILE_FINISHED_GOODS_BATCH_NUMBER_AUDIT)
     auditTransID = GetNextTransID(auditFilePath)
     auditLine = updatedLine & ",""" & auditTransID & """"
     

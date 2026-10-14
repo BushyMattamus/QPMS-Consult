@@ -1,0 +1,18 @@
+{
+  "name": "R2 PathResolver auto-detection",
+  "description": "Verifies R2 detects the sandboxed repo data root, resolves its tables, and creates a temporary table copy.",
+  "ignore_formula_errors": [
+    { "sheet": "Helper", "error": "#REF!" }
+  ],
+  "macros": [
+    { "name": "PathResolverSelfTest.RunPathResolverSelfTest" }
+  ],
+  "assertions": [
+    { "cell": "XFD1", "expected": "REPO" },
+    { "cell": "XFD2", "expected": "DEV" },
+    { "cell": "XFD3", "expected": "OK" },
+    { "cell": "XFD4", "expected": "OK" },
+    { "cell": "XFD5", "expected": "OK" },
+    { "cell": "XFD6", "expected": "OK" }
+  ]
+}

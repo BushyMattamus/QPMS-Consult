@@ -34,8 +34,8 @@ Public Sub WriteBatchToCSV(sheetName As String)
     Set ws = ThisWorkbook.Sheets(sheetName)
 
     ' --- File paths ---
-    masterCSV = GetDataFilePath(FOLDER_MATERIAL_MANAGEMENT & "\" & FOLDER_TABLES, FILE_FINISHED_GOODS_BATCH_NUMBER_MASTER)
-    auditCSV = GetDataFilePath(FOLDER_MATERIAL_MANAGEMENT & "\" & FOLDER_TABLES, FILE_FINISHED_GOODS_BATCH_NUMBER_AUDIT)
+    masterCSV = GetDataFilePath(FILE_FINISHED_GOODS_BATCH_NUMBER_MASTER)
+    auditCSV = GetDataFilePath(FILE_FINISHED_GOODS_BATCH_NUMBER_AUDIT)
 
     ' --- Pull all values from the Batch Number Generation sheet ---
     Batch_Number = GetFieldByLabel(sheetName, "C", "Batch Number").value

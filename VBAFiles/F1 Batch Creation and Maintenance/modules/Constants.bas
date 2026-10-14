@@ -1,18 +1,12 @@
 Attribute VB_Name = "Constants"
 Option Explicit
 
-' Master Switches
-Public Const MASTER_ENV_SWITCH As String = "WORK" ' Options: "WORK", "HOME"
-Public Const PROD_DEV As String = "PROD" ' Change to "PROD" for production
+' Data folder locations and the PROD_DEV environment flag are auto-detected in PathResolver.
 
 ' --- Folder Names ---
 Public Const FOLDER_TABLES As String = "Tables"
 Public Const FOLDER_MASTER_DATA As String = "Master Data"
 Public Const FOLDER_MATERIAL_MANAGEMENT As String = "Material Management"
-
-' --- Master Data Base Path (relative to workbook parent) ---
-Public Const PATH_MASTER_DATA_TABLES As String = "Master Data\Tables"
-Public Const PATH_MATERIAL_MANAGEMENT_TABLES As String = "Material Management\Tables"
 
 ' --- File Names ---
 Public Const FILE_MASTER_DATA_FINISHED_GOODS As String = "MasterDataFinishedGoods.csv"

@@ -1,14 +1,8 @@
 Attribute VB_Name = "Constants"
 Option Explicit
 
-' --- Master Data Root Path (use this as the base for Master Data files) ---
-Public Const DEV_MASTER_DATA_ROOT As String = "G:\Pharmacy\2.MFG\DEV\Master Data\"
-Public Const PROD_MASTER_DATA_ROOT As String = "G:\Pharmacy\2.MFG\DATA\Master Data\"
-Public Const HOME_MASTER_DATA_ROOT As String = "C:\Pharmacy\2.MFG\DATA\Master Data\"
-
-' Master Switches
-Public Const MASTER_ENV_SWITCH As String = "PROD"
-Public Const PROD_DEV As String = "PROD" ' DEV or PROD controls backups, form protection, cell dragging and save as supression
+' Data folder locations and the PROD_DEV environment flag (DEV or PROD controls backups,
+' form protection, cell dragging and save as suppression) are auto-detected in PathResolver.
 
 ' --- File and Folder Names (Master Data and workbook-local Tables) ---
 Public Const FOLDER_TABLES As String = "Tables"
@@ -185,75 +179,7 @@ Public Function GetRequiredRMMasterHeaders() As Variant
     )
 End Function
 
-' --- Helper to resolve master root based on switch / auto-detect ---
-Private Function ResolveMasterDataRoot() As String
-    Dim candidate As String
-    Dim switchValue As String
-    
-    switchValue = UCase$(Trim$(MASTER_ENV_SWITCH))
-    If switchValue = "AUTO" Then
-        switchValue = UCase$(Trim$(PROD_DEV))
-    End If
-        
-    Select Case switchValue
-        Case "DEV"
-            ResolveMasterDataRoot = DEV_MASTER_DATA_ROOT
-            Exit Function
-        Case "PROD"
-            ResolveMasterDataRoot = PROD_MASTER_DATA_ROOT
-            Exit Function
-        Case "HOME"
-            ResolveMasterDataRoot = HOME_MASTER_DATA_ROOT
-            Exit Function
-        Case Else
-            candidate = DEV_MASTER_DATA_ROOT
-            If FolderExists(candidate) Then
-                ResolveMasterDataRoot = candidate
-                Exit Function
-            End If
-            candidate = PROD_MASTER_DATA_ROOT
-            If FolderExists(candidate) Then
-                ResolveMasterDataRoot = candidate
-                Exit Function
-            End If
-            ResolveMasterDataRoot = HOME_MASTER_DATA_ROOT
-            Exit Function
-    End Select
-End Function
-
-' --- Helper to build full path under MASTER_DATA_ROOT ---
-Public Function GetMasterDataPath(Optional ByVal relativePath As String = "") As String
-    Dim base As String
-    base = ResolveMasterDataRoot()
-    If Len(relativePath) = 0 Then
-        GetMasterDataPath = base
-        Exit Function
-    End If
-    If Right(base, 1) <> "\" Then base = base & "\"
-    If Left(relativePath, 1) = "\" Then relativePath = Mid$(relativePath, 2)
-    GetMasterDataPath = base & relativePath
-End Function
-
-' --- Helper: workbook-local Tables folder path (based on workbook location) ---
-Public Function GetWorkbookTablesPath() As String
-    Dim base As String
-    base = ThisWorkbook.Path
-    If Len(base) = 0 Then
-        ' Workbook unsaved — return current folder marker
-        GetWorkbookTablesPath = FOLDER_TABLES & "\"
-        Exit Function
-    End If
-    If Right(base, 1) <> "\" Then base = base & "\"
-    GetWorkbookTablesPath = base & FOLDER_TABLES & "\"
-End Function
-
-' --- Helper: full path to a file in the workbook's Tables folder ---
-Public Function GetWorkbookTableFilePath(ByVal fileName As String) As String
-    Dim tblPath As String
-    tblPath = GetWorkbookTablesPath()
-    If Left(fileName, 1) = "\" Then fileName = Mid$(fileName, 2)
-    GetWorkbookTableFilePath = tblPath & fileName
-End Function
+' Data paths are resolved by PathResolver (GetMasterDataPath, GetWorkbookTablesPath, GetWorkbookTableFilePath).
 
 ' --- Utility: Array of All QC_Number Headers ---
 Public Function GetQCNumberHeaders() As Variant

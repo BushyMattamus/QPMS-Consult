@@ -1,11 +1,7 @@
 Attribute VB_Name = "Constants"
 Option Explicit
 
-' --- Master Data Root Path (use this as the base for Master Data files) ---
-' Replaced single constant with per-environment roots and a simple switch.
-Public Const DEV_MASTER_DATA_ROOT As String = "G:\Pharmacy\2.MFG\DEV\Master Data\"
-Public Const PROD_MASTER_DATA_ROOT As String = "G:\Pharmacy\2.MFG\DATA\Master Data\"
-Public Const HOME_MASTER_DATA_ROOT As String = "C:\Pharmacy\2.MFG\DATA\Master Data\"
+' Data folder locations and the PROD_DEV environment flag are auto-detected in PathResolver.
 ' Approved Documents Paths
 Public Const APPROVED_PMI_WORD_PATH As String = "\Pharmacy\2.MFG\Documents\PMIs\2 Word Approved\"
 Public Const APPROVED_PMI_PDF_PATH As String = "\Pharmacy\2.MFG\Documents\PMIs\4 PDF Approved\"
@@ -15,13 +11,6 @@ Public Const PRODUCTION_ARCHIVE_PMI_PATH As String = "\Pharmacy\2.MFG\Documents\
 Public Const PRODUCTION_ARCHIVE_COMPLETED_PMI_PATH As String = "\Pharmacy\2.MFG\Documents\Archived Documents\Batch Completed\"
 Public Const ARCHIVE_PRODUCT_LABELS_PATH As String = "\Pharmacy\2.MFG\Documents\Archived Documents\Product Labels\"
 Public Const ARCHIVE_PMI_LABELS_PATH As String = "\Pharmacy\2.MFG\Documents\Archived Documents\PMI Labels\"
-' Data tables paths
-Public Const FG_MASTER_DATA_PATH As String = "\Pharmacy\2.MFG\DATA\Master Data\"
-Public Const FG_MATERIAL_MANAGEMENT_PATH As String = "\Pharmacy\2.MFG\DATA\Material Management\"
-
-' Master Switches
-Public Const MASTER_ENV_SWITCH As String = "PROD"
-Public Const PROD_DEV As String = "PROD"
 
 ' --- File and Folder Names ---
 Public Const FOLDER_TABLES As String = "Tables"

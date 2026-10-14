@@ -40,7 +40,7 @@ Public Sub GenerateBatchMaterialsReport()
     
     ' --- Build file paths ---
     tablesFolder = GetWorkbookTablesPath()
-    masterTablesFolder = GetMasterDataPath(FOLDER_TABLES & "\")
+    masterTablesFolder = GetMasterDataTablesPath()
     rmTransPath = GetWorkbookTableFilePath(FILE_RM_TRANS)
     fgBatchMasterPath = GetWorkbookTableFilePath(FILE_FINISHED_GOODS_BATCH_MASTER)
     qcCSVPath = GetWorkbookTableFilePath(FILE_QC_NUMBER)

@@ -65,7 +65,7 @@ Public Sub SaveGoodsReversal()
         GoTo CleanExit
     End If
     
-    Set conn = OpenADOConnection(GetWorkbookPath() & "\Tables\temp\")
+    Set conn = OpenADOConnection(GetTempFolderPath())
     
     If conn Is Nothing Then
         MsgBox "Unable to open database connection.", vbCritical, "SaveGoodsReversal"

@@ -1,0 +1,78 @@
+{
+  "name": "R4 stock adjustment write-off",
+  "description": "Loads RM and QC details, performs a two-unit write-off, and verifies the transaction and revised QC balance.",
+  "active_sheet": "Stock_Adjust",
+  "inputs": [
+    {
+      "sheet": "Stock_Adjust",
+      "cell": "D4",
+      "value": "ACETIC ACID - GLACIAL"
+    },
+    {
+      "sheet": "Stock_Adjust",
+      "cell": "D6",
+      "value": "250085"
+    },
+    {
+      "sheet": "Stock_Adjust",
+      "cell": "D11",
+      "value": "Write-Off"
+    },
+    {
+      "sheet": "Stock_Adjust",
+      "cell": "D12",
+      "value": 2
+    },
+    {
+      "sheet": "Stock_Adjust",
+      "cell": "D15",
+      "value": "autotest"
+    }
+  ],
+  "macros": [
+    {
+      "name": "ButtonUtils.ButtSaveStockAdjustment",
+      "dialogs": [
+        {
+          "title": "Adjustment Complete",
+          "button": "OK",
+          "count": 1
+        }
+      ]
+    }
+  ],
+  "csv_assertions": [
+    {
+      "file": "Material Management/Tables/RM_Trans.csv",
+      "encoding": "cp1252",
+      "match": {
+        "Trans_Type": "WOF",
+        "QC_Number": "250085",
+        "Quantity": "-2",
+        "Master_UoM": "mL",
+        "Adj_Note": "autotest"
+      },
+      "count": 1
+    },
+    {
+      "file": "Material Management/Tables/QC_Number.csv",
+      "encoding": "cp1252",
+      "match": {
+        "QC_Number": "250085"
+      },
+      "numeric_match": {
+        "QC_Balance": {
+          "expected": 4826.105,
+          "tolerance": 0.0005
+        }
+      },
+      "count": 1
+    }
+  ],
+  "assertions": [
+    { "sheet": "QC_Number", "cell": "A1", "expected": "QC_Number" },
+    { "sheet": "QC_Number", "cell": "A2", "expected": "230084" },
+    { "sheet": "RM_Master", "cell": "A1", "expected": "RM_Code" },
+    { "sheet": "RM_Master", "cell": "A2", "expected": "0010" }
+  ]
+}

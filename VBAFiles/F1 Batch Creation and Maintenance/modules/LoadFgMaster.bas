@@ -34,7 +34,7 @@ Sub ImportSelectedCSVColumns()
     Dim dataEndRow As Long
 
     ' --- Create temporary copy of CSV from Master Data location ---
-    tempCsvPath = CreateTemporaryFileCopy(FILE_MASTER_DATA_FINISHED_GOODS, PATH_MASTER_DATA_TABLES)
+    tempCsvPath = CreateTemporaryFileCopy(FILE_MASTER_DATA_FINISHED_GOODS, GetMasterDataTablesPath())
     If tempCsvPath = "" Then
         MsgBox "Unable to create temporary copy of source file.", vbExclamation, "Import Error"
         GoTo CleanExit
