@@ -1,0 +1,556 @@
+﻿RM_Code,Std_Name,Alt_Name,Category,Storage_Cond,S4_Number,Quick_Code,Prod_ID,Brand_Name,Part_ARTG,Master_UoM,QTY_Per_Pack,Conc_Vol,Wt_per_mL,Wt_per_Unit,QC_Number_Required,Testing_Flag,QC_QTY,Retention_Flag,Retention_QTY,Sample_Comment,ChemAlert_Submit,ChemAlert_Updated,HazChem,CAS_Num,UN_Code,Curr_Ind,Created_By,Create_Date,Last_Change_By,Last_Change_Date,Last_Change_Detail,Extended_Retest,MRP_Min,MRP_Max,Pack_Price
+0010,ACACIA,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,28/10/2025,Test - curr_ind to N extended retest to N,Y
+0020,ACETIC ACID - GLACIAL,,ACS,Flammable Room Temp,,,,,,mL,2500,,1.049,,Y,Y,50,Y,50,Sample at time of analysis (volatile),N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add price,N,10000,30000,62.7
+0030,ACETONE,,ACS,Flammable Room Temp,,,,,,mL,,,0.79,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0035,ACETYLCHOLINE,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,Y,CollettMatt,9/09/2025,,,
+0040,AGAROSE GEL,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,Y,CollettMatt,9/09/2025,,,
+0041,ASPIRIN,ACETYLSALICYLIC ACID,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0050,ALANINE,L-ALANINE,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0060,ALCOHOLIC SOAP SOLUTION,,ACS,General Room Temp,,,,,,mL,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0070,ALUMINIUM ACETATE SOLUTION,,ACS,General Room Temp,,,,,,mL,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0071,ALUMINIUM HYDROXIDE GEL (DRIED),,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0080,ALUMINIUM POTASSIUM SULFATE,ALUM - DODECAHYDRATE,ACS,General Room Temp,,,,PCCA,30-1692-500,g,500,,,,Y,Y,2.5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,Add pricing,N,1000,2500,214
+0090,AMARANTH C.I. 16185,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0100,AMETHOCAINE HYDROCHLORIDE,TETRACAINE HYDROCHLORIDE,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0101,AMMONIA SOLUTION - STRONG,,ACS,General Room Temp,,,,,,mL,,,0.91,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0105,AMPHOTERICIN B,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0110,ANISE OIL,ANISEED OIL,ACS,General Room Temp,,,,,,mL,,,0.98,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0120,AQUEOUS CREAM,,ACS,General Room Temp,,1266143,3232,Central Pharmacy (David Craig),,g,500,,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,Pricing/prod ID/quick code/brand added,N,10000,20000,10.87
+0121,ARSENIC TRIOXIDE,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0130,ASCORBIC ACID,,ACS,General Room Temp,,,,Medisca,0634-08,g,500,,,,Y,Y,2.5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,10/02/2026,add brand part and cost,N,50,500,65
+0131,ASPARTAME,,ACS,General Room Temp,,,,Medisca,0061-05,g,100,,,,Y,Y,2,Y,2,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,10/02/2026,add brand part and cost,N,10,100,75
+0140,ATROPINE SULFATE,ATROPINE SULFATE MONOHYDRATE,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0150,BACITRACIN,,ACS,Fridge (4 to 8°C),,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0160,BALSAM PERU,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0170,BALSAM TOLU,TOLU BALSAM,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0180,BEESWAX,,ACS,General Room Temp,,,,PCCA,30-1143-454,g,454,,,,Y,Y,2.5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,10/02/2026,add brand part and cost,N,0,454,138
+0190,BENZALKONIUM CHLORIDE,,ACS,General Room Temp,,,,,,mL,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0195,BENZALKONIUM CHLORIDE SOLUTION 50%,,ACS,Flammable Room Temp,,,,PCCA,50-1568,mL,115,,0.97,,Y,Y,15,Y,15,Need to do wt/mL,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,Add pricing,N,20,135,225
+0196,BENZOCAINE,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0200,BENZOIC ACID,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0210,BENZOIN COMPOUND TINCTURE,,ACS,General Room Temp,,,,,,mL,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0220,GUM BENZOIN,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0230,BENZOINATED LARD,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0240,BENZYL BENZOATE,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0250,BETACAROTENE,,ACS,Fridge (4 to 8°C),,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0251,BETAINE - ANHYDROUS,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0260,BETAMETHASONE VALERATE,,ACS,General Room Temp,,,,Medisca,0004-01,g,10,,,,Y,Y,1.5,Y,1.5,Limited quantity.,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,06/02/2026,price update,N,7,15,450
+0270,BIOTIN,,ACS,General Room Temp,,,,Medisca,2004-05,g,100,,,,Y,Y,1.5,Y,1.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,Add pricing,Y,40,200,1030
+0280,BISMUTH SUBNITRATE,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0290,BORAX,SODIUM TETRABORATE,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0300,BORIC ACID,,ACS,General Room Temp,,,,Medisca,0064-01,g,2500,,,,Y,Y,2.5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add pricing brand and part number,Y,200,2500,140
+0310,BOZ OINTMENT,,Sundry,General Room Temp,,,,,,g,1000,,,,Y,Y,25,Y,25,Made inhouse. QC and retention amounts can vary. Theoretical given.,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,22/12/2025,add pack size,N,1000,2000
+0311,BRILLIANT BLUE C.I. 42090,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0320,BRILLIANT GREEN C.I. 42040,,ACS,General Room Temp,,,,Thermo Fischer,A12801.22,g,100,,,,Y,Y,2.5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,10/02/2026,add brand part and cost,N,25,100,102.3
+0330,BROMOCRIPTINE 2.5mg TABLETS,,ACS,General Room Temp,,,,,,Ea,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0340,BUTYLATED HYDROXYANISOLE,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0350,BUTYLATED HYDROXYTOLUENE,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0351,CAFFEINE CITRATE,,ACS,Fridge (4 to 8°C),,,,Azelis,416983-BGAL00000.1KG0,g,1000,,,,Y,Y,2.5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add pricing brand and part number,N,400,1000,2925
+0352,CAFFEINE ANHYDROUS,,ACS,General Room Temp,,,,Medisca,0419-09,g,1000,,,,Y,Y,2.5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add pricing brand and part number,N,200,1000,185
+0360,CALAMINE LOTION,,ACS,General Room Temp,,,,,,mL,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0370,CALCIUM CHLORIDE,CALCIUM CHLORIDE DIHYDRATE,ACS,General Room Temp,,,,Sigma Aldrich,C3881-500g,g,500,,,,Y,Y,2.5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,06/02/2026,price adjust,N,10,500,112
+0380,CALCIUM HYDROXIDE,,ACS,Corrosive Room Temp,,,,Sigma Aldrich,239232-500g,g,500,,,,Y,Y,2.5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add brand,N,100,500,123
+0390,CAMPHOR,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0400,CARNITINE L (LEVOCARNITINE),,ACS,General Room Temp,,,,Medisca,2763-03,g,5000,,,,Y,Y,2.5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add pricing brand and part number,N,0,0,1600
+0405,CAPTOPRIL,,ACS,General Room Temp,,,,PCCA,55-2907,g,25,,,,Y,Y,2.5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add price brand and part number update pack size,N,80,200,639
+0410,CAPSAICIN,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0420,CASTOR OIL,,ACS,General Room Temp,,,,,,mL,200,,0.96,g,Y,Y,25,Y,25,,N,N,,,,Y,CollettMatt,9/09/2025,MulliganW,30/06/2026,weight per unit updated,N,850,2400,
+0425,CELLULOSE MICROCRYSTALLINE,FLOCEL @ 101,ACS,General Room Temp,,,,Medisca,0567-08,g,500,,,,Y,N,,N,,,N,N,,,,N,CollettMatt,9/09/2025,CollettMatt,10/02/2026,add brand cost and part number,N,,,65
+0430,CETOMACROGOL CREAM AQUEOUS APF,SORBOLENE CREAM,ACS,General Room Temp,,,,,,g,500,,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,22/12/2025,add pack size,N,5225,11400
+0440,CETOMACROGOL EMULSIFYING WAX,EMULGADE 1000 N.I.,ACS,General Room Temp,,,,,,g,1000,,,,Y,Y,2.5,Y,2.5,,N,N,,,,N,CollettMatt,9/09/2025,MulliganW,13/08/2026,Material no longer active,N,1000,4000,
+0450,CETOSTEARYL ALCOHOL,DEHYDAG WAX O,ACS,General Room Temp,,,,Australian Wholesale Oils,,g,1000,,,,Y,Y,2.5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,16/02/2026,add brand and price. Change pack size.,N,300,20000,18.7
+0451,CETYLPYRIDINIUM CHLORIDE,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0460,CHARCOAL - ACTIVATED,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0470,CHLORAL HYDRATE,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0480,CHLORBUTOL,CHLOROBUTANOL HEMIHYDRATE,ACS,General Room Temp,,,,Ace Chemicals,C651724,g,500,,,,Y,Y,2.5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add price brand and part number,N,400,1500,379.6
+0481,CHLORHEXIDINE ACETATE,CHLORHEXIDINE DIACETATE SALT HYDRATE,ACS,General Room Temp,,,,ChemSupply Australia,GA1676-5G,g,5,,,,Y,Y,2.5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add price brand and part number,N,,,115
+0490,CHLORHEXIDINE ACETATE 1% SOLUTION,,Sundry,General Room Temp,,,,,,mL,200,,0.98,,Y,Y,10,N,,Made inhouse. QC and retention amounts can vary. Theoretical given.,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,22/12/2025,add min max,N,200,400
+0500,CHLORHEXIDINE GLUCONATE 20% SOLUTION,,ACS,General Room Temp,,,,CNH Enterprise,Quote number: QU-2208-1,mL,20000,,1.063,,Y,Y,25,Y,25,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add price brand and part number,N,220000,450000,650
+0510,CHLORHEXIDINE GLUCONATE 5% SOLUTION,,ACS,General Room Temp,,156210,5419,,,mL,500,,1.02,,Y,N,,N,,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add pricing,N,35000,60000,22.37
+0520,CHLOROCRESOL,4-CHLORO-3-METHYL PHENOL,ACS,General Room Temp,,,,Sigma Aldrich,C55402-100G,g,100,,,,Y,Y,2.5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,06/02/2026,adjust price,N,40,500,78.5
+0530,CHLOROFORM,,ACS,General Room Temp,,,,Medisca,0586-08,mL,500,,1.48,,Y,Y,50,Y,25,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add price brand and part number,N,350,500,185
+0540,CHLORPROMAZINE HYDROCHLORIDE,,ACS,General Room Temp,,,,Medisca,0423-09,g,1000,,,,Y,Y,2.5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add price brand and part number,N,2050,3000,1650
+0541,CINEOLE,,ACS,General Room Temp,,,,,,mL,,,0.92,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0545,CHOLESTEROL,CHOLESTEROL POWDER,ACS,General Room Temp,,,,PCCA,30-1203-454,g,454,,,,Y,Y,2.5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,06/02/2026,adjust price,N,474,908,612
+0550,CINNAMALDEHYDE,,ACS,General Room Temp,,,,Sigma Aldrich,W228613-1KG-K,mL,1000,,1.052,,Y,Y,25,Y,25,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,06/02/2026,update pricing,N,200,1000,297
+0560,CINNAMON BARK OIL,,ACS,General Room Temp,,,,Australian Wholesale Oils Pty Ltd,C0031-9,mL,500,,1.01,,Y,Y,25,Y,25,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add price brand and part number,N,200,1000,269.5
+0570,CITRIC ACID - ANHYDROUS,CITRIC ACID,ACS,General Room Temp,,,,Medisca,0068-01,g,2500,,,,Y,Y,2.5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,Add pricing brand and part number,N,1200,2500,145
+0571,L-CITRULLINE,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0580,CLIOQUINOL,,ACS,General Room Temp,,,,Azelis Australia,803160,g,500,,,,Y,Y,2.5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add price brand and part number update pack size,N,100,200,1365
+0590,CLOVE OIL,,ACS,General Room Temp,,,,Merck Life Science,W232300-1KG-K,mL,1000,,1.0425,,Y,Y,25,Y,25,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,06/02/2026,pricing update,N,1000,3000,208
+0600,COAL TAR,CRUDE COAL TAR,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0610,COAL TAR SOLUTION,,ACS,Flammable Room Temp,,,,PCCA,50-1051-3785,mL,3785,,,,Y,Y,25,Y,25,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add price brand and part number,N,750,3785,1505
+0611,COCAINE HYDROCHLORIDE,,ACS,General Room Temp,,,,HL Pharma,2780,g,25,,,,Y,Y,0.05,N,,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,06/02/2026,update pack and price,Y,,,2050
+0612,CODEINE PHOSPHATE,CODEINE PHOSPHATE HEMIHYDRATE,ACS,General Room Temp,,,,Medisca,0679-04,g,25,,,,Y,Y,1,N,,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add price brand and part number,N,,,415
+0620,WHEAT STARCH,CORN FLOUR,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0621,STARCH - CORN,,ACS,General Room Temp,,,,Sanschem,96,g,5000,,,,Y,Y,8,Y,8,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,13/02/2026,corrected price per pack,Y,2000,3000,550
+0630,CRYSTAL VIOLET C.I. 42555,GENTIAN VIOLET / METHYLROSANILINIUM CHLORIDE,ACS,Corrosive Room Temp,,,,Signma Aldrich,G2039-100g,g,100,,,,Y,Y,2.5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add brand,N,25,100,262
+0640,CRYSTAL VIOLET 1% IN ALCOHOL 20%,,ACS,General Room Temp,,,,,,mL,1,,,,Y,Y,25,Y,25,Made inhouse. QC and retention amounts can vary. Theoretical given.,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,22/12/2025,add min max,N,1,5
+0650,CUPRIC SULFATE PENTAHYDRATE,COPPER SULPHATE,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0660,CYCLOPENTOLATE HYDROCHLORIDE,,ACS,General Room Temp,,,,Azelis Australia,415987-BTPL000.1KG0,g,100,,,,Y,Y,2,Y,2,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add price brand and part number,N,24,100,4560
+0670,CYSTEAMINE HYDROCHLORIDE,MERCAPTAMINE,ACS,Fridge (4 to 8°C),,,,Sigma Aldrich,30078-25g,g,25,,,,Y,Y,2.5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add brand,N,10,25,183
+0680,DEXAMETHASONE,,ACS,General Room Temp,,,,Medisca,0405-05,g,100,,,,Y,Y,1,Y,1,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,06/02/2026,adjust price,N,30,100,930
+0690,GLUCOSE MONOHYDRATE,DEXTROSE MONOHYDRATE / GLUCOSE,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0695,DIAZOXIDE,,ACS,General Room Temp,,,,Medisca,3184-05,g,100,,,,Y,Y,2.5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add price brand and part number,N,,,3996
+0700,ETHER - SOLVENT,DIETHYL ETHER / ETHER,ACS,Fridge (4 to 8°C),,,,Merck Millipore,1009212500,mL,2500,,0.71,,Y,Y,100,Y,25,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,06/02/2026,new part number and price and pack size,N,100,5000,131
+0710,DIMETHYL SULFOXIDE,DSMO,ACS,General Room Temp,,,,Medisca,2430-09,mL,1000,,1.1,,Y,Y,50,Y,25,Sample at time of analysis (hygroscopic).,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add price brand and part number,N,850,2000,500
+0720,DISODIUM EDETATE,,ACS,General Room Temp,,,,Medisca,0545-08,g,500,,,,Y,Y,5,Y,5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add brand part number and pricing,N,30,500,120
+0721,DISODIUM PHOSPHATE DIHYDRATE,SODIUM PHOSPHATE DIBASIC DIHYDRATE,ACS,General Room Temp,,,,,,g,,,,,Y,Y,2.5,Y,2.5,,,,,,,Y,CollettMatt,9/09/2025,,,
+0730,DITHRANOL,ANTHRALIN,ACS,General Room Temp,,,,PCCA,30-3869-25,g,25,,,,Y,Y,1.5,Y,1.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,06/02/2026,adjust price,N,10,25,490
+0740,EMULSIFYING WAX,DEHYDAG WAX SX/LANETTE SX/W,ACS,General Room Temp,,,,Croda Pharma,EM82466/0010/8C03,g,10000,,,,Y,Y,2.5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add brand part number and pricing,N,2000,10000,268.1
+0750,ERYTHROSINE C.I. 45430,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0760,ETHANOL 96%,,ACS,Flammable Room Temp,,,,,,mL,,,0.8,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0770,ETHANOL 100%,,ACS,Flammable Room Temp,,,,Merck Life Science,1009832511,mL,2500,,0.79,,Y,Y,100,Y,100,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add brand part number and pricing,N,12000,50000,88.1
+0771,ETHANOL (200 PROOF) USP/NF,,ACS,Flammable Room Temp,,,,,,mL,,,0.79,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0780,FERRIC CHLORIDE 60% SOLUTION,,ACS,General Room Temp,,,,,,mL,,,1.44,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0781,FERROUS SULFATE,FERROUS SULFATE HEPTAHYDRATE,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0782,FERRIC SUBSULFATE SOLUTION,MONSEL’S SOLUTION,ACS,General Room Temp,,,,,,mL,,,1.55,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0790,COLLODION - FLEXIBLE,,ACS,General Room Temp,,,,,,mL,,,,,Y,Y,25,Y,25,,,,,,,Y,CollettMatt,9/09/2025,,,
+0800,GELATIN,,ACS,General Room Temp,,,,PCCA,30-1101-500,g,454,,,,Y,Y,2.5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,06/02/2026,adjust price,N,50,454,163
+0801,GELATIN CAPSULE - SIZE 00,,ACS,General Room Temp,,,,,,Ea,1000,,,,Y,Y,25,Y,25,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,17/12/2025,add pack,N,,
+0802,GELATIN CAPSULE - SIZE 0,,ACS,General Room Temp,,,,Medisca,1107-01,Ea,10000,,,,Y,Y,25,Y,25,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add brand part number and pricing,Y,,,155
+0803,GELATIN CAPSULE - SIZE 3,,ACS,General Room Temp,,,,,,Ea,,,,,Y,Y,25,Y,25,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,28/10/2025,Add extended retest,Y
+0806,GELATIN CAPSULE SIZE 3 WHITE/WHITE (CONI-SNAP) MEDISCA,,ACS,General Room Temp,,,,Medisca,1122-09,Ea,1000,,,,Y,Y,25,Y,25,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add brand part number and pricing,N,,,35
+0810,MONOSODIUM GLUTAMATE,GLUTAMIC ACID SODIUM SALT / MONOSODIUM GLUTAMATE MONOHYDRATE,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0820,GLUTEN,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0830,GLYCEROL,BP/USP PHARMACOPOEIAL GRADE,ACS,General Room Temp,,,,Medisca,0613-01,mL,4000,,1.26,,Y,Y,25,Y,25,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,Add pricing brand and part number,N,100000,200000,118
+0840,GLYCOPYRROLATE (GLYCOPYRRONIUM BROMIDE),,ACS,General Room Temp,,,,Medisca,2087-04,g,25,,,,Y,Y,0.5,Y,0.15,Expensive,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,06/02/2026,price updated,N,30,75,2987
+0841,FOOD COLOUR - BLUE,,ACS,General Room Temp,,,,,,mL,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0850,FOOD COLOUR - GREEN,,ACS,General Room Temp,,,,Padstow Food Service (Queen),F00CG500,mL,500,,,,Y,Y,25,Y,25,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add brand part number and pricing,N,30,500,6.9
+0860,HISTAMINE PHOSPHATE,,ACS,Fridge (4 to 8°C),,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0870,HOMATROPINE HYDROBROMIDE,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0875,HYDROCHLORIC ACID CONCENTRATED,,ACS,Corrosive Room Temp,,,,,,mL,,,1.18,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0880,HYDROCHLORIC ACID DILUTE 10% w/w,,ACS,General Room Temp,,,,,,mL,,,1.05,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0881,HYDROCORTISONE HYDROGEN SUCCINATE,HYDROCORTISONE 21 HEMISUCCINATE,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0882,HYDROGEN PEROXIDE SOLUTION 6% w/w,,ACS,General Room Temp,,,,,,mL,,,1.02,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0883,HYDROXOCOBALAMIN,VITAMIN B12A,ACS,Fridge (4 to 8°C),,,,Medisca,2533-03,g,5,,,,Y,Y,0.2,Y,0.1,In vial. Sample at time of analysis (hygroscopic). Expensive. Limited quantity.,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,06/02/2026,update part number and pricing,N,15,30,850
+0884,HYDROXOCOBALAMIN CHLORIDE,VITAMIN B12a HYDROCHLORIDE; HYDROXOCOBALAMIN HYDROCHLORIDE,ACS,Fridge (4 to 8°C),,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0885,COMPOUND HYDROXYBENZOATE SOLUTION APF,,Sundry,General Room Temp,,,,,,mL,200,,,,Y,Y,25,Y,25,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,22/12/2025,add min max,N,400,1000
+0890,para-HYDROXYBENZOIC ACID,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0891,OXITRIPTAN,5-HYDROXY L-TRYPTOPHAN,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0900,HYPROMELLOSE 2910,HYDROXYPROPYL METHYLCELLULOSE 2910,ACS,General Room Temp,,,,Medisca,3223-08,g,500,,,,Y,Y,2.5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add brand part number and pricing,N,600,1000,105
+0910,ICHTHAMMOL,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0911,INDIGO CARMINE CI 73015,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0920,INDOMETHACIN,INDOMETACIN,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0930,IODINE,,ACS,Corrosive Room Temp,,,,Thermo Fisher,AJA268-100g,g,100,,,,Y,Y,2.5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add brand part number and pricing,N,60,100,46.69
+0940,IODOFORM,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0950,FERRIC CHLORIDE - ANHYDROUS,IRON III CHLORIDE / FERRIC CHLORIDE,ACS,Corrosive Room Temp,,,,Thermo Fisher,I-1035-50,g,250,,,,Y,Y,2.5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add brand part number and pricing,N,100,500,56.48
+0960,FERRIC CHLORIDE - HEXAHYDRATE,IRON III CHLORIDE HEXAHYDRATE,ACS,Corrosive Room Temp,,,,Merck Life Science,103943-1000,g,1000,,,,Y,Y,10,Y,10,To be sampled at time of analysis due to its oxidising nature.,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,update brand,N,450,2000,408
+0970,ISONIAZID,,ACS,General Room Temp,,,,Orpharma Pty Ltd,,g,1000,,,,Y,Y,2.5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add brand part number and pricing,N,500,1000,1440
+0980,KAOLIN - LIGHT,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+0981,KETAMINE HYDROCHLORIDE,,ACS,General Room Temp,,,,PCCA,23-2790,g,100,,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add brand part number and pricing,N,,,450
+0990,LACTIC ACID,,ACS,General Room Temp,,,,,,mL,,,1.21,,Y,Y,25,Y,25,,,,,,,Y,CollettMatt,9/09/2025,,,
+1000,LACTOSE,LACTOSE MONOHYDRATE,ACS,General Room Temp,,,,Medisca,0316-01,g,5000,,,,Y,Y,2.5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,06/02/2026,change pack size and costing,Y,1000,2500,110
+1010,LARD,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1012,L-ARGININE (BASE),NB: do NOT confuse with HCl form below,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1013,L-ARGININE HYDROCHLORIDE,,ACS,General Room Temp,,,,Medisca,0503-09,g,1000,,,,Y,Y,2.5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,Add pricing brand and part number,N,1000,2000,315
+1016,L-LYSINE HYDROCHLORIDE,,ACS,General Room Temp,,,,Sanschem Pty Ltd,#000157,g,1000,,,,Y,Y,2.5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,06/02/2026,add part number,N,1000,2000,165
+1017,NATURE IDENTICAL RASPBERRY FLAVOUR 084246,,ACS,General Room Temp,,,,,,mL,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1018,NATURAL LEMON FLAVOUR 060404,,ACS,General Room Temp,,,,,,mL,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1019,LEMON FLAVOUR NI 058935,,ACS,General Room Temp,,,,,,mL,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1020,LEMON OIL TERPENELESS,,ACS,General Room Temp,,,,,,mL,,,0.85,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1021,LIGNOCAINE HYDROCHLORIDE,LIDOCAINE HYDROCHLORIDE MONOHYDRATE,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1023,LIQUID ORGANIC CASTILLE SOAP,,ACS,General Room Temp,,,,,,mL,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1025,NALTREXONE HYDROCHLORIDE DIHYDRATE USP,,ACS,General Room Temp,,,,Medisca,0887-03,g,5,,,,Y,Y,2.5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add brand part number and pricing,N,,,280
+1030,BASIC FUCHSIN C.I. 42510,MAGENTA,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1040,MAGNESIUM ACETATE,MAGNESIUM ACETATE TETRAHYDRATE,ACS,General Room Temp,,,,,,g,,,,,Y,Y,2.5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,GholamiM,29/06/2026,specific brand removed to encompass all brands on the one QC number,N,,,
+1050,MAGNESIUM CARBONATE - LIGHT,MAGNESIUM CARBONATE HYDRATE,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1060,MAGNESIUM CHLORIDE,MAGNESIUM CHLORIDE HEXAHYDRATE,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1070,MAGNESIUM CITRATE 14 HYDRATE,TRIMAGNESIUM CITRATE 14- HYDRATE,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1075,MAGNESIUM CITRATE TRIBASIC HYDRATE,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1080,MAGNESIUM OXIDE - LIGHT,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1090,MAGNESIUM SULFATE,MAGNESIUM SULFATE HEPTAHYDRATE,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1100,MAGNESIUM TRISILICATE,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1110,MCT OIL,,ACS,General Room Temp,,,,,,mL,,,0.95,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1115,MELATONIN,,ACS,General Room Temp,,,,Medisca,3200-08,g,500,,,,Y,Y,2,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add pricing brand and part number,N,500,1000,1050
+1120,MENTHOL,,ACS,General Room Temp,,,,Medisca,0521-09,g,1000,,,,Y,Y,4,Y,4,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add pricing brand and part number,N,250,1000,290
+1130,MERCUROCHROME,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1140,MESALAZINE,5-AMINOSALICYLIC ACID,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1150,METHACHOLINE CHLORIDE,,ACS,Fridge (4 to 8°C),,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1151,METHYL CELLULOSE,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1160,METHYL HYDROXYBENZOATE,METHYL PARABEN,ACS,General Room Temp,,,,Medisca,1439-08,g,500,,,,Y,Y,2.5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,06/02/2026,price update,N,250,500,135
+1161,METHYL NICOTINATE,,ACS,General Room Temp,,,,,,g,,,1.15,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1170,METHYL SALICYLATE,,ACS,General Room Temp,,,,Chem Supply,ML015-500mL,mL,500,,1.18,,Y,Y,25,Y,25,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add brand part number and pricing,N,100,500,57
+1171,MORPHINE HYDROCHLORIDE TRIHYDRATE,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1172,MORPHINE SULPHATE PENTAHYDRATE,,ACS,General Room Temp,,,,Medisca,0673-04,g,25,,,,Y,Y,0.3,N,,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add brand part number and pricing,N,,,285
+1175,OLIVE OIL NF,,ACS,General Room Temp,,,,,,mL,,,0.91,,Y,Y,25,Y,25,,,,,,,Y,CollettMatt,9/09/2025,,,
+1180,OLIVE OIL VIRGIN,,ACS,General Room Temp,,,,,,mL,,,0.913,,Y,Y,25,Y,25,,,,,,,Y,CollettMatt,9/09/2025,,,
+1181,OMEPRAZOLE,,Tablets & Capsules,General Room Temp,,2920002,,Pharmacor,167313,ea,30,20mg/cap,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add pricing,N,4200,6300,3.39
+1185,OLIVE OIL REFINED,,ACS,General Room Temp,,,,Australian Wholesale Oils,,mL,5000,,0.91,,Y,Y,25,Y,25,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add brand part number and pricing,N,15000,20000,130.5
+1186,ORA-PLUS,,ACS,General Room Temp,,821742,,Medisca,,mL,473,,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,9/09/2025,SivoinavatuK,25/08/2026,WRONG QUICK CODE ENTERED,N,,,27.5
+1187,ORA-BLEND SF,,ACS,General Room Temp,,,,Medisca,2349-08,mL,473,,1.03,,Y,Y,25,Y,25,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add pricing brand and part number,N,100000,200000,22.5
+1188,ORA-SWEET SF,,ACS,General Room Temp,,,,Medisca,2343-08,mL,473,,1.06,,Y,N,,N,,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add brand part number and pricing,N,,,22.5
+1189,ORANGE FLAVOUR CALABRIA,NUMBER 072083,ACS,General Room Temp,,,,Specialty Flavours & Fragrances,72083,mL,4600,,0.8686,,Y,Y,25,Y,25,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,06/02/2026,pricing updated,N,100,4600,210
+1190,ORANGE TINCTURE,,ACS,General Room Temp,,,,,,mL,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1192,ORANGE LIQUID COLOUR 4.5%,,ACS,General Room Temp,,,,,,mL,25,,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,17/12/2025,add pack,N,,
+1194,ORAL-MIX SF,,ACS,General Room Temp,,,,Medisca,2600-08,mL,473,,1.1,,Y,Y,25,Y,25,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add brand part number and pricing,N,40000,60000,45
+1195,OXYCODONE HYDROCHLORIDE,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,Y,CollettMatt,9/09/2025,,,
+1196,ORAL SYRUP-SF(FLAVORED SYRUP VEHICLE),,ACS,General Room Temp,,,,Medisca,2599-08,mL,473,,1.05,,Y,Y,25,Y,25,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,06/02/2026,update pricing,N,,,45
+1197,ORAL SUSPEND (SUSPENDING VEHICLE),,ACS,General Room Temp,,,,Medisca,2510-08,mL,473,,1.01,,Y,Y,25,Y,25,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,06/02/2026,adjust pack size,N,,,45
+1200,PARAFFIN - LIQUID,WHITE OIL PHARMA 68,ACS,General Room Temp,,,,Merck Life Science,18512,mL,2500,,0.86,,Y,Y,25,Y,25,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add brand part number and pricing,N,1000,2500,250
+1210,PARAFFIN - SOFT WHITE,SNOW WHITE PETROLEUM JELLY / WHITE SOFT PARAFFIN,ACS,General Room Temp,,3016753,35265,HALMED,,g,500,,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add pricing,N,10000,15000,7.95
+1220,PARAFFIN - SOFT YELLOW,YELLOW SOFT PARAFFIN,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1230,PARAFFIN - HARD,,ACS,General Room Temp,,,,Thermo Fisher,AJA3251,g,1000,,,,Y,Y,2.5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add brand part number and pricing,N,120,1000,52.55
+1231,PASTILLES - SUPPOCIRE DM,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1232,PASTILLES - SUPPOCIRE C,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1233,PCCA-SWEET SF SUGAR FREE SYRUP VEHICLE,,ACS,General Room Temp,,,,,,mL,,,1.125,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1235,PCCA-PLUS ORAL SUSENDING AGENT,,ACS,General Room Temp,,,,,,mL,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1240,PEANUT OIL,ARACHIS OIL,ACS,General Room Temp,,,,,,mL,,,0.91,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1250,PEPPERMINT OIL,,ACS,General Room Temp,,,,Medisca,0827-05,mL,100,,0.9,,Y,Y,25,Y,25,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add brand part number and pricing,N,50,100,65
+1260,B-PHENYLETHYLAMINE HYDROCHLORIDE,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1269,PHENOBARBITAL,PHENOBARBITONE,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1270,PHENOL,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1280,PHENYLEPHRINE HYDROCHLORIDE,,ACS,General Room Temp,,,,Medisca,0247-05,g,100,,,,Y,Y,2,Y,2,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,update pricing,N,60,150,330
+1281,PHOLCODINE,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1290,PILOCARPINE HYDROCHLORIDE,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1300,PODOPHYLLUM RESIN,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1301,POLIHEXANIDE (PHMB) 20% SOLUTION,,ACS,General Room Temp,,,,,,mL,100,,1.04,,Y,Y,2,N,,Do not sample until Eye drop has been made,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,22/12/2025,amend min max,N,10,100
+1309,POTASSIUM BICARBONATE,,ACS,General Room Temp,,,,PCCA,30-1305GM,g,454,,,,Y,N,,N,,,N,N,,,,N,CollettMatt,9/09/2025,CollettMatt,03/02/2026,update pricing,N,,,149
+1310,POTASSIUM CHLORIDE,,ACS,General Room Temp,,,,Merck Millipore,1370099029,g,25000,,,,Y,Y,2.5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add brand part number and pricing,N,50,25000,477
+1311,POTASSIUM BROMIDE,,ACS,General Room Temp,,,,Reach Pharmaceuticals,Kbrraw,g,2500,,,,Y,Y,2.5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,update pricing,N,800,2500,1200
+1320,POTASSIUM CITRATE,,ACS,General Room Temp,,,,Medisca,0623-01,g,2500,,,,Y,Y,2.5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add pricing brand and part number,N,3000,5000,105
+1330,POTASSIUM HYDROXIDE,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1340,POTASSIUM IODIDE,,ACS,Corrosive Room Temp,,,,Medisca,0602-05,g,100,,,,Y,Y,2.5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add brand part number nad pricing,N,10,100,45
+1350,POTASSIUM PERCHLORATE,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1351,POTASSIUM SORBATE,,ACS,General Room Temp,,,,Medisca,0833-08,g,500,,,,Y,Y,2.5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add brand part number nad pricing,N,100,500,57
+1352,POTASSIUM SULFATE,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1353,POTASSIUM PERMANGANATE,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1354,PROPRANOLOL HYDROCHLORIDE,,ACS,General Room Temp,,,,Sanschem,000097,g,100,,,,Y,Y,2.5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add brand part number and pricing,N,240,600,225
+1357,POVIDONE K30,,ACS,General Room Temp,,,,Merck Life Science,P2472-50,g,50,,,,Y,Y,2.5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,06/02/2026,price updated,N,15,50,118
+1360,STARCH - POTATO,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1370,PROPYL HYDROXYBENZOATE,PROPYL PARABEN,ACS,General Room Temp,,,,Medisca,1551-05,g,100,,,,Y,Y,2.5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,06/02/2026,amend part number,N,50,500,60
+1380,PROPYLENE GLYCOL,,ACS,General Room Temp,,,,Medisca,0510-01,mL,4000,,1.04,,Y,Y,25,Y,25,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add pricing brand and part number,N,8000,12000,120
+1390,QUILLAIA TINCTURE,,ACS,General Room Temp,,,,,,mL,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1400,RASPBERRY HC417,,ACS,General Room Temp,,,,,,mL,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1410,RESORCINOL,,ACS,General Room Temp,,,,Sanschem,125,g,100,,,,Y,Y,2.5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,06/02/2026,corrected price,N,400,1000,105
+1420,TRETINOIN,RETINOIC ACID ALL TRANS,ACS,Fridge (4 to 8°C),,,,,,g,,,,,Y,N,1.5,N,1.5,Limited quantity.,,,,,,N,CollettMatt,9/09/2025,,,
+1430,SACCHARIN SODIUM,,ACS,General Room Temp,,,,Medisca,0095-08,g,500,,,,Y,Y,2.5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,update pricing,N,150,500,205
+1435,SALBUTAMOL SULFATE,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1440,SALICYLIC ACID,,ACS,General Room Temp,,,,Medisca,0091-01,g,2500,,,,Y,Y,2.5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add brand part number and pricing,N,750,5000,150
+1441,SILICA GEL,,ACS,General Room Temp,,,,Mela Group,DSGA-1,Ea,10000,,,,Y,Y,8,Y,8,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,06/02/2026,add price brand and part number,N,,,192
+1450,SILDENAFIL CITRATE,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1460,SILVER NITRATE,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1465,SIROLIMUS,RAPAMYCIN,ACS,Fridge (4 to 8°C),,,,Medisca,3036-BLK,g,5,,,,Y,Y,0.3,Y,0.25,Expensive,N,N,,,,Y,CollettMatt,9/09/2025,LuongSo,26/02/2026,Adjust QC and retention sample qty,N,10,30,2350
+1466,SODIUM ACETATE ANHYDROUS,,ACS,General Room Temp,,,,Thermo Fisher,AJA679-500,g,500,,,,Y,Y,2.5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add brand part number and pricing,N,,,77.31
+1470,SODIUM BENZOATE,,ACS,General Room Temp,,,,Medisca,0551-09,g,1000,,,,Y,Y,2.5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add pricing brand and part number,N,3000,6000,90
+1480,SODIUM BICARBONATE,,ACS,General Room Temp,,,,Medisca,0640-00,g,10000,,,,Y,Y,2.5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add brand part number and pricing,N,5040,10000,223
+1481,SODIUM BISULFITE,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1490,SODIUM BROMIDE,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1500,SODIUM BUTYRATE,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1510,SODIUM CHLORIDE,,ACS,General Room Temp,,,,Medisca,0629-01,g,2500,,,,Y,Y,5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add brand part number and pricing,N,300,2500,165
+1511,SODIUM CHLORIDE SOLUTION FOR INJECTION 0.9% 500ML,(FREEFLEX NON-PVC) (FRESENIUS K690521) 0.9% 500ML IV INFUSION 20,Sterile Medication,General Room Temp,,361816,,Fresenius Kabi,29745,ea,20,500mL,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,CollettMatt,03/02/2026,add pricing,N,,,28.6
+1520,SODIUM CITRATE,SODIUM CITRATE AHYDROUS,ACS,General Room Temp,,,,Medisca,0543-08,g,500,,,,Y,Y,2.5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add brand part number and pricing,N,500,2500,50
+1521,SODIUM CYCLAMATE,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1530,SODIUM DIHYDROGEN PHOSPHATE DIHYDRATE,SODIUM ACID PHOSPHATE/ORTHOPHOSPHATE. SODIUM PHOSPHATE MONOBASIC DIHYDRATE,ACS,General Room Temp,,,,Sigma Aldrich,04269-1kg or 1063421000,g,1000,,,,Y,Y,2.5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,06/02/2026,adjust price,N,100,1000,121
+1540,SODIUM FLUORIDE,,ACS,Corrosive Room Temp,,,,Merck Life Science,1064490250,g,250,,,,Y,Y,2.5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add brand part number and pricing,N,5,250,76.3
+1550,DISODIUM HYDROGEN PHOSPHATE - ANHYDROUS,DISODIUM HYDROGEN ORTHOPHOSPHATE ANHYDROUS/SODIUM PHOSPHATE ANHYDROUS DIBASIC,ACS,General Room Temp,,,,Medisca,0807-08,g,500,,,,Y,Y,2.5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,06/02/2026,adjust price,N,40,500,70
+1560,SODIUM HYDROXIDE,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1570,SODIUM METABISULFITE,,ACS,General Room Temp,,,,Thermo Fischer,419582500,g,250,,,,Y,Y,2.5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,16/02/2026,add brand part number and price. change pack size.,N,10,500,102.63
+1580,SODIUM NITRATE,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1590,SODIUM NITRITE,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1600,SODIUM PROPIONATE,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1610,SODIUM SALICYLATE,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1620,SODIUM SULFIDE,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1630,SODIUM THIOSULFATE,SODIUM THIOSULFATE PENTAHYDRATE,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1640,SORBIC ACID,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1650,SORBITOL,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1660,SORBITOL SOLUTION 70%,,ACS,General Room Temp,,,,,,mL,,,1.29,,Y,N,,N,,,N,N,,,,Y,CollettMatt,9/09/2025,MulliganW,24/02/2026,For use with trial. Possible use at later date with other products,N,,,
+1670,SPECIAL METHYLATED SPIRITS,,ACS,Flammable Room Temp,,,,,,mL,20000,,,,Y,Y,25,Y,25,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,22/12/2025,add min max,N,40000,80000
+1680,SPEARMINT OIL,,ACS,General Room Temp,,,,PCCA,30-1178,mL,120,,0.93,,Y,Y,25,Y,25,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add brand part number and pricing,N,30,115,230
+1690,STEARIC ACID,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1700,SODIUM SUCCINATE - HEXAHYDRATE,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1710,SUCROSE - GRADED SUGAR,,ACS,General Room Temp,,,,Bidfood Brisbane,37492,g,25000,,,,Y,Y,2.5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add brand part number and pricing,N,75000,200000,47.28
+1711,SUCROSE - AR GRADE,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1720,SULFUR - PRECIPITATED,,ACS,Flammable Room Temp,,,,Thermo Fischer,010785-A3,g,2000,,,,Y,Y,2.5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,16/02/2026,add brand part number and pricing. Update pack size.   Pricing from thermo web site.,N,150,5000,320.55
+1725,SYRUP - SIMPLE,,ACS,General Room Temp,,,,Medisca,1779-01,mL,4000,,1.31,,Y,Y,25,Y,25,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add brand part number and pricing,N,,,165
+1730,SULFADIMIDINE,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1731,PASTILLES - SUPPOCIRE D,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1740,SYRUP - PRESERVED,,ACS,General Room Temp,,,,,,mL,,,1.31,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1741,TACROLIMUS MONOHYDRATE,,ACS,General Room Temp,,,,Medisca,2698-03,g,5,,,,Y,Y,0.25,Y,0.25,Expensive. Limited quantity.,N,N,,,,Y,CollettMatt,9/09/2025,LuongSo,26/02/2026,Adjust QC and ret sample qty,N,40,120,2690
+1750,TALC - PURIFIED,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1760,TARTARIC ACID,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1770,TARTRAZINE C.I. 19140,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1780,TESTOSTERONE PROPIONATE,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1790,THIOUREA,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1800,THYMOL,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1810,TOBRAMYCIN,,ACS,General Room Temp,,,,,,mL,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1820,TOLU SOLUTION APF,,ACS,General Room Temp,,,,,,mL,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1830,TOLUIDINE BLUE C.I. 63340,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1840,TRAGACANTH - POWDERED,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1850,TRANEXAMIC ACID (CYKLOKAPRON) 500MG TABLETS 100,,Tablets & Capsules,General Room Temp,,392789,,Cykokapron,14463,ea,100,500,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,CollettMatt,03/02/2026,add pricing,N,7200,10800,18.94
+1855,TRANSDERMAL PAIN BASE,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1860,TRICHLOROACETIC ACID,,ACS,Fridge (4 to 8°C),,,,PCCA,50-1243-100,g,100,,,,Y,Y,2.5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,06/02/2026,adjust price,N,10,100,284
+1861,TRYPTONE SOYA BROTH,SOYBEAN-CASEIN DIGEST MEDIUM U.S.P.,ACS,General Room Temp,,,,Thermo Fisher,CM0129B,g,500,,,,Y,Y,2.5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add brand part number and pricing,N,200,500,75.79
+1870,POLYSORBATE 20,TWEEN 20,ACS,General Room Temp,,,,,,mL,,,1.1,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1880,POLYSORBATE 80,TWEEN 80,ACS,General Room Temp,,,,Medisca,0526-09,mL,1000,,1.1,,Y,Y,25,Y,25,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add brand part number and pricing,N,250,1000,75
+1890,TYRAMINE HYDROCHLORIDE,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1900,TYROSINE,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1910,UREA,,ACS,General Room Temp,,,,Medisca,0101-03,g,5000,,,,Y,Y,5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,update pricing,Y,250,2500,330
+1911,URIDINE,,ACS,General Room Temp,,,,Thermo Fisher,ALFA15227.22,g,100,,,,Y,Y,0.5,Y,0.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,03/02/2026,add brand part number and pricing,Y,600,1200,898.46
+1920,VANILLIN,,ACS,General Room Temp,,,,Medisca,0815-08,g,500,,,,Y,Y,2.5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,06/02/2026,adjust price,N,200,500,130
+1930,VITAMIN E DRY 50%,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1931,WATER - PURIFIED,,ACS,General Room Temp,,,,,,mL,,,,,N,N,,N,,,N,N,,,,Y,,,CollettMatt,03/02/2026,activated,N,,
+1932,WATER FOR INJECTION 1L,WATER FOR INJECTION (AHB0304 BAXTER) 1L IV INFUSION 12,Sterile Medication,General Room Temp,,239007,,Baxter,19456,ea,12,1L,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,CollettMatt,03/02/2026,add pricing,N,,,20.77
+1933,WATER FOR IRRIGATION 1L,WATER FOR IRRIGATION (AHF7114 BAXTER) 1L IRRIGATION 10,Sterile Medication,General Room Temp,,239025,,Baxter,NULL,ea,10,1L,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,CollettMatt,03/02/2026,add pricing,N,,,16
+1940,WOOL FAT - ANHYDROUS,LANOLIN,ACS,General Room Temp,,,,Croda Pharma or Australian Wholesale Oils,,g,50000 or 20000,,,,Y,Y,30,Y,30,,N,N,,,,Y,CollettMatt,9/09/2025,gholamim,09/09/2026,Australian Wholesale Oils added to Brand name,N,10000,50000,3506.5
+1950,WOOL FAT - HYDROUS,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,CollettMatt,17/12/2025,Standard Name Change,,,
+1960,ZINC CHLORIDE,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1970,ZINC OXIDE,,ACS,General Room Temp,,,,Merck Life Science,96479-1kg,g,1000,,,,Y,Y,2.5,Y,2.5,,N,N,,,,Y,CollettMatt,9/09/2025,CollettMatt,06/02/2026,adjust price,N,500,1000,176
+1980,ZINC PASTE CPD.,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+1990,ZINC OXIDE PASTE & SALICYLIC ACID,LASSAR’S PASTE,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+2000,ZINC PASTE-LARD BASE,,ACS,General Room Temp,,,,,,g,,,,,Y,N,,N,,,,,,,,N,CollettMatt,9/09/2025,,,
+2001,AMIODARONE (CORDARONE X) 200MG TABLETS 30,,Tablets & Capsules,General Room Temp,,118352,298,Cordarone X,15361,ea,30,200,,0.38 g,Y,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,LuongSo,06/02/2026,missing Prod ID from iphcy,N,30,,14.54
+2002,AMLODIPINE (AMLODIPINE SANDOZ) 5MG TABLETS 30,,Tablets & Capsules,General Room Temp,,1190001,,Sandoz,124578,ea,30,5,,0.16 g,Y,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,CollettMatt,03/02/2026,add pricing,N,480,720,2.5
+2003,APREPITANT (APREPITANT APOTEX) 165MG CAPSULES 1,,Tablets & Capsules,General Room Temp,,1264711,28166,Apotex/Arrotex,309382,ea,1,165,,0.465 g,Y,N,,N,,Aprepitant ARX on ARTG,N,N,,,,Y,CollettMatt,22/09/2025,LuongSo,09/02/2026,include iphcy product ID,N,240,720,37.38
+2004,ATENOLOL (NOTEN) 50MG TABLETS 30,,Tablets & Capsules,General Room Temp,,128950,,Noten,46250,ea,30,50,,0.202 g,Y,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,CollettMatt,03/02/2026,add pricing,N,900,1500,2.5
+2005,AZATHIOPRINE (AZAPIN) 50MG TABLETS 100,,Tablets & Capsules,General Room Temp,,1308323,,Azapin,92801,ea,100,50,,0.164 g,Y,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,CollettMatt,03/02/2026,add pricing,N,400,600,13.29
+2006,BACLOFEN (CLOFEN) 25MG TABLETS 100,,Tablets & Capsules,General Room Temp,,130910,,Clofen,42147,ea,100,25,,0.200 g,Y,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,CollettMatt,03/02/2026,add pricing,N,1000,1500,20.28
+2007,CARVEDILOL (CARVIDOL 25) 25MG TABLETS 60,,Tablets & Capsules,General Room Temp,,1492552,,Carvidol,332853,ea,60,25,,0.316 g,Y,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,CollettMatt,03/02/2026,add pricing,N,1500,2400,5.37
+2008,CLOPIDOGREL (CLOPIDOGREL WINTHROP) 75MG TABLETS 28,,Tablets & Capsules,General Room Temp,,1626602,,Winthrop,148947,ea,28,75,,0.253 g,Y,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,CollettMatt,03/02/2026,add pricing,N,112,196,3.81
+2009,CLOBAZAM (FRISIUM) 10MG TABLETS 50,,Tablets & Capsules,General Room Temp,,400170,2070,Frisium,12400,ea,50,10mg,,0.121 g,Y,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,LuongSo,06/02/2026,inlcude missing product ID,N,400,600,9.65
+2010,CLONIDINE (APO-CLONIDINE (DCS ONLY)) 100 MICROGRAM TABLETS 100,,Tablets & Capsules,General Room Temp,,162616,,Apotex,265776,ea,100,0.1,,,Y,N,,N,,Not preferred. Please refer RM Code 2011,,,,,,N,CollettMatt,22/09/2025,,,
+2011,CLONIDINE (CATAPRES) 100 MICROGRAM TABLETS 100,,Tablets & Capsules,General Room Temp,,162615,546,Catapress,17921,ea,100,0.1,,,Y,N,,N,,Catapres is preferred brand,N,N,,,,Y,CollettMatt,22/09/2025,LuongSo,09/02/2026,include prod id fr iphcy,N,800,1200,11.3
+2012,DIAZOXIDE (SAS) (PROGLICEM) 100MG CAPSULES 100,,Tablets & Capsules,General Room Temp,,180060,,Proglicem,NULL (SAS),ea,100,100,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,CollettMatt,03/02/2026,add pricing,N,3000,4000,143.5
+2013,HYDROCHLOROTHIAZIDE (DITHIAZIDE) 25MG TABLETS 100,,Tablets & Capsules,General Room Temp,,226197,8356,Dithiazide,92060,ea,100,25,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,LuongSo,09/02/2026,include Prod ID from iphcy,N,300,500,7.58
+2014,ENALAPRIL (RENITEC) 20MG TABLETS 30,,Tablets & Capsules,General Room Temp,,400310,657,Renitec,10515,ea,30,20,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,LuongSo,11/02/2026,include product ID fr iphcy,N,120,150,14.19
+2015,FLECAINIDE (FLECATAB) 100MG TABLETS 60,,Tablets & Capsules,General Room Temp,,206350,,Flecatab,68651,ea,60,100,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,CollettMatt,03/02/2026,add pricing,N,,,15.9
+2016,FLUCYTOSINE (SAS) (ANCOTIL) 500MG TABLETS 100,,Tablets & Capsules,General Room Temp,,810270,,Ancotil (SAS),NULL (SAS),ea,100,500,,,Y,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,,,
+2017,GABAPENTIN (GABAPENTIN SANDOZ) 300MG CAPSULES 100,,Tablets & Capsules,General Room Temp,,2134005,16709,Sandoz,157197,ea,100,300,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,LuongSo,11/02/2026,include prod ID fr iphcy,N,200,400,7.88
+2018,HYDROXYCHLOROQUINE (APO- HYDROXYCHLOROQUINE) 200MG TABLETS 100,,Tablets & Capsules,General Room Temp,,2283101,22508,APOTEX,186393,ea,100,200,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,LuongSo,06/02/2026,Add Product ID fr iphcy,N,100,,9.44
+2019,HYDROCORTISONE (HYSONE) 20MG TABLETS 60,,Tablets & Capsules,General Room Temp,,227560,,Hysone,27926,ea,60,20,,,Y,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,,,
+2020,LOSARTAN (COZAAR) 50MG TABLETS 30,,Tablets & Capsules,General Room Temp,,815092,9919,Cozaar,54809,ea,30,50,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,LuongSo,09/02/2026,include prod ID  from iphcy,N,90,120,16.28
+2021,ISRADIPINE (SAS) (ELITE) 5MG CAPSULES 100,,Tablets & Capsules,General Room Temp,,814100,32812,Elite (SAS),NULL (SAS),ea,100,5,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,LuongSo,11/02/2026,include Prod Id fr iphcy,N,100,200,466.4
+2022,LISINOPRIL (FIBSOL 20) 20MG TABLETS 30,,Tablets & Capsules,General Room Temp,,814972,,Fibsol 20,101318,ea,30,20,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,CollettMatt,03/02/2026,add pricing,N,1500,2250,3.79
+2023,METOLAZONE (SAS) (ZAROXOLYN) 5MG TABLETS 50,,Tablets & Capsules,General Room Temp,,815835,14575,Zaroxolyn (SAS),NULL (SAS),ea,50,5,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,LuongSo,11/02/2026,include Prod ID fr iphcy,N,100,150,39.85
+2024,METOPROLOL (MINAX) 100MG TABLETS 60,,Tablets & Capsules,General Room Temp,,272406,,Minax,34410,ea,60,100,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,CollettMatt,03/02/2026,add pricing,N,360,450,2.76
+2025,MOXIFLOXACIN (MOXIFLOXACIN APO) 400MG TABLETS 5,,Tablets & Capsules,General Room Temp,,2758792,,apotex,309824,ea,5,400,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,CollettMatt,03/02/2026,add pricing,N,20,30,42.11
+2026,PROPRANOLOL (APO-PROPRANOLOL) 40MG TABLETS 100,,Tablets & Capsules,General Room Temp,,3404702,23394,apotex,222969,ea,100,40,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,LuongSo,12/02/2026,include Prod ID fr iphcy,N,500,700,3.32
+2027,RIFABUTIN (MYCOBUTIN) 150MG CAPSULES 30,,Tablets & Capsules,General Room Temp,,347555,,Mycobutin,55038,ea,30,150,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,CollettMatt,03/02/2026,add pricing,N,30,,131.46
+2028,RUFINAMIDE (INOVELON) 400MG TABLETS 60,,Tablets & Capsules,General Room Temp,,800531,,Inovelon,287537,ea,60,400,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,CollettMatt,03/02/2026,add pricing,N,,,247
+2029,SILDENAFIL (SILDENAFIL SANDOZ) 100MG TABLETS 12,,Tablets & Capsules,General Room Temp,,803027,,Sandoz,148568,ea,12,100,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,CollettMatt,03/02/2026,add pricing,N,1200,1800,5.24
+2030,SODIUM CHLORIDE CONCENTRATED (PHEBRA) 23.4% 10ML INJECTION 10,,Tablets & Capsules,General Room Temp,,361885,,Phebra,23119,ea,10,23.4,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,CollettMatt,03/02/2026,add pricing,N,,,54.63
+2031,SOTALOL (CARDOL) 160MG TABLETS 60,,Tablets & Capsules,General Room Temp,,370420,,Cardol,43241,ea,60,160,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,CollettMatt,03/02/2026,add pricing,N,480,720,6.43
+2032,SOTALOL (SOTALOL SANDOZ) 160MG TABLETS 60,,Tablets & Capsules,General Room Temp,,3704201,,Sandoz,63724,ea,60,160,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,CollettMatt,03/02/2026,add pricing,N,,,6.43
+2033,SOTALOL (APX-SOTALOL) 160MG TABLETS 60,,Tablets & Capsules,General Room Temp,,370421,,Apotex,333532,ea,60,160,,,Y,N,,N,,Use this brand to do a trial batch. Won't be used for production,,,,,,N,CollettMatt,22/09/2025,,,
+2034,SPIRONOLACTONE (SPIRACTIN) 100MG TABLETS 100,,Tablets & Capsules,General Room Temp,,371422,,Spiractin,46691,ea,100,100,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,CollettMatt,03/02/2026,add pricing,N,900,1300,13.77
+2035,TACROLIMUS (PROGRAF) 5MG CAPSULES 50,OPENED CAPSULES' WORTH,Tablets & Capsules,General Room Temp,,382505,,Prograf,58931,ea,50,5,,,Y,N,,N,,Prograf 382500 or Tacrograf 3825052. Don't open the caps anymore use the powder. Less Hazardous for staff,,,,,,N,CollettMatt,22/09/2025,CollettMatt,22/09/2025,Prograf 382500 or Tacrograf 3825052. Don't open the caps anymore use the powder. Less Hazardous for staff
+2036,TEMOZOLOMIDE (TEMOZOLOMIDE JUNO) 100MG CAPSULES 5,,Tablets & Capsules,General Room Temp,,3836503,,Juno,206044,ea,5,100,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,CollettMatt,03/02/2026,add pricing,N,,,62
+2037,TEMOZOLOMIDE (TEMIZOLE) 100MG CAPSULES 5,,Tablets & Capsules,General Room Temp,,3836501,,Vitaris (Temiszole),172964,ea,5,100,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,CollettMatt,03/02/2026,add pricing,N,,,33
+2038,TOPIRAMATE (TOPAMAX) 100MG TABLET,,Tablets & Capsules,General Room Temp,,392783,,Janssen-Cilag,62711,ea,60,100,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,LuongSo,03/02/2026,Initial data entry error as Apotex brand. QPMS use Topamax brand only,N,1320,1980,19.24
+2039,TRANEXAMIC ACID (ARROTEX) 500MG TABLETS 100,,Tablets & Capsules,General Room Temp,,3927891,24274,Arrotex,272732,ea,100,500,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,KistenreddyV,10/03/2026,wrong ARTG entered,N,,,
+2040,TRIMETHOPRIM (VIATRIS) 300MG TABLETS 7,,Tablets & Capsules,General Room Temp,,3940683,,Vitaris,338350,ea,7,300,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,CollettMatt,03/02/2026,add pricing,N,63,84,2.5
+2041,NOURIVAN ANTIOX 500G,FOR RESORCINOL CREAM,Cream Base,General Room Temp,,,,Sanschem,000057,g,500,,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,CollettMatt,03/02/2026,add brand part number and pricing,N,2000,4000,105
+2042,AQUEOUS CREAM BP 500G,,Cream Base,General Room Temp,,,,Kenkay,,g,500,,,,Y,N,,N,,use Aqueous Cream code 0120,N,N,,,,N,CollettMatt,22/09/2025,CollettMatt,12/12/2025,add comment,N,,
+2043,AQUEOUS CREAM 500G,,Cream Base,General Room Temp,,,,David Craig,,g,500,,,,Y,N,,N,,"No not use.  Use ""Aqueous cream"" material 0120.",N,N,,,,N,CollettMatt,22/09/2025,CollettMatt,12/12/2025,add comment,N,,
+2044,AQUEOUS CREAM BP 100G,,Cream Base,General Room Temp,,,,Pharmacy Select,,g,100,,,,Y,N,,N,,,,,,,,N,CollettMatt,22/09/2025,CollettMatt,30/09/2025,Use RM0120
+2045,CETOMACROGOL CREAM 500G,SORBOLENE PURE CREAM,Cream Base,General Room Temp,,1516751,18518,Kenkay,,g,475,,,,Y,N,,N,,,N,N,,,,N,CollettMatt,22/09/2025,MulliganW,15/12/2025,Duplicate code should be 0430,N,3800,5700
+2046,ACETYLCYSTEINE (DBL) 2G/10ML INJECTION,,Sterile Medication,General Room Temp,,101988,,Pfizer,121503,ea,10,2g/10mL,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,CollettMatt,03/02/2026,add pricing,N,10,,99.3
+2047,AMIKACIN (DBL) 500MG/2ML INJECTION 5,,Sterile Medication,General Room Temp,,115800,,Pfizer,49945,ea,5,500mg/2mL,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,CollettMatt,03/02/2026,add pricing,N,,,94.5
+2048,ALTEPLASE (ACTILYSE) 50MG INJECTION 1,,Sterile Medication,General Room Temp,,392260,,Boehringer Ingleheim,17905,ea,1,50mg,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,CollettMatt,03/02/2026,add pricing,N,16,24,1898.76
+2049,ATROPINE (PFIZER) 1.2MG/ML 1ML INJECTION 50,,Sterile Medication,General Room Temp,,1299651,,Pfizer,11303,ea,50,1.2mg/mL,,,Y,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,,,
+2050,SODIUM CHLORIDE WITH ELECTROLYTES (BSS) 15ML SOLUTION 1,,Sterile Medication,General Room Temp,,362195,,Alcon,AustMD106599,ea,1,15mL,,,Y,N,,N,,use this pack size to replace 500ml RM2075,N,N,,,,Y,CollettMatt,22/09/2025,CollettMatt,03/02/2026,add pricing,N,20,25,4.81
+2051,CEFAZOLIN (CEFAZOLIN-AFT) 1G INJECTION,,Sterile Medication,General Room Temp,,1516113,,AFT Pharmaceuticals,171582,ea,5,1g,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,CollettMatt,03/02/2026,add pricing,N,200,300,3.24
+2052,CEFTAZIDIME (CEFTAZIDIME-AFT) 1G INJECTION 1,,Sterile Medication,General Room Temp,,1509812,27440,AFT Pharmaceuticals,277680,ea,10,1g,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,LuongSo,17/02/2026,include Prod ID fr iphcy,N,20,30,27.37
+2053,CICLOSPORIN (SANDIMMUN) 50MG/1ML INJECTION 10,,Sterile Medication,General Room Temp,,170860,,Novartis,13370,ea,10,50mg/mL  1mL,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,CollettMatt,03/02/2026,add pricing,N,,,54.1
+2054,CICLOSPORIN (SANDIMMUN) 250MG/5ML INJECTION 10,,Sterile Medication,General Room Temp,,170862,,Novartis,47290,ea,10,250mg/mL  5mL,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,CollettMatt,03/02/2026,add pricing,N,10,20,257.95
+2055,GENTAMICIN (PFIZER) 80MG/2ML INJECTION 50,,Sterile Medication,General Room Temp,,216208,,Pfizer,11376,ea,50,80mg/2mL,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,CollettMatt,03/02/2026,add pricing,N,250,400,53.51
+2056,INTERFERON ALFA-2B 5.000.000 IU (SAS) (RELIFERON) 0.5ML INJECTION 1,,Sterile Medication,Fridge (4 to 8°C),,234515,,Reliferon (SAS),NULL (SAS),ea,1,5MIL IU/0.5mL,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,CollettMatt,03/02/2026,add pricing,N,225,335,63.21
+2057,INSULIN LISPRO (HUMALOG) 100 U/ML 3ML CARTRIDGE 5,,Sterile Medication,Fridge (4 to 8°C),,233492,,Insulin Lispro Lilly,53466,ea,5,100IU/mL,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,CollettMatt,03/02/2026,add pricing,N,20,25,28.18
+2058,POLYVINYL ALCOHOL (SAS) (LIQUIFILM TEARS) 1.4% 15ML EYE DROPS 1,,Sterile Medication,General Room Temp,,325603,,Allergan,NULL (SAS),ea,1,15mL,,,Y,N,,N,,use non-SAS code 2059,N,N,,,,N,CollettMatt,22/09/2025,CollettMatt,12/12/2025,add comment,N,,
+2059,POLYVINYL ALCOHOL (LIQUIFILM TEARS) 1.4% 15ML EYE DROPS 1,,Sterile Medication,General Room Temp,,325600D,,Abbvie (Allergan),3856ED,ea,1,15mL,,,Y,N,,N,,ARTG Discontinued,N,N,,,,Y,CollettMatt,22/09/2025,CollettMatt,03/02/2026,add brand part number and pricing,N,320,475,5.19
+2060,HYPROMELLOSE (METHOPT) 0.5% 15ML EYE DROPS 1,,Sterile Medication,General Room Temp,,230330,,Aspen Pharma,NULL,ea,1,0.5% 15mL,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,CollettMatt,03/02/2026,add pricing,N,8,12,3.91
+2061,POLYETHYLENE GLYCOL 400 PROPYLENE GLYCOL (SYSTANE ULTRA TWIN PACK) 10ML EYE DROPS,SYSTANE ULTRA® LUBRICANT EYE DROP,Sterile Medication,General Room Temp,,734321,,Alcon,286697,ea,2,10mL,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,FankhauserK,16/02/2026,Added alternate name,N,,,21.17
+2062,TOBRAMYCIN (TOBREX),,Sterile Medication,General Room Temp,,392430,,Novartis,25365,ea,1,3mg/mL,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,CollettMatt,03/02/2026,add pricing,N,,,39.5
+2063,TOBRAMYCIN (PRESERVATIVE FREE) (PFIZER) 80MG/2ML INJECTION 5,,Sterile Medication,General Room Temp,,392446,,Pfizer,75686,ea,5,80mg/2mL,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,CollettMatt,03/02/2026,add pricing,N,,,20.98
+2064,VANCOMYCIN (VANCOMYCIN VIATRIS) 500MG INJECTION 1,,Sterile Medication,General Room Temp,,3963961,,Viatris,373670,ea,1,500mg,,,Y,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,,,
+2065,VANCOMYCIN (VANCOMYCIN BAXTER) 500MG INJECTION 10,,Sterile Medication,General Room Temp,,396395,,Baxter,391511,ea,10,500mg,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,CollettMatt,03/02/2026,add pricing,N,40,60,26
+2066,VORICONAZOLE (VFEND) 200MG INJECTION 1,,Sterile Medication,General Room Temp,,396406,,Pfizer,82503,ea,1,200mg,,,Y,N,,N,,runout. Brand no longer available.,N,N,,,,Y,CollettMatt,22/09/2025,CollettMatt,12/12/2025,remove min max. brand no longer available.,N,,
+2067,VORICONAZOLE (VORICONAZOLE-AFT) 200MG INJECTION 1,,Sterile Medication,General Room Temp,,396409,,AFT,351831,ea,1,200mg,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,CollettMatt,03/02/2026,add pricing,N,80,120,18.59
+2068,WATER FOR INJECTION (KABI) 10ML INJECTION 50,,Sterile Medication,General Room Temp,,398705,,Fresenius Kabi,198330,ea,50,10mL,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,CollettMatt,03/02/2026,add pricing,N,,,10.79
+2069,WATER FOR INJECTION (KABI) 20ML INJECTION 20,,Sterile Medication,General Room Temp,,398767,,Fresenius Kabi,198331,ea,20,20mL,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,CollettMatt,03/02/2026,add pricing,N,,,5.14
+2070,WATER FOR INJECTION (AHB0304 BAXTER) 1L IV INFUSION 12,,Sterile Medication,General Room Temp,,239007,,Baxter,19456,ea,12,1L,,,Y,N,,N,,,N,N,,,,N,CollettMatt,22/09/2025,CollettMatt,31/10/2025,Incorrect code.  Use code 1932,N
+2071,WATER FOR IRRIGATION (AHF7114 BAXTER) 1L IRRIGATION 10,,Sterile Medication,General Room Temp,,239025,,Baxter,NULL,ea,10,1L,,,Y,N,,N,,Use material 1933,N,N,,,,N,CollettMatt,22/09/2025,CollettMatt,17/12/2025,added comment to use 1933,N,,
+2072,SODIUM CHLORIDE (KABI) 0.9% 10ML INJECTION 50,,Sterile Medication,General Room Temp,,361862,,Fresenius Kabi,197198,ea,50,10mL,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,CollettMatt,03/02/2026,add pricing,N,50,100,11.04
+2073,SODIUM CHLORIDE (FREEFLEX NON-PVC) (FRESENIUS K690521) 0.9% 500ML IV INFUSION 20,,Sterile Medication,General Room Temp,,361816,,Fresenius Kabi,29745,ea,20,500mL,,,Y,N,,N,,,N,N,,,,N,CollettMatt,22/09/2025,CollettMatt,31/10/2025,Incorrect code assigned. use code 1511,N
+2074,HYPROMELLOSE (POLYTEARS) 0.3% 15ML EYE DROPS 1,,Sterile Medication,General Room Temp,,230350,,Alcon,NULL,ea,1,15mL,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,CollettMatt,03/02/2026,add pricing,N,2,3,4.17
+2075,SODIUM CHLORIDE WITH ELECTROLYTES (BSS PLUS (BAG)) 500ML SOLUTION 1,,Sterile Medication,General Room Temp,,362201,,Alcon,,ea,,500mL,,,Y,N,,N,,,,,,,,N,CollettMatt,22/09/2025,CollettMatt,30/09/2025,We don't usually use this pack size. Ordered in error by MS 08/03/24. Dist 353723
+2076,1ML SYRINGE (100S),SYRINGE:HYPO:PLAS:ST:SU:L/LK:BD:1ML,Sterile Consumable,,10444657,,18312,BD Leur Lok,309628,ea,100,,,,N,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,CollettMatt,23/10/2025,added alt name
+2077,3ML SYRINGE (100S),SYRINGE:HYPO:INJ:ST:SU:L/LK:3ML,Sterile Consumable,,10015216,,,,302113,ea,100,,,,N,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,,,
+2078,5ML SYRINGE (100S),SYRINGE:HYPO:INJ:ST:SU:L/LK:5ML,Sterile Consumable,,10030391,,,,302135,ea,100,,,,N,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,,,
+2079,10ML SYRINGE (100S),SYRINGE:HYPO:INJ:ST:SU:L/LK:10ML,Sterile Consumable,,10007615,,,,302149,ea,100,,,,N,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,,,
+2080,20ML SYRINGE (120S),SYRINGE:HYPO:INJ:ST:SU:L/LK:20ML,Sterile Consumable,,10001010,,,,300629,ea,120,,,,N,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,,,
+2081,30ML SYRINGE (60S),SYRINGE:HYPO:INJ:ST:SU:L/LK:30ML,Sterile Consumable,,10001902,,,,301229,ea,60,,,,N,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,,,
+2082,50ML SYRINGE (60S),SYRINGE:HYPO:SYR PMP:BD CAL:L/L:50ML,Sterile Consumable,,10008111,,,,300865,ea,60,,,,N,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,,,
+2083,50ML CATHETER TIP SYRINGE (60S),SYRINGE:HYPO:INJ/IRR:ST:SU:CATH TIP:60ML,Sterile Consumable,,10018576,,,,300867,ea,60,,,,N,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,LuongSo,24/06/2026,Standard Name Change - Incorrectly entered initially,,,,
+2084,18G NEEDLE (100S),NEEDLE:HYPO:INJ:ST:SU:18GX38MM:BOX/100,Sterile Consumable,,10060633,,,,302032,ea,100,,,,N,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,,,
+2085,21G NEEDLE (100S),NEEDLE:HYPO:INJ:ST:SU:21GX38MM:BOX/10,Sterile Consumable,,10015436,,,,302017,ea,100,,,,N,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,,,
+2086,23G NEEDLE (100S),NEEDLE:HYPO:INJ:ST:SU:23GX32MM:BOX/100,Sterile Consumable,,10015382,,,,302008,ea,100,,,,N,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,,,
+2087,5UM FILTER NEEDLE,NEEDLE:PARTIC FILT:BLUNT:ST:19GX38MM:5UM,Sterile Consumable,,10033498,,16526,Braun,415030,ea,100,,,,N,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,,,
+2088,EVA EXACTAMIX CONTAINER 500ML,,Sterile Consumable,,,,32309,Baxter,H938738,ea,50,,,,N,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,CollettMatt,29/10/2025,Standard Name Change,
+2089,1000ML BAG,,Sterile Consumable,,,,27800,Baxter,H938739,ea,50,,,,N,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,,,
+2090,3000ML BAG,,Sterile Consumable,,,,,,H938741,ea,50,,,,N,N,,N,,,N,N,,,,N,CollettMatt,22/09/2025,FankhauserK,20/02/2026,No longer in stock,N,,,
+2091,TUTA SET,TUTA TRANSFER SET,Sterile Consumable,,,,,ICU Medical Australia,32.87,ea,100,,,,N,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,FankhauserK,16/02/2026,Updated brand details,N,,,
+2092,SYRINGE TO SYRINGE CONNECTOR,CONNECTOR:FLUID:DISPENSING:BOX/100,Sterile Consumable,,10033158,,16309,Braun,415080,ea,100,,,,N,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,,,
+2093,EXACTAMIX ADAPTER LUER LOCK TO BAG,,Sterile Consumable,,,,,,H93884,ea,50,,,,N,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,CollettMatt,29/10/2025,Standard Name Change,
+2094,BAXTER REPEATER TUBING,TUBE SET:FLUID TFR/VENTED SPIKE,Sterile Consumable,,10026899,,,Baxter,H93811,ea,10,,,,N,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,FankhauserK,20/02/2026,Brand name,N,,,
+2095,CAPS (BOX OF 100),CAP:IV:L/LK:DEAD END:M/F:RED,Sterile Consumable,,10003815,,,,4495101,ea,100,,,,N,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,,,
+2096,QUADFUSE (25S),EXTN SET:IV:4 WAY:4 SPIKES:48CM,Sterile Consumable,,10041315,,,,061-CH3134,ea,25,,,,N,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,,,
+2097,EXTENSION SET SPIROS DRY SPIKE (50S),,Sterile Consumable,,,,,,061-CH3176,ea,50,,,,N,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,,,
+2098,MULTI-AD FLUID TRANSFER SET,,Sterile Consumable,,,,12200,Braun,513548,ea,20,,,,N,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,,,
+2099,SETTLE PLATES,,Sterile Consumable,,,,,,1460010020,ea,20,,,,N,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,,,
+2100,CONTACT PLATES,,Sterile Consumable,,,,,,1461950020,ea,20,,,,N,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,,,
+2101,MINISART FILTER NML 0.2UM,FILTER:SYRINGE:MINISART:0.2ΜM:SARTORIUS,Sterile Consumable,,10032058,,,,16534,ea,50,,,,N,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,,,
+2102,MINISART PES FILTER HIGH FLOW 0.22UM,FILTER:SYRINGE:HIGH FLOW:0.2UM:ST:L/LK,Sterile Consumable,,10041832,,,,16532,ea,50,,,,N,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,,,
+2103,MILLEX GP FILTER 0.2UM,,Sterile Consumable,,,,,,SLGP033RS,ea,50,,,,N,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,FankhauserK,11/02/2026,Standard Name Change,,,,
+2104,ARGON PRESSURE TUBING,,Sterile Consumable,,,,,,682075,ea,25,,,,N,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,,,
+2105,SARTOLAB P20,,Sterile Consumable,,,,,,18053,ea,10,,,,N,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,,,
+2106,7ML STERILE PLASTIC DROPTAINER,,Sterile Consumable,,,,,,9575-01,ea,100,,,,N,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,,,
+2107,ATTEST,,Sterile Consumable,,,,,,,ea,100,,,,N,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,,,
+2108,MESA STRIP (100S),,Sterile Consumable,,,,,,SGMG/6,ea,100,,,,N,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,,,
+2109,WHITE VENTED NEEDLE,,Sterile Consumable,,,,,,415072,ea,100,,,,N,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,,,
+2110,15ML HDPE EYE DROP BOTTLE (NON-STERILE),BOTTLE - EYE DROPPER WHITE HDPE ROUND 15MM WITH NOZZLE & CAP (-) 15ML BOTTLE 1,Bottles and Caps,,,750015,8509,,,ea,100,,,,N,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,LuongSo,13/02/2026,Changed from incorrect sterile entry. It's non sterile,N,,,
+2111,15ML STERILE CLEAR BOTTLES (2 PACK),STERI-DROPPER 15ML DROPPER BOTTLE ASSEMBLIES - BOTTLES DROPPER TIPS CAPS,Sterile Consumable,General Room Temp,,,,The Medi-Dose Group supplied by Medisca,,ea,50,,,,N,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,FankhauserK,17/02/2026,Updated to reflect actual product,N,,,
+2112,VALMED 1000ML BAGS,,Sterile Consumable,,,,,,AU0012BP,ea,125,,,,N,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,,,
+2113,VALMED 3000ML BAGS,,Sterile Consumable,,,,,Baxter - Exacta Mix,AU0014BP,ea,80,,,,N,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,FankhauserK,20/02/2026,Added beand name,N,,,
+2114,FLEXIBOY BAG 1000ML,,Sterile Consumable,,,,,,FFB103547,ea,20,,,,N,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,,,
+2115,FLEXIBOY BAG 3000ML,,Sterile Consumable,,,,,,FFB102812,ea,20,,,,N,N,,N,,,N,N,,,,N,CollettMatt,22/09/2025,FankhauserK,20/02/2026,Can't use due to extension leads not being able to be sealed,N,,,
+2116,PHARMASSIST TUBE SET,,Sterile Consumable,,,,,,7395-01,ea,10,,,,N,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,,,
+2117,VALMED (BAXTER EXACTAMIX) 250ML BAG,,Sterile Consumable,,,,,,AU0010BP,ea,150,,,,N,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,,,
+2118,MPS PHARM SINGLE LEAD PUMP SET,TUBING SET,Sterile Consumable,,,,,MPS Pharma (overseas sourced),G82711-M,ea,10,,,,N,N,,N,,,N,N,,,,Y,CollettMatt,22/09/2025,FankhauserK,20/02/2026,added brand name and alt name,N,,,
+2119,BOTTLE - AMBER GLASS (GL18) 30ML BOTTLE 1,30ML AMBER BOTTLES,Bottles and Caps,,,750042,30764,,,ea,104,,,,N,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,,,
+2120,BOTTLE - MIXTURE AMBER GLASS (TAKES 24MM CAP) (COSPAK) 50ML BOTTLE 1,50ML AMBER BOTTLE,Bottles and Caps,,,750358,3351,,,ea,110,,,,N,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,,,
+2121,BOTTLE - AMBER GLASS ROUND T/TELL (TO TAKE 752753/06 24MM CAP) 100ML BOTTLE 1,100ML AMBER BOTTLE,Bottles and Caps,,,750433,8494,,,ea,56,,,,N,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,,,
+2122,BOTTLE - AMBER GLASS MIXTURE 752753/06 24MM CAP (COSPAK) 200ML BOTTLE 1,200ML AMBER BOTTLE,Bottles and Caps,,,750537,9079,,,ea,41,,,,N,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,,,
+2123,BOTTLE - MIXTURE AMBER GLASS ROUND (TO TAKE 752765/02 28MM CAP) 500ML BOTTLE 1,500ML AMBER BOTTLE,Bottles and Caps,,,750567,3205,,,ea,1,,,,N,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,,,
+2124,BOTTLE - POISON AMBER GLASS (TAKES 24MM RED CAP) (COSPAK) 25ML BOTTLE 1,25ML POISON BOTTLE,Bottles and Caps,,,750701,3045,,,ea,156,,,,N,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,,,
+2125,BOTTLE - POISON AMBER GLASS (TAKES 24MM RED CAP) (COSPAK) 50ML BOTTLE 1,50ML POISON BOTTLE,Bottles and Caps,,,750716,3044,,,ea,,,,,N,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,,,
+2126,BOTTLE - POISON AMBER GLASS (TAKES 24MM RED CAP) (COSPAK) 100ML BOTTLE 1,100ML POISON BOTTLE,Bottles and Caps,,,750835,3038,,,ea,63,,,,N,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,,,
+2127,BOTTLE - POISON AMBER GLASS (TAKES 24MM RED CAP) (COSPAK) 200ML BOTTLE 1,200ML POISON BOTTLE,Bottles and Caps,,,750895,3037,,,ea,30,,,,N,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,,,
+2128,"BOTTLE - POISON BLACK HDPE (COSPAK (TAKES 28MM RED CAP QC 752752)) 1L BOTTLE 1",1L POISON BOTTLE,Bottles and Caps,,,751501,17723,,,ea,48,,,,N,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,,,
+2129,BOTTLE - PLASTIC NATURAL JUICE WITH HANDLE & 38MM WHITE PP T/E CAP (-) 2L BOTTLE 1,2L BOTTLES,Bottles and Caps,,,751371,8523,,,ea,50,,,,N,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,,,
+2130,BOTTLE - NATURAL JERRICAN WITH 38MM 410 T/E WEDGESEAL CAP (COSPAK C5JNDG) 5L BOTTLE 20,5L BOTTLES,Bottles and Caps,,,751433,27624,,,ea,20,,,,N,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,,,
+2131,BOTTLE - CREAM AMBER GLASS JAR (TO TAKE 752774/03 38MM CAP) 30ML BOTTLE 1,30ML AMBER JARS (25G),Bottles and Caps,,,750031,8492,,,ea,144,,,,N,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,,,
+2132,BOTTLE-POMADE AMBER GLASS JAR (TAKES 48MM CAP (COSPAK) 65ML BOTTLE 1,65ML AMBER JARS (50G),Bottles and Caps,,,750170,8493,,,ea,42,,,,N,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,,,
+2133,BOTTLE - CREAM AMBER GLASS JAR (TAKES 48MM CAP) (COSPAK) 125ML BOTTLE 1,125ML AMBER JARS (100G),Bottles and Caps,,,750181,25353,,,ea,42,,,,N,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,,,
+2134,BOTTLE - TABLET AMBER PVC (NOT TAMPERTEL) (-) 30ML (24MM) BOTTLE 1,30ML PLASTIC AMBER BOTTLES,Bottles and Caps,,,751773,8219,,,ea,4200,,,,N,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,,,
+2135,BOTTLE - TABLET WHITE HDPE (-) 35ML BOTTLE 1,35ML PLASTIC WHITE BOTTLES,Bottles and Caps,,,830109,8512,,,ea,2800,,,,N,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,,,
+2136,BOTTLE - TABLET WHITE HDPE PGP MODIFIED (TO TAKE Q752777 38MM CHILD RESISTANT CAP) 75ML BOTTLE 1,75ML PLASTIC WHITE BOTTLES,Bottles and Caps,,,751790,8507,,,ea,1080,,,,N,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,,,
+2137,"CAP - RED POISON (COSPAK) 24MM UNIT 1",RED 24MM POISON CAP,Bottles and Caps,,,752754,3041,,,ea,500,,,,N,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,,,
+2138,CAP - RED WEDGESEAL CLOSURE (COSPAK (FOR BOTTLE QC 751501)) 28MM UNIT 1,RED 28MM POISON CAP,Bottles and Caps,,,752752,25955,,,ea,,,,,N,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,,,
+2139,"CAP - WHITE CHILD RESISTANT PP (-) 24MM UNIT 1",24MM CRC CAP,Bottles and Caps,,,752756,8329,,,ea,2400,,,,N,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,,,
+2140,"CAP - WHITE CHILD RESISTANT/TAMPERTEL (-) 24MM UNIT 1",24MM TAMPERTEL CHILD CRC,Bottles and Caps,,,752790,16825,,,ea,2300,,,,N,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,,,
+2141,CAP - WHITE WADDED (COSPAK) 48MM UNIT 1,48MM CREAM JAR CAPS,Bottles and Caps,,,750182,25735,,,ea,500,,,,N,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,,,
+2142,CAP - WHITE CHILD RESISTANT PP (PLASDENE) 38MM UNIT 1,38MM WHITE TAMPERTEL,Bottles and Caps,,,752777,3261,,,ea,,,,,N,N,,N,,,,,,,,Y,CollettMatt,22/09/2025,,,
+2143,BOTTLE - TABLET WHITE RECTANGULAR HDPE 100ML BOTTLE 1,100ML PLASTIC WHITE BOTTLES,Bottles and Caps,,,751906,34800,,,ea,,,,,N,N,,N,,,,,,,,Y,CollettMatt,14/10/2025,,,
+2144,"CAP - WHITE TAMPERTEL (PLASDENE GLASS-PAK) 33MM UNIT 1",38MM WHITE TAMPERTEL CAP,Bottles and Caps,,,752769,19651,,,ea,,,,,N,N,,N,,,,,,,,Y,CollettMatt,14/10/2025,,,
+2145,BOTTLE - MIXTURE AMBER GLASS (TAKES 20MM CAP)(COSPAK) 25ML BOTTLE 1,BOTTLE – 25ML AMBER GLASS BOTTLE,Bottles and Caps,,,750299,3177,,,ea,,,,,N,N,,N,,,,,,,,Y,CollettMatt,14/10/2025,,,
+2146,"CAP WHITE CHILD-RESISTANT (-) 20MM UNIT 1",CHILD RESISTANT CAP 20MM,Bottles and Caps,,,752770,12969,,,ea,,,,,N,N,,N,,,,,,,,Y,CollettMatt,14/10/2025,,,
+2147,BOTTLE - TABLET CLEAR PLASTIC VIAL WITH PUSH IN CAP (-) 2 DRAM BOTTLE 1,2 DRAM VIAL,Bottles and Caps,,,752175,8526,,,ea,,,,,N,N,,N,,,,,,,,Y,CollettMatt,14/10/2025,,,
+2148,BOTTLE - TABLET WHITE HDPE (PLASDENE (TO TAKE 38MM CAP QC752772)) 200ML BOTTLE 1,200ML PLASTIC WHITE BOTTLE,Bottles and Caps,,,751970,30190,,,ea,,,,,N,N,,N,,,,,,,,Y,CollettMatt,14/10/2025,,,
+2149,"CAP - WHITE 400 POLY (COSPAK) 48MM UNIT 1",48MM WHITE CAP,Bottles and Caps,,,750180,25352,,,ea,,,,,N,N,,N,,,,,,,,Y,CollettMatt,14/10/2025,,,
+2150,"CAP - WHITE RINGSEAL PP (COSPAK) 38MM UNIT 1",38MM WHITE RINGSEAL CAP,Bottles and Caps,,,752774,3179,,,ea,,,,,N,N,,N,,,,,,,,Y,CollettMatt,14/10/2025,,,
+2151,BOTTLE - EMPTY CLEAR VIAL WITH CAPS (THE BOTTLE PEOPLE) 20 DRAM VIAL 100,20 DRAM CLEAR VIAL WITH CAP,Bottles and Caps,,,830009,12529,,,ea,,,,,N,N,,N,,,,,,,,Y,CollettMatt,14/10/2025,,,
+2152,BOTTLE - EYE DROPPER PLASTIC WITH NOZZLE & CAP (GAMMA STERILE QH-CP) 15ML BOTTLE 1,15ML EYE DROPPER NOZZLE AND CAP GAMMA STERILE,Sterile Consumable,,,750020,15510,,,ea,,,,,N,N,,N,,,,,,,,Y,CollettMatt,14/10/2025,,,
+2153,BOTTLE - TABLET AMBER STYRENE VIAL & CAP (-) 8 DRAM BOTTLE 1,8 DRAM BOTTLEAMBER STYRENE VIAL AND CAP,Bottles and Caps,,,752443,8516,,,ea,,,,,N,N,,N,,,,,,,,Y,CollettMatt,14/10/2025,,,
+2154,CAP - WHITE PP CELLO WADDED T/TEL (PLASDENE) 38MM UNIT 1,38MM CAP PP CELLOW WADDED T/TELL,Bottles and Caps,,,8301331,31965,,,ea,,,,,N,N,,N,,,,,,,,Y,CollettMatt,14/10/2025,,,
+2155,CAP - WHITE WITH SYRINGE PLUG (NW18 CR OVII) 6.0MM UNIT 1,6MM SYRINGE CAP WITH PLUG,Sterile Consumable,,,750043,30792,,,ea,,,,,N,N,,N,,,,,,,,Y,CollettMatt,14/10/2025,,,
+2156,"CAP - WHITE CHILD RESISTANT CELLO WADDED WITH RATCHET (COSPAK) 28MM UNIT 1",28MM CAP WITH CR CELLO WADDED WITH RATCHET,Bottles and Caps,,,830072,9207,,,ea,,,,,N,N,,N,,,,,,,,Y,CollettMatt,14/10/2025,,,
+2157,SODIUM BICARBONATE SOLUTION 8.4%,,Sundry,General Room Temp,,,,,,mL,4000,1mmol/mL,,,Y,N,10,N,,Sundry item for use in Omeprazole.,N,N,,,,Y,CollettMatt,20/10/2025,MulliganW,21/07/2026,QC testing changed to No as it is the batch of sodium bicarbonate 8.4pct that is tested originally,N,,,
+2158,BENZALKONIUM CHLORIDE 1MG/1ML SOLUTION 2.5ML,BZK SOLUTION 1MG/ML,Sundry,Fridge (4 to 8°C),,,,,,ea,1,1mg/1mL Benzalkonium chloride 2.5mL,,,Y,Y,65,Y,10,Sundry item for manufacturing,N,N,,,,Y,CollettMatt,23/10/2025,FankhauserK,04/02/2026,To reflect short name in PMIs,N,,,
+2159,CALCIUM CARBONATE 1500MG (CALCI-TAB 600) (600MG CALCIUM) TABLETS 240,,Tablets & Capsules,General Room Temp,,140555,17044,AFT Pharmaceuticals Pty Ltd,165284,ea,240,600mg calcium,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,24/10/2025,CollettMatt,03/02/2026,add pricing,N,,,7.75
+2160,DIAZEPAM (VALPAM 5) 5MG TABLETS 50,,Tablets & Capsules,General Room Temp,,179479,6926,Arrotex Pharmaceuticals Pty Ltd,80811,ea,50,5mg,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,24/10/2025,,,New Material
+2161,DIGOXIN (SIGMAXIN-PG) 62.5 MICROGRAM TABLETS 200,,Tablets & Capsules,General Room Temp,,1833701,6949,Aspen Pharmacare Australia Pty Ltd,90114,ea,200,62.5ug,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,24/10/2025,CollettMatt,03/02/2026,add pricing,N,,,3.61
+2162,HYDROMORPHONE (S19A) (HIKMA) 1MG/ML ORAL LIQ 473ML,,Liquid Medication,General Room Temp,,228281,30766,Hikma,,mL,473,1mg/mL,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,24/10/2025,CollettMatt,24/10/2025,Standard Name Change
+2163,HYDROMORPHONE (S19A) (RHODES) 1MG/ML ORAL LIQ 473ML,,Liquid Medication,General Room Temp,,2282761,30178,Rhodes,,mL,473,1mg/mL,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,24/10/2025,CollettMatt,03/02/2026,add pricing,N,,,493.72
+2164,ISONIAZID (ARROW) 100MG TABLETS 100,,Tablets & Capsules,General Room Temp,,2414122,24064,Arrotex Pharmaceuticals Pty Ltd,13455,ea,100,100 mg,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,24/10/2025,CollettMatt,03/02/2026,add pricing,N,,,7.69
+2165,LOMUSTINE (S19A) (MEDAC) 40MG CAPSULES 20,,Tablets & Capsules,General Room Temp,,150932,34459,Link Pharmaceuticals,19249,ea,20,40mg,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,24/10/2025,CollettMatt,03/02/2026,add pricing,N,140,200,795
+2166,METHADONE (ASPEN) 5MG IN 1ML SYRUP 200ML,,Liquid Medication,General Room Temp,,264432,34250,Aspen Pharmacare Australia Pty Ltd,49372,mL,200,5mg/mL,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,24/10/2025,CollettMatt,03/02/2026,add pricing,N,,,6
+2167,METHADONE (FOR TREATMENT OF OPIOID DEPENDENCE) (ASPEN) 5MG/ML SYRUP 200ML,,Liquid Medication,General Room Temp,,264422,620,Aspen Pharmacare Australia Pty Ltd,49372,mL,200,5mg/mL,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,24/10/2025,,,New Material
+2168,PARACETAMOL - CODEINE (PANADEINE FORTE) 500MG-30MG TABLETS 20,,Tablets & Capsules,General Room Temp,,301485,2015,Sanofi-Aventis Australia Pty Ltd,73507,mL,20,500mg Paracetamol 30mg codeine,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,24/10/2025,CollettMatt,03/02/2026,add pricing,N,,,5.07
+2169,PHENYTOIN (DILANTIN) 100MG CAPSULES 200,,Tablets & Capsules,General Room Temp,,318137,26049,Viatris Pty Ltd,295265,ea,200,100mg,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,24/10/2025,CollettMatt,03/02/2026,add pricing,N,,,18.9
+2170,PHENYTOIN (DILANTIN) 30MG CAPSULES 200,,Tablets & Capsules,General Room Temp,,318127,26048,Viatris Pty Ltd,295264,ea,200,30mg,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,24/10/2025,CollettMatt,03/02/2026,add pricing,N,,,36.8
+2171,PYRIDOXINE (PYRIDOX B6) 25MG TABLETS 100,,Tablets & Capsules,General Room Temp,,3443001,24213,,216522,ea,100,25mg,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,24/10/2025,CollettMatt,03/02/2026,add pricing,N,,,5.51
+2172,RALTEGRAVIR (ISENTRESS HD) 600MG  TABLETS 60,,Tablets & Capsules,General Room Temp,,346820,25285,Merck Sharp & Dohme (Australia) Pty Ltd,280294,ea,60,600mg,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,24/10/2025,CollettMatt,03/02/2026,add pricing,N,,,420.52
+2173,TENOFOVIR DISOPROXIL FUMARATE + EMTRICITABINE (TENOFOVIR/EMTRICITABINE 300/200 ARX) 300MG + 200MG TABLETS 30,,Tablets & Capsules,General Room Temp,,820717,34957,Arrotex Pharmaceuticals Pty Ltd,275070,ea,30,300mg Tenofovir 200mg Emtricitabine,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,24/10/2025,CollettMatt,03/02/2026,add pricing,N,,,20
+2174,TENOFOVIR DISOPROXIL MALEATE - EMTRICITABINE (TENOFOVIR DISOPROXIL EMTRICITABINE MYLAN) 300MG-200MG TABLETS 30,,Tablets & Capsules,General Room Temp,,820713,24831,Mylan,265834,ea,30,300mg Tenofovir 200mg Emtricitabine,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,24/10/2025,CollettMatt,24/10/2025,amend brand
+2175,TENOFOVIR DISOPROXIL MALEATE - EMTRICITABINE (VIATRIS) 300MG-200MG TABLETS 30,,Tablets & Capsules,General Room Temp,,820715,32474,Viatris,265834,mL,30,300mg Tenofovir 200mg Emtricitabine,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,24/10/2025,LuongSo,24/08/2026,Amend cost price,N,,,17.6124
+2176,THIAMINE (BETAVIT) 100MG TABLETS 100,,Tablets & Capsules,General Room Temp,,3891371,19533,,381376,ea,100,100mg,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,24/10/2025,LuongSo,21/07/2026,Superseded Aust L 278105 entered incorrectly,N,,,4.0016
+2177,OXYCODONE (OXYNORM) 1MG/ML ORAL LIQUID 250ML,,Liquid Medication,General Room Temp,,295292,9752,Mundipharma Pty Ltd,77464,mL,250,1mg/mL,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,27/10/2025,CollettMatt,03/02/2026,add pricing,N,37500,55000,12.31
+2178,BOTTLE - NATURAL HDPE ROUND 28MM 125ML,,Bottles and Caps,General Room Temp,,751103,,,,ea,,,,,N,N,,N,,,N,N,,,,Y,FankhauserK,10/11/2025,,,New Material,N
+2179,CAP - WHITE 28MM,,Bottles and Caps,,,752765,,,,ea,,,,,N,N,,N,,,N,N,,,,Y,FankhauserK,10/11/2025,,,New Material,N
+2180,SODIUM POLYSTYRENE SULFONATE,RESONIUM A,ACS,General Room Temp,,367215,,Sanofi,15497,g,454,,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,21/11/2025,CollettMatt,03/02/2026,add pricing,N,,,71.81
+2181,WHITE SIMPLE OINTMENT,WHITE SIMPLE PARRAFIN,Sundry,General Room Temp,,,,,,g,,,,,Y,Y,25,N,,,N,N,,,,Y,CollettMatt,21/11/2025,CollettMatt,12/12/2025,change to QC testing required.,N,,
+2182,BUPIVACAINE HYDROCHLORIDE 50MG/10ML INJECTION,MARCAIN 0.5%,Liquid Medication,General Room Temp,,139513,3219,Marcain,11937,ea,50,50mg/10mL,,,Y,N,,N,,,N,N,,,,Y,CollettMatt,21/11/2025,GholamiM,29/07/2026,Unit of measure changed to each rather than ml,N,50,,257.06
+2183,AGAROSE POWDER,,ACS,General Room Temp,,,,,A0169-25g,g,25,,,,Y,Y,0.2,Y,0.2,,N,N,,,,Y,CollettMatt,26/11/2025,CollettMatt,03/02/2026,Add pricing,N,,,133
+2184,ACETYLCHOLINE CHLORIDE,,ACS,General Room Temp,,,,Sigma Aldrich,A2661-100g,g,100,,,,Y,Y,0.5,Y,0.5,,N,N,,,,Y,CollettMatt,26/11/2025,CollettMatt,03/02/2026,add brand,N,40,100,385
+2185,HYDROCORTISONE 20MG TABLETS 60,,Tablets & Capsules,General Room Temp,,227561,,Hydrocortisone Viatris 20,290098,ea,60,20MG,,,Y,N,,N,,,N,N,,,,Y,MulliganW,01/12/2025,CollettMatt,03/02/2026,add pricing,N,300,420,20.45
+2186,CICLOSPORIN (SANDIMMUN) 250MG/5ML INJECTION 10,,Sterile Medication,General Room Temp,,,,Novartis,47290,ea,10,250MG/ML,,,N,N,,N,,use code 2054.  Code 2186 raised in error.,N,N,,,,N,MulliganW,05/12/2025,CollettMatt,12/12/2025,add comment,N,,
+2187,BENZALKONIUM CHLORIDE 1MG/1ML 50ML SOLUTION,,Sundry,Fridge (4 to 8°C),,,,,,ea,1,1mg/ml at 50mL per ea,,,Y,N,,N,,Sundry item for manufacturing,N,N,,,,Y,MulliganW,15/12/2025,CollettMatt,04/02/2026,update qty per pack and add details to conc/str/vol,N,,,
+2188,BOTTLE - AMBER GLASS INJECTION VIAL 5ML,SERUM VIAL AMBER,Bottles and Caps,General Room Temp,,,,Duran Wheaton Kimble,110-WUBB5MLA - T - EN,ea,,,,,N,N,,N,,,N,N,,,,Y,FankhauserK,16/12/2025,,,New Material,N,,
+2189,BAG - AMBER ZIPLOCK 3MM 3X 5INCH,OPAQUE ZIP LOCK BAG,Packaging Other,General Room Temp,,,,Medisca,9784-02,ea,500,,,,N,N,,N,,,N,N,,,,Y,FankhauserK,17/12/2025,FankhauserK,10/02/2026,Chnaged category,N,,,
+2190,OSELTAMIVIR PHOSPHATE,TAMIFLU,ACS,General Room Temp,,,,,,g,,1,,,Y,N,,N,,,N,N,,,,N,CollettMatt,24/12/2025,CollettMatt,20/02/2026,change to not active,N,0,0,
+2191,BOTTLE AMBER GLASS VIAL 50ML,SERUM VIAL AMBER 50ML 20MM,Bottles and Caps,General Room Temp,,,,Wheaton,223764,ea,,,,,N,N,,N,,,N,N,,,,Y,FankhauserK,24/12/2025,,,New Material,N,,
+2192,STOPPER SNAP-ON GREY CHLOROBUTYL 20MM,SNAP-ON STOPPER 20MM,Bottles and Caps,General Room Temp,,,,Wheaton,W224100-181,ea,,,,,N,N,,N,,,N,N,,,,Y,FankhauserK,24/12/2025,,,New Material,N,,
+2193,SEAL - UNLINED CENTRE TEAR-OUT ALUMINIUM 20MM,SEAL UNLINED ALUMINIUM TEAR-OUT NATURAL 20MM,Bottles and Caps,General Room Temp,,,,Wheaton,224183-01,ea,,,,,N,N,,N,,,N,N,,,,Y,FankhauserK,24/12/2025,,,New Material,N,,
+2194,CAP - WHITE RINGSEAL PP 24MM,24MM RINGSEAL CAP,Bottles and Caps,General Room Temp,,752753,,Cospack,,ea,,,,,N,N,,N,,,N,N,,,,Y,FankhauserK,27/01/2026,,,New Material,N,,
+2195,50ML AMBER PET ROUND 24MM T/TEL,50ML AMBER PET ROUND 24MM T/TEL,Bottles and Caps,General Room Temp,,,,Plassdene Glass-Pak,928446,ea,,,,,N,N,,N,,,N,N,,,,Y,FankhauserK,29/01/2026,,,New Material,N,,
+2196,EYE DROP CARTON 13 X 9 X 8.5CM,EYE DROP CARTON 13 X 9 X 8.5CM,Packaging Other,,,830197,,,,ea,1,,,,N,N,,N,,,N,N,,,,Y,FankhauserK,29/01/2026,FankhauserK,17/02/2026,changed category,N,,,0.34
+2197,100 UM LDPE PLAIN BAG 230 X 150 MM,100 UM LDPE PLAIN BAG 230 X 150 MM - PLASTIC,Packaging Other,General Room Temp,,,,,100LD0906,ea,1500,,,,N,N,,N,,,N,N,,,,Y,FankhauserK,05/02/2026,FankhauserK,10/02/2026,Changed category,N,,,
+2198,CHLOROQUINE PHOSPHATE IP 250MG (LARIAGO®) TABLETS,,Tablets & Capsules,General Room Temp,,806437,,Lariago,,ea,,250mg,,,Y,N,,N,,,N,N,,,,Y,MulliganW,06/02/2026,,,New Material,N,,,
+2199,ETHAMBUTOL HCL 400MG (MYAMBUTOL),,Tablets & Capsules,General Room Temp,,198170,,Myambutol,147246,ea,56,400mg,,,Y,N,,N,,,N,N,,,,Y,MulliganW,06/02/2026,,,New Material,N,,,
+2200,BOTTLE - 20ML AMBER GLASS SERUM VIAL (20MM),20ML AMBER GLASS SERUM VIAL (20MM),Bottles and Caps,,,,,Wheaton/Edwards,223762,ea,,,,,N,N,,N,,,N,N,,,,Y,FankhauserK,09/02/2026,,,New Material,N,,,
+2201,SEAL - ALUMINIUM CENTRE TEAR-OFF CAP 20MM,TEAR-OFF SEAL 20MM,Bottles and Caps,General Room Temp,,,,,,ea,,,,,N,N,,N,,,N,N,,,,Y,FankhauserK,10/02/2026,,,New Material,N,,,
+2202,100UM LDPE PLAIN BAG 305 X 205 MM,100UM LDPE PLAIN BAG 305 X 205 MM - PLASTIC BAG,Packaging Other,General Room Temp,,,,,100LD1208,ea,,,,,N,N,,N,,,N,N,,,,Y,FankhauserK,10/02/2026,,,New Material,N,,,
+2203,SHRINK SEAL SMALL - 40 X 25 MM,SHRINK SEAL SMALL - 40 X 25 MM,Packaging Other,General Room Temp,,,,,,ea,,,,,N,N,,N,,,N,N,,,,Y,FankhauserK,10/02/2026,,,New Material,N,,,
+2204,SHRINK SEAL - MEDIUM 53 X 35 MM,SHRINK SEAL - MEDIUM 53 X 35 MM,Packaging Other,General Room Temp,,,,,,ea,,,,,N,N,,N,,,N,N,,,,Y,FankhauserK,10/02/2026,,,New Material,N,,,
+2205,SHRINK SEAL - LARGE 70 X 35 MM,SHRINK SEAL - LARGE 70 X 35 MM,Packaging Other,General Room Temp,,,,,,ea,,,,,N,N,,N,,,N,N,,,,Y,FankhauserK,10/02/2026,,,New Material,N,,,
+2206,COMBI-STOPPER LUER LOCK,COMBI-STOPPER LUER LOCK,Sterile Consumable,General Room Temp,,,,Braun,4495101,ea,100,,,,N,N,,N,,,N,N,,,,Y,FankhauserK,10/02/2026,,,New Material,N,,,
+2207,STERI-DROPPER 7ML STERILE DROPPER BOTTLE ASSEMBLIES (BOTTLES DROPPER TIPS CAPS) 2 PACK,STERI-DROPPER 7ML - 2PACK,Bottles and Caps,General Room Temp,,,,Medi-Dose Group - Supplied by Medisca,,ea,50,,,,N,N,,N,,,N,N,,,,Y,FankhauserK,17/02/2026,,,New Material,N,,,
+2208,BOTTLE – CLEAR 100ML GLASS INJECTION VIAL (20MM CRIMP TOP),100ML CLEAR GLASS VIALS,Bottles and Caps,General Room Temp,,,,Glass Vials Australia Pty Ltd,GV100-C-5195,ea,1,,,,N,N,,N,,,N,N,,,,Y,FankhauserK,18/02/2026,,,New Material,N,,,0.88
+2209,AUTOCLAVE BAG - 100 X 200MM,POUCH:STRLSN:ROLL:PAP/LAM:100MMX200M,Sterile Consumable,General Room Temp,10007754,,,,,ea,,,,,N,N,,N,,,N,N,,,,Y,FankhauserK,20/02/2026,,,New Material,N,,,
+2210,AUTOCLAVE BAG - 100 X 200MM,POUCH:STRLSN:ROLL:PAP/LAM:150MMX200M,Sterile Consumable,General Room Temp,10060737,,,,,ea,,,,,N,N,,N,,,N,N,,,,Y,FankhauserK,20/02/2026,,,New Material,N,,,
+2211,AUTOCLAVE BAG - 200 X 200MM,POUCH:STRLSN:ROLL:PAP/LAM:200MMX200M,Sterile Consumable,General Room Temp,10016190,,,,,ea,,,,,N,N,,N,,,N,N,,,,Y,FankhauserK,20/02/2026,,,New Material,N,,,
+2212,AUTOCLAVE BAG - 75 X 200MM,POUCH:STRLSN:ROLL:PAP/LAM:75MMX200M,Sterile Consumable,General Room Temp,10030954,,,,,ea,,,,,N,N,,N,,,N,N,,,,Y,FankhauserK,20/02/2026,,,New Material,N,,,
+2213,STERIKING S11 AUTOCLAVE POUCH - SMALL,AUTOCLAVE POUCH S11 250 X 200MM - SMALL,Sterile Consumable,General Room Temp,,,,Steriking,S11,ea,,,,,N,N,,N,,,N,N,,,,Y,FankhauserK,20/02/2026,,,New Material,N,,,
+2214,STERIKING S21 AUTOCLAVE POUCH - MEDIUM,AUTOCLAVE POUCH S21 300 X 500MM - MEDIUM,Sterile Consumable,General Room Temp,,,,,,ea,,,,,N,N,,N,,,N,N,,,,Y,FankhauserK,20/02/2026,,,New Material,N,,,
+2215,STERIKING B34 AUTOCLAVE POUCH - LARGE,AUTOCLAVE POUCH S21 300 X 80 X 550MM - LARGE,Sterile Consumable,General Room Temp,,,,Steriking,B34,ea,,,,,N,N,,N,,,N,N,,,,Y,FankhauserK,20/02/2026,,,New Material,N,,,
+2216,CEFTAZIDIME (VITARIS) 1G INJECTION,CEFTAZIDIME (VITARIS) 1G INJECTION,Sterile Medication,General Room Temp,,150983,,Vitaris,154398,ea,10,1G,,,Y,N,,N,,,N,N,,,,Y,FankhauserK,20/02/2026,,,New Material,N,,,17.46
+2217,WADS - PS22 PRESSURE SENSITIVE 48MM UNIT,WADS - PS22 PRESSURE SENSITIVE 48MM UNIT,Bottles and Caps,General Room Temp,,8303257,,Cospack,,ea,1,,,,N,N,,N,,,N,N,,,,Y,FankhauserK,23/02/2026,,,New Material,N,,,0.18
+2218,LACTULOSE,,Liquid Medication,General Room Temp,,2658656,33916,Dulose,220095,mL,1,3.34g/5mL,,,Y,N,,N,,,N,N,,,,Y,KistenreddyV,03/03/2026,KistenreddyV,03/03/2026,wrong price was entered,N,,,5.86
+2219,7ML DROPTAINER BOTTLE (10 PACK),7ML STERILE CLEAR BOTTLES (10 PACK),Sterile Consumable,General Room Temp,,,,MEDIDOSE GROUP,,ea,10,,,,N,N,,N,,,N,N,,,,Y,MulliganW,06/03/2026,,,New Material,N,,,
+2220,CAP - BLACK PHENOLIC CELLO WADDED CAP,CAP - BLACK PHENOLIC CELLO WADDED CAP,Bottles and Caps,General Room Temp,,830208,,,,ea,,,,,N,N,,N,,,N,N,,,,Y,FankhauserK,06/03/2026,,,New Material,N,,,
+2221,TRANEXAMIC ACID (ARROTEX) 500MG TABLETS 100,TRANEXAMIC ACID (ARROTEX) 500MG TABLETS 100,Tablets & Capsules,General Room Temp,,3927891,24274,ARROTEX,272732,ea,100,,,,N,N,,N,,Use code for 2039,N,N,,,,N,GholamiM,09/03/2026,MulliganW,10/03/2026,Comment added,N,,,25.85
+2222,CEFAZOLIN (CEFAZOLIN-AFT) 2G INJECTION,,ACS,General Room Temp,,151612,33384,AFT,359670,ea,5,,,,Y,N,,N,,,N,N,,,,Y,MulliganW,13/03/2026,MulliganW,13/03/2026,QC number required,N,,,9.18
+2223,DIPHENYLCYCLOPROPENONE,DCP,ACS,Fridge (4 to 8°C),,,,Thermofisher,,g,,,,,Y,N,,N,,,N,N,,,,Y,MulliganW,18/03/2026,,,New Material,N,,,
+2224,INSULIN NEUTRAL (ACTRAPID) 100 U/ML 3ML CARTRIDGE 5,,Sterile Medication,Fridge (4 to 8°C),,233550,2558,ACTRAPID PENFILL,169623,ea,5,100 IU/ML,,,Y,N,,N,,,N,N,,,,Y,KistenreddyV,20/03/2026,,,New Material,N,,,23.49
+2225,VERSABASE CREAM,PCCA VERSABASE CREAM,Cream Base,General Room Temp,,,,PCCA VERSABASE CREAM,30-3641-500,g,500,,,,Y,N,,N,,,N,N,,,,Y,LuongSo,31/03/2026,,,New Material,N,0,500,196
+2226,STERIKING B38 AUTOCLAVE POUCH - EXTRA LARGE,AUTOCLAVE POUCH  420 X 100 X 570MM - EXTRA LARGE,Sterile Consumable,General Room Temp,,,,Steriking,B38,ea,,,,,N,N,,N,,,N,N,,,,Y,MulliganW,09/04/2026,MulliganW,09/04/2026,Standard Name Change - Name change,N,,,
+2227,SOFT WHITE PARAFFIN (DAVID CRAIG),,Cream Base,General Room Temp,,302582,21909,DAVID CRAIG,,g,500,,,,Y,N,,N,,,N,N,,,,Y,SivoinavatuK,24/04/2026,,,New Material,N,,,20.25
+2228,MERIDIAN IONTOPHORETIC DRUG DELIVERY ELECTRODE,ELECTRODES,Packaging Other,General Room Temp,,,,,,ea,,,,,Y,N,,N,,,N,N,,,,Y,SivoinavatuK,14/05/2026,,,New Material,N,,,
+2229,TENOFOVIR/EMTRICITABINE 300/200 APX (TENOFOVIR DISOPROXIL FUMARATE 300MG EMTRICITABINE 200MG) TABLET,,Tablets & Capsules,General Room Temp,,8207171,35247,ARROTEX,327896,ea,30,,,,Y,N,,N,,,N,N,,,,Y,SivoinavatuK,22/06/2026,,,New Material,N,,,20
+2230,TOPIRAMATE USP,,ACS,General Room Temp,,,,MEDISCA,,g,100,,,,Y,Y,0.1,Y,0.1,,N,N,,,,Y,Sivoinavatuk,07/07/2026,,,New Material,N,,,720.5
+2231,IRON(III) CHLORIDE HEXAHYDRATE P.A.EMSU,,ACS,Corrosive Room Temp,,,,MERCK,,g,1000,,,,Y,Y,0.1,Y,0.1,,N,N,,,,Y,SivoinavatuK,13/07/2026,,,New Material,N,,,408
+2232,CHLOROBUTANOL HEMIHYDRATE,,ACS,General Room Temp,,,,CHEMSUPPLY,,g,500,,,,Y,Y,0.1,Y,0.1,,N,N,,,,Y,SivoinavatuK,13/07/2026,,,New Material,N,,,816
+2233,CARTON-PILL (10.5 X 4.5 X 1.2CM) 1OZ,1OZ PILL CARTON,Packaging Other,General Room Temp,,753515,8334,Opal Specialty Packaging,10002547,ea,25000,,,,N,N,,N,,,N,N,,,,Y,LuongSo,22/07/2026,,,New Material,N,,,2892.25
+2234,CARTON - PILL (11.5 X 5.5 X 1.5CM) 2OZ,2OZ PILL CARTON,Packaging Other,General Room Temp,,753580,8335,Opal Specialty Packaging,10002548,ea,55500,,,,N,N,,N,,,N,N,,,,Y,LuongSo,22/07/2026,,,New Material,N,,,6123.37
+2235,CARTON - PILL (15 X 6 X 3CM) 4OZ,4OZ PILL CARTON,Packaging Other,General Room Temp,,753649,8336,Pakko Pty Ltd,15x6x3,ea,2500,,,,N,N,,N,,,N,N,,,,Y,LuongSo,22/07/2026,,,New Material,N,,,2700
+2236,SEALED FOR YOUR PROTECTION STICKER,SECURITY SEAL,Packaging Other,General Room Temp,,,,ACS Print,16 x 30mm gloss red sticker,ea,30000,,,,N,N,,N,,,N,N,,,,Y,LuongSo,22/07/2026,,,New Material,N,,,702
+2237,ARIPIPRAZOLE (ARIPIPRAZOLE SANDOZ) 10MG TABLETS 30,ARIPIPRAZOLE SANDOZ 10MG,Tablets & Capsules,General Room Temp,,1269805,27025,ARIPIPRAZOLE SANDOZ,158283,ea,30,,,,Y,N,,N,,,N,N,,,,Y,LuongSo,22/07/2026,SivoinavatuK,06/08/2026,YES TO QC NO,N,,,10.0006
+2238,RISPERIDONE (RIXADONE) 1MG TABLETS 60,RIXADONE 1MG,Tablets & Capsules,General Room Temp,,3495003,36267,RIXADONE,199178 ,ea,60,,,,Y,N,,N,,,N,N,,,,Y,LuongSo,24/07/2026,SivoinavatuK,06/08/2026,YES TO QC NO,N,,,4
+2239,RISPERIDONE (RISPERIDONE SANDOZ) 2MG TABLETS 60,RISPERIDONE SANDOZ 2MG,Tablets & Capsules,General Room Temp,,3495052,33501,RISPERIDONE SANDOZ,126158,ea,60,,,,Y,N,,N,,,N,N,,,,Y,LuongSo,24/07/2026,SivoinavatuK,06/08/2026,YES TO QC NO,N,,,6.2342
+2240,QUETIAPINE (PHARMACOR QUETIAPINE) 25MG TABLETS 60,PHARMACOR QUETIAPINE 25MG,Tablets & Capsules,General Room Temp,,3449709,26356,PHARMACOR QUETIAPINE 25MG,204843,ea,60,,,,Y,N,,N,,,N,N,,,,Y,LuongSo,28/07/2026,SivoinavatuK,04/08/2026,YES TO QC NO,N,,,1.85
+2241,QUETIAPINE (PHARMACOR QUETIAPINE) 100MG TABLET 90,PHARMACOR QUETIAPINE 100MG,Tablets & Capsules,General Room Temp,,3449736,27411,PHARMACOR QUETIAPINE 100MG,204829,ea,90,,,,Y,N,,N,,,N,N,,,,Y,LuongSo,28/07/2026,SivoinavatuK,04/08/2026,YES TO QC NUMBER,N,,,4.99
+2242,OLANZAPINE (APO-OLANZAPINE ODT) 5MG ORALLY DISINTEGRATING TABLETS 28,APO-OLANZAPINE 5MG DISINTEGRATING TABLETS 28,Tablets & Capsules,General Room Temp,,2888154,25008,Apo-OLANZAPINE ODT 5MG TABLETS 28,158995,ea,28,,,,Y,N,,N,,,N,N,,,,Y,LuongSo,30/07/2026,SivoinavatuK,06/08/2026,YES TO QC NO,N,,,4
+2243,OLANZAPINE (OLANZAPINE SANDOZ ODT) 10MG ORALLY DISINTEGRATING TABLETS 28,OLANZAPINE SANDOZ 10MG ORALLY DISINTEGRATING TABLETS 28,Tablets & Capsules,General Room Temp,,2888203,36183,OLANZAPINE SANDOZ ODT 10,179086,ea,28,,,,Y,N,,N,,,N,N,,,,Y,LuongSo,30/07/2026,SivoinavatuK,06/08/2026,YES TO QC NO,N,,,6.1
+2244,CARTON - AMPOULE (9.2 X 7.5 X 1.5CM) 2.5ML,2.5ML AMPOULE CARTON,Packaging Other,General Room Temp,,753043,8331,OPAL,9.2x7.5x1.5,ea,16000,,,,N,N,,N,,,N,N,,,,Y,LuongSo,31/07/2026,,,New Material,N,,,1952
+2245,ESCITALOPRAM SANDOZ 10MG TABLETS 28,ESCITALOPRAM SANDOZ 10MG,Tablets & Capsules,General Room Temp,,198011,29003,ESCITALOPRAM SANDOZ,290455,ea,28,,,,Y,N,,N,,,N,N,,,,Y,LuongSo,04/08/2026,SivoinavatuK,06/08/2026,YES TO QC NO,N,,,2.5
+2246,APREPITANT (SAS) SAWAI 125MG CAPSULES 6,APREPITANT SAWAI 125MG CAPSULES,Tablets & Capsules,General Room Temp,,126713,37585,SAWAI SAS,,ea,6,,,,Y,N,,N,,,N,N,,,,N,LuongSo,04/08/2026,KistenreddyV,28/08/2026,entered in twice in error,N,,,95
+2247,MIRTAZAPINE (MIRTANZA ODT) 15MG TABLETS 30,,Tablets & Capsules,General Room Temp,,275157,30902,ARROTEX,183404,ea,30,,,,Y,N,,N,,,N,N,,,,Y,SivoinavatuK,06/08/2026,LuongSo,11/08/2026,Standard Name Change - More comprehensive name,N,,,3.85
+2248,VENLAFAXINE (APO-VENLAFAXINE XR) 75MG MR CAPS 28,,Tablets & Capsules,General Room Temp,,3966683,26222,VIATRIS,286958,ea,28,,,,Y,N,,N,,,N,N,,,,Y,SivoinavatuK,06/08/2026,SivoinavatuK,06/08/2026,WRONG AUSTR NO ENTERED,N,,,3.5
+2249,VENLAFAXINE (EFEXOR XR) 37.5MG MR CAPS 28,,Tablets & Capsules,General Room Temp,,396675,12906,VIATRIS,99802,ea,28,,,,Y,N,,N,,,N,N,,,,Y,SivoinavatuK,06/08/2026,,,New Material,N,,,2.72
+2250,MIRTAZAPINE (MIRTANZA ODT) 15MG TABLETS 30,MIRTANZA ODT 15MG TABLETS 30,Tablets & Capsules,General Room Temp,,275157,30902,MIRTANZA ODT 15MG TABLETS 30,183404,ea,30,,,,N,N,,N,,,N,N,,,,N,LuongSo,11/08/2026,SivoinavatuK,17/08/2026,DUPLICATE ENTRY,N,,,3.85
+2251,DEXAMETHASONE SODIUM PHOSPHATE,DEXAMETHASONE SODIUM PHOSPHATE,ACS,Fridge (4 to 8°C),,,,,,g,,,,,Y,Y,2.5,Y,2.5,,N,N,,2392-39-4,,Y,MulliganW,26/08/2026,,,New Material,N,,,
+2252,APREPITANT (SAS) (SAWAI) 125MG CAPSULES 6,,Tablets & Capsules,General Room Temp,,126713,37585,Sawai,Null (SAS),ea,6,125mg,,,Y,N,,N,,,N,N,,,,Y,KistenreddyV,27/08/2026,,,New Material,N,,,95
+2253,ORA-BLEND,,ACS,General Room Temp,,,,Medisca,2348-08,mL,473,,1.1389,,Y,Y,25,Y,25,,N,N,,,,Y,KistenreddyV,28/08/2026,,,New Material,N,,,22.5
+2254,CARTON - AMPOULE (11 X 9.2 X 2 CM) 5ML,,Packaging Other,General Room Temp,,753113,,,11x9.2x2,ea,1900,,,,N,N,,N,,,N,N,,,,Y,KistenreddyV,07/09/2026,,,New Material,N,,,1443.81
+2255,PENTOBARBITAL SODIUM (SAS) (PENTOBARBITAL),,ACS,General Room Temp,,401221,30895,,,g,5000,,,,Y,N,,N,,,N,N,,57-33-0,,Y,kistenreddyv,17/09/2026,KistenreddyV,17/09/2026,QC sample not required,Y,,,
