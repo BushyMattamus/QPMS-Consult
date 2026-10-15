@@ -1,22 +1,20 @@
 # Excel AI Test Report: `R4 Stock Management.xlsm`
-**Timestamp:** 2026-10-14T23:17:07.787196
-**Sandbox Copy (deleted after test):** `C:\Users\mattc\AppData\Local\Temp\QPMS-Consult-test-runs\R4 Stock Management_test_20261014_231707_844162.xlsm`
+**Timestamp:** 2026-10-15T21:14:47.817033
+**Sandbox Copy (deleted after test):** `C:\Users\mattc\AppData\Local\Temp\QPMS-Consult-test-runs\R4 Stock Management_test_20261015_211447_867625.xlsm`
 
-**Result:** FAILED
+**Result:** PASSED
 
 ## Test Scenario: `R4 stock adjustment write-off`
-**Status:** ❌ FAILED
+**Status:** ✅ PASSED
 
 ### Macro Execution
-- **ButtonUtils.ButtSaveStockAdjustment**: ❌ Success=False
-  - **Error:** `Could not safely dismiss Excel dialog 'Adjustment Complete'.; Expected Excel dialog 'Adjustment Complete' with OK 1 more time(s), but it did not appear.`
+- **ButtonUtils.ButtSaveStockAdjustment**: ✅ Success=True
 
 ### CSV Data Assertions
 - `Material Management/Tables/RM_Trans.csv`: ✅ matched 1 row(s); expected 1.
-- `Material Management/Tables/QC_Number.csv`: ❌ matched 0 row(s); expected 1.
+- `Material Management/Tables/QC_Number.csv`: ✅ matched 1 row(s); expected 1.
 
-### ⚠️ Errors Detected (1)
-- **Material Management/Tables/QC_Number.csv**: `Expected 1 matching CSV row(s), found 0.` (Formula: `None`)
+### ✅ Errors Detected: 0
 
 ### Sheet Snapshot: `Stock_Adjust` (R1C2:R24C13)
 | Row | Col 1 | Col 2 | Col 3 | Col 4 | Col 5 | Col 6 | Col 7 | Col 8 | Col 9 | Col 10 | Col 11 | Col 12 |

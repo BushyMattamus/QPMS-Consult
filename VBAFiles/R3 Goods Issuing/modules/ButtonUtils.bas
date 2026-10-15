@@ -38,6 +38,8 @@ CleanExit:
 End Sub
 
 Public Sub ButtSaveGoodsIssue()
+    Dim stageStartedAt As Double
+
     AppStateUtils.DisableAppUpdates
     FormUtils.UnprotectActiveSheet
     
@@ -46,10 +48,20 @@ Public Sub ButtSaveGoodsIssue()
     Call BusLogIssueGoods.SaveGoodsIssue
     
     ' --- Reload & Cleanup ---
+    stageStartedAt = Timer
+    Debug.Print "[R3 Goods Issue] START LoadQCNumberData at " & Format$(Now, "hh:nn:ss")
     BusLogDataLoads.LoadQCNumberData
+    Debug.Print "[R3 Goods Issue] END LoadQCNumberData; elapsed " & Format$(ElapsedSeconds(stageStartedAt), "0.000") & " seconds"
+
+    stageStartedAt = Timer
+    Debug.Print "[R3 Goods Issue] START FGBatchDetails at " & Format$(Now, "hh:nn:ss")
     BusLogDataLoads.FGBatchDetails
+    Debug.Print "[R3 Goods Issue] END FGBatchDetails; elapsed " & Format$(ElapsedSeconds(stageStartedAt), "0.000") & " seconds"
     
+    stageStartedAt = Timer
+    Debug.Print "[R3 Goods Issue] START ClearIssuingRM at " & Format$(Now, "hh:nn:ss")
     RangeClearing.ClearIssuingRM
+    Debug.Print "[R3 Goods Issue] END ClearIssuingRM; elapsed " & Format$(ElapsedSeconds(stageStartedAt), "0.000") & " seconds"
     
     GoTo CleanExit
 
@@ -57,10 +69,18 @@ ErrorHandler:
     MsgBox "Error in Save Goods Issue: " & Err.Description, vbCritical
 
 CleanExit:
+    stageStartedAt = Timer
+    Debug.Print "[R3 Goods Issue] START final protection and app-state restore at " & Format$(Now, "hh:nn:ss")
     FormUtils.ProtectActiveSheet
     AppStateUtils.RestoreAppState
+    Debug.Print "[R3 Goods Issue] END final protection and app-state restore; elapsed " & Format$(ElapsedSeconds(stageStartedAt), "0.000") & " seconds"
 
 End Sub
+
+Private Function ElapsedSeconds(ByVal startedAt As Double) As Double
+    ElapsedSeconds = Timer - startedAt
+    If ElapsedSeconds < 0 Then ElapsedSeconds = ElapsedSeconds + 86400#
+End Function
 
 Public Sub ButtGenerateWhereUsedReport()
 

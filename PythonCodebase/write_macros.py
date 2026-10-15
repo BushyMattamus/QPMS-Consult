@@ -8,7 +8,6 @@ from datetime import datetime
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 PRODUCTION_DIR = PROJECT_ROOT / "ExcelFiles"
 STAGING_DIR = PROJECT_ROOT / "StagedExcelFiles"
-TEST_RUNS_DIR = PROJECT_ROOT / ".test_runs"
 
 # Ensure UTF-8 output encoding for Windows terminal compatibility
 if sys.platform == 'win32' and hasattr(sys.stdout, 'reconfigure'):
@@ -435,12 +434,10 @@ def stage_single_workbook(source_excel, vba_source_dir, staging_dir=STAGING_DIR)
     stage_dir.mkdir(parents=True, exist_ok=True)
     staged_path = stage_dir / source_path.name
     evidence_path = staged_path.with_suffix(".release.json")
-    test_results = TEST_RUNS_DIR / f"{staged_path.name}_test_results.json"
     source_hash = sha256_file(source_path)
     vba_source_hash = sha256_vba_source(source_dir)
-    for stale_evidence in (evidence_path, test_results):
-        if stale_evidence.exists():
-            stale_evidence.unlink()
+    if evidence_path.exists():
+        evidence_path.unlink()
 
     shutil.copy2(source_path, staged_path)
     objects_updated, modules_updated = write_vba_to_workbook(staged_path, source_dir, backup=False)

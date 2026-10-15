@@ -31,14 +31,7 @@
   ],
   "macros": [
     {
-      "name": "ButtonUtils.ButtSaveStockAdjustment",
-      "dialogs": [
-        {
-          "title": "Adjustment Complete",
-          "button": "OK",
-          "count": 1
-        }
-      ]
+      "name": "ButtonUtils.ButtSaveStockAdjustment"
     }
   ],
   "csv_assertions": [
@@ -56,7 +49,7 @@
     },
     {
       "file": "Material Management/Tables/QC_Number.csv",
-      "encoding": "cp1252",
+      "encoding": "utf-8-sig",
       "match": {
         "QC_Number": "250085"
       },

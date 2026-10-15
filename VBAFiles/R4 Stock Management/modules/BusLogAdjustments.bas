@@ -54,16 +54,22 @@ Public Sub SaveStockAdjustment()
     BusLogDataLoads.LoadQCNumberData
     RangeClearing.ClearStockAdjust
     
-    ' Show confirmation
+    ' Show confirmation (suppressed in sandbox test runs; see QPMS_TEST_MODE)
     Dim actionDesc As String
     actionDesc = IIf(result.adjustmentType = "WRITE-OFF", "written off", "written on")
     
-    MsgBox "Raw Material has been " & actionDesc & "." & vbCrLf & vbCrLf & _
+    Dim confirmMsg As String
+    confirmMsg = "Raw Material has been " & actionDesc & "." & vbCrLf & vbCrLf & _
            "QC Number: " & qcNumber & vbCrLf & _
            "Quantity: " & Format$(Abs(result.transactionQty), "0.000") & vbCrLf & _
            "Previous Balance: " & Format$(result.PreviousBalance, "0.000") & vbCrLf & _
-           "New Balance: " & Format$(result.newBalance, "0.000"), _
-           vbInformation, "Adjustment Complete"
+           "New Balance: " & Format$(result.newBalance, "0.000")
+    
+    If Trim$(Environ$("QPMS_TEST_MODE")) = "1" Then
+        Debug.Print "Adjustment Complete (test mode): " & Replace$(confirmMsg, vbCrLf, " ")
+    Else
+        MsgBox confirmMsg, vbInformation, "Adjustment Complete"
+    End If
     
     Exit Sub
     

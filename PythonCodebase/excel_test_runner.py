@@ -7,7 +7,7 @@ Can be triggered manually via CLI or VS Code tasks.
 Features:
 - Auto-detects the most recently modified workbook or VBA module.
 - Creates an isolated temporary workbook copy outside the repository.
-- Saves human- and machine-readable test reports in `.test_runs/`.
+- Archives JSON and Markdown results by date, workbook, and scenario.
 - Inspects worksheet structure, named ranges, formulas, and cells into Markdown/JSON.
 - Injects test inputs, evaluates formulas, and executes VBA macros.
 - Captures runtime errors, formula errors (#VALUE!, #REF!, etc.), and unexpected outputs.
@@ -23,10 +23,13 @@ import multiprocessing
 import queue
 import shutil
 import tempfile
+import time
 import traceback
 from datetime import datetime
 from decimal import Decimal, InvalidOperation
 from pathlib import Path
+
+from test_run_artifacts import archive_test_run, write_json_results
 
 # Ensure UTF-8 output encoding for Windows terminal
 if sys.platform == 'win32' and hasattr(sys.stdout, 'reconfigure'):
@@ -38,10 +41,13 @@ if sys.platform == 'win32' and hasattr(sys.stdout, 'reconfigure'):
 REPO_ROOT = Path(__file__).resolve().parent.parent
 EXCEL_DIR = REPO_ROOT / "ExcelFiles"
 VBA_DIR = REPO_ROOT / "VBAFiles"
-SANDBOX_DIR = REPO_ROOT / ".test_runs"
+TEST_RUNS_DIR = REPO_ROOT / ".test_runs"
 SANDBOX_WORKBOOK_DIR = Path(tempfile.gettempdir()) / "QPMS-Consult-test-runs"
 DATA_DIR = REPO_ROOT / "DataFiles"
 DATA_ROOT_ENV_VAR = "QPMS_DATA_ROOT"
+TEST_MODE_ENV_VAR = "QPMS_TEST_MODE"
+DIALOG_CLOSE_TIMEOUT_SECONDS = 2.0
+UTF8_BOM = b"\xef\xbb\xbf"
 SCENARIO_DIR = REPO_ROOT / "TestScenarios"
 
 
@@ -128,9 +134,16 @@ def evaluate_csv_assertion(data_root, assertion):
     if not csv_path.is_file():
         raise FileNotFoundError(f"CSV assertion file not found in sandbox: {assertion['file']}")
 
+    encoding = assertion.get("encoding", "utf-8-sig")
+    with csv_path.open("rb") as raw_file:
+        if raw_file.read(len(UTF8_BOM)) == UTF8_BOM:
+            # A UTF-8 BOM read as cp1252 turns the first header into "ï»¿Name",
+            # so the match silently finds no rows.
+            encoding = "utf-8-sig"
+
     with csv_path.open(
         "r",
-        encoding=assertion.get("encoding", "utf-8-sig"),
+        encoding=encoding,
         newline="",
     ) as csv_file:
         matched_count = 0
@@ -165,13 +178,54 @@ def evaluate_csv_assertion(data_root, assertion):
     }
 
 
+def _dialog_is_open(hwnd):
+    import win32gui
+
+    return bool(win32gui.IsWindow(hwnd) and win32gui.IsWindowVisible(hwnd))
+
+
+def _wait_for_dialog_close(hwnd, timeout):
+    deadline = time.monotonic() + timeout
+    while _dialog_is_open(hwnd):
+        if time.monotonic() >= deadline:
+            return False
+        time.sleep(0.05)
+    return True
+
+
+def _click_dialog_buttons(hwnd, button_ids, responses):
+    """Click each button's control directly when a posted command is ignored."""
+    import win32gui
+
+    bm_click = 0x00F5
+    for response in responses:
+        child = win32gui.GetDlgItem(hwnd, button_ids[response])
+        if child:
+            win32gui.SendMessage(child, bm_click, 0, 0)
+        if _wait_for_dialog_close(hwnd, 1.0):
+            return True
+    return False
+
+
+def _terminate_test_excel(excel_pid):
+    """Stop only the dedicated test Excel instance so a blocked excel.Run returns."""
+    import win32api
+    import win32con
+
+    handle = win32api.OpenProcess(win32con.PROCESS_TERMINATE, False, excel_pid)
+    try:
+        win32api.TerminateProcess(handle, 1)
+    finally:
+        win32api.CloseHandle(handle)
+
+
 def watch_excel_dialogs(excel_pid, dialog_rules, stop_event, result_queue):
     """Dismiss Excel message boxes from a separate process while COM is blocked."""
     import ctypes
     import win32gui
     import win32process
 
-    button_ids = {"OK": 1, "Cancel": 2, "Yes": 6, "No": 7}
+    button_ids = {"OK": 1, "Cancel": 2, "Yes": 6, "No": 7, "Abort": 3}
     user32 = ctypes.WinDLL("user32", use_last_error=True)
     post_message = user32.PostMessageW
     post_message.argtypes = [
@@ -220,14 +274,6 @@ def watch_excel_dialogs(excel_pid, dialog_rules, stop_event, result_queue):
             else:
                 buttons = ("No", "Cancel", "Abort", "OK")
                 expected = False
-            button_ids.setdefault("Abort", 3)
-            button = buttons[0] if expected else "No/Cancel/Abort/OK fallback"
-            result_queue.put({
-                "type": "dialog",
-                "title": title,
-                "button": button,
-                "expected": expected,
-            })
             for response in buttons:
                 if not post_message(hwnd, 0x0111, button_ids[response], 0):
                     result_queue.put({
@@ -237,7 +283,29 @@ def watch_excel_dialogs(excel_pid, dialog_rules, stop_event, result_queue):
                             f"{ctypes.get_last_error()}."
                         ),
                     })
+
+            dismissed = _wait_for_dialog_close(hwnd, DIALOG_CLOSE_TIMEOUT_SECONDS)
+            if not dismissed:
+                dismissed = _click_dialog_buttons(hwnd, button_ids, buttons)
+            result_queue.put({
+                "type": "dialog",
+                "title": title,
+                "button": buttons[0] if expected else "No/Cancel/Abort/OK fallback",
+                "expected": expected,
+                "dismissed": dismissed,
+            })
             seen_dialogs.add(hwnd)
+
+            if not dismissed:
+                result_queue.put({
+                    "type": "error",
+                    "message": (
+                        f"Excel dialog '{title}' stayed open after clicking "
+                        f"{buttons[0]}; stopped the test Excel instance to avoid a hang."
+                    ),
+                })
+                _terminate_test_excel(excel_pid)
+                return
 
         stop_event.wait(0.05)
 
@@ -283,6 +351,7 @@ class ExcelModalDialogWatcher:
                     "title": result["title"],
                     "button": result["button"],
                     "expected": result["expected"],
+                    "dismissed": result.get("dismissed", True),
                 })
             else:
                 self.errors.append(result["message"])
@@ -299,6 +368,7 @@ class ExcelModalDialogWatcher:
             handled_count = sum(
                 1 for event in self.events
                 if event["expected"]
+                and event["dismissed"]
                 and event["title"] == rule["title"]
                 and event["button"] == rule["button"]
             )
@@ -379,6 +449,8 @@ class ExcelSession:
         self.active_path = None
         self.sandbox_data_dir = None
         self.previous_data_root = None
+        self.previous_test_mode = None
+        self.test_mode_set = False
         self.dialog_rules = []
 
     def __enter__(self):
@@ -388,6 +460,10 @@ class ExcelSession:
             sandbox_wb = SANDBOX_WORKBOOK_DIR / f"{self.original_path.stem}_test_{timestamp}{self.original_path.suffix}"
             shutil.copy2(self.original_path, sandbox_wb)
             self.active_path = sandbox_wb
+            # Sandbox runs skip the success MsgBox that VBA shows only when this is unset.
+            self.previous_test_mode = os.environ.get(TEST_MODE_ENV_VAR)
+            os.environ[TEST_MODE_ENV_VAR] = "1"
+            self.test_mode_set = True
             # The sandboxed workbook lives outside the repo, so give it a private
             # copy of DataFiles and point the VBA PathResolver at it.
             if DATA_DIR.is_dir():
@@ -421,6 +497,12 @@ class ExcelSession:
         return self
 
     def _cleanup_sandbox_data(self):
+        if self.test_mode_set:
+            if self.previous_test_mode is None:
+                os.environ.pop(TEST_MODE_ENV_VAR, None)
+            else:
+                os.environ[TEST_MODE_ENV_VAR] = self.previous_test_mode
+            self.test_mode_set = False
         if self.sandbox_data_dir:
             shutil.rmtree(self.sandbox_data_dir, ignore_errors=True)
             self.sandbox_data_dir = None
@@ -508,9 +590,10 @@ class ExcelSession:
         macro_error = None
         success = False
         try:
-            if self.dialog_rules:
-                watcher = ExcelModalDialogWatcher(self.excel.Hwnd, self.dialog_rules)
-                watcher.start()
+            # Always watch: unexpected message boxes are dismissed and reported
+            # as failures instead of blocking the run.
+            watcher = ExcelModalDialogWatcher(self.excel.Hwnd, self.dialog_rules)
+            watcher.start()
             res = self.excel.Run(macro_name, *args)
             macro_result = res
             success = True
@@ -585,6 +668,10 @@ def generate_markdown_report(report_data):
     md = []
     md.append(f"# Excel AI Test Report: `{report_data.get('target')}`")
     md.append(f"**Timestamp:** {report_data.get('timestamp')}")
+    if report_data.get("run_id"):
+        md.append(f"**Run ID:** `{report_data['run_id']}`")
+    if report_data.get("duration_seconds") is not None:
+        md.append(f"**Duration:** {report_data['duration_seconds']} seconds")
     md.append(f"**Sandbox Copy (deleted after test):** `{report_data.get('sandbox_path')}`\n")
     md.append(f"**Result:** {'PASSED' if report_data.get('passed') else 'FAILED'}\n")
 
@@ -665,14 +752,22 @@ def is_ignored_formula_error(sheet_name, error, ignore_rules):
     )
 
 
-def run_test_scenario(workbook_path, scenario_path=None, json_report_path=None):
+def run_test_scenario(
+    workbook_path,
+    scenario_path=None,
+    json_report_path=None,
+    artifact_dir=None,
+    run_timestamp=None,
+):
     """
     Executes a test scenario against the workbook.
     If no scenario is specified, performs a general health check and macro test.
+    Completed results are archived with date and workbook indexes.
     """
     workbook_path = Path(workbook_path).resolve()
     scenario_file = Path(scenario_path).resolve() if scenario_path else None
     initial_workbook_hash = sha256_file(workbook_path)
+    run_started_at = run_timestamp or datetime.now()
 
     scenario_data = None
     if scenario_file:
@@ -704,7 +799,7 @@ def run_test_scenario(workbook_path, scenario_path=None, json_report_path=None):
         "target": workbook_path.name,
         "target_path": str(workbook_path),
         "target_sha256": initial_workbook_hash,
-        "timestamp": datetime.now().isoformat(),
+        "timestamp": run_started_at.isoformat(),
         "passed": True,
         "scenario": scenario_data.get("name", "Default Inspection & Health Check") if scenario_data else "Default Inspection",
         "scenario_path": str(scenario_file) if scenario_file else None,
@@ -716,6 +811,7 @@ def run_test_scenario(workbook_path, scenario_path=None, json_report_path=None):
         "sheets": []
     }
 
+    run_started_perf = time.perf_counter()
     with ExcelSession(workbook_path, sandbox=True) as session:
         results["sandbox_path"] = str(session.active_path)
 
@@ -794,6 +890,8 @@ def run_test_scenario(workbook_path, scenario_path=None, json_report_path=None):
                     results["passed"] = False
                     results["errors"].append(error)
 
+    results["duration_seconds"] = round(time.perf_counter() - run_started_perf, 3)
+
     sandbox_path = Path(results["sandbox_path"])
     sandbox_path.unlink(missing_ok=True)
     if sandbox_path.exists():
@@ -809,21 +907,23 @@ def run_test_scenario(workbook_path, scenario_path=None, json_report_path=None):
             "formula": None
         })
 
-    # Output report
-    SANDBOX_DIR.mkdir(parents=True, exist_ok=True)
-    report_file = SANDBOX_DIR / "last_test_report.md"
-    report_md = generate_markdown_report(results)
-    with open(report_file, "w", encoding="utf-8") as f:
-        f.write(report_md)
+    result_file, report_file = archive_test_run(
+        TEST_RUNS_DIR,
+        results,
+        generate_markdown_report,
+        artifact_dir,
+    )
 
-    result_file = Path(json_report_path).resolve() if json_report_path else SANDBOX_DIR / "last_test_results.json"
-    result_file.parent.mkdir(parents=True, exist_ok=True)
-    with open(result_file, "w", encoding="utf-8") as f:
-        json.dump(results, f, indent=2, default=str)
+    if json_report_path:
+        export_path = Path(json_report_path).resolve()
+        if export_path != result_file.resolve():
+            write_json_results(export_path, results)
 
     print(f"\n[REPORT GENERATED] Saved to: {report_file}")
     print(f"[RESULTS SAVED] Saved to: {result_file}")
-    print(report_md)
+    if json_report_path and export_path != result_file.resolve():
+        print(f"[JSON EXPORT] Saved to: {export_path}")
+    print(report_file.read_text(encoding="utf-8"))
     sandbox_path.unlink(missing_ok=True)
     if sandbox_path.exists():
         raise OSError(f"Could not remove temporary test workbook: {sandbox_path}")
@@ -836,6 +936,8 @@ def main():
     parser.add_argument("workbook", nargs="?", help="Path to .xlsm workbook (optional, defaults to last modified)")
     parser.add_argument("--scenario", help="Path to JSON test scenario file")
     parser.add_argument("--json-report", help="Path for machine-readable test results")
+    parser.add_argument("--artifact-dir", help="Existing per-run archive directory for JSON and Markdown outputs")
+    parser.add_argument("--run-timestamp", help="ISO timestamp that determines the archive date and run time")
     parser.add_argument("--detect-only", action="store_true", help="Only detect and display the latest changed target")
 
     args = parser.parse_args()
@@ -853,7 +955,20 @@ def main():
     if args.detect_only:
         return 0
 
-    results = run_test_scenario(wb_path, args.scenario, args.json_report)
+    try:
+        run_timestamp = (
+            datetime.fromisoformat(args.run_timestamp) if args.run_timestamp else None
+        )
+    except ValueError as error:
+        parser.error(f"Invalid --run-timestamp: {error}")
+
+    results = run_test_scenario(
+        wb_path,
+        args.scenario,
+        args.json_report,
+        args.artifact_dir,
+        run_timestamp,
+    )
     return 0 if results["passed"] else 1
 
 

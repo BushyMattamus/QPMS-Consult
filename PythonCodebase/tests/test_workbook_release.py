@@ -1,13 +1,22 @@
 import json
 import tempfile
 import unittest
+from datetime import datetime
 from pathlib import Path
+from types import SimpleNamespace
+from unittest import mock
 
-from write_macros import find_changed_vba_targets, sha256_vba_source
+from write_macros import (
+    find_changed_vba_targets,
+    sha256_vba_source,
+    stage_single_workbook,
+)
+from test_run_artifacts import create_run_directory
 from workbook_release import (
     promote_workbook,
     sha256_file,
     state_path,
+    test_workbook,
     test_results_path as get_test_results_path,
 )
 
@@ -27,6 +36,13 @@ class PromoteWorkbookTests(unittest.TestCase):
         self.staged_path = self.staging_dir / self.production_path.name
         self.production_path.write_bytes(b"production version")
         self.staged_path.write_bytes(b"tested staged version")
+        self.run_directory = create_run_directory(
+            self.test_runs_dir,
+            self.staged_path,
+            "passing test",
+            datetime(2026, 10, 15, 21, 30, 0),
+        )
+        self.run_id = self.run_directory.relative_to(self.test_runs_dir).as_posix()
         self.scenario_path = root / "scenario.json"
         self.scenario_path.write_text('{"name": "passing test"}', encoding="utf-8")
         self.metadata = {
@@ -34,6 +50,8 @@ class PromoteWorkbookTests(unittest.TestCase):
             "production_sha256": sha256_file(self.production_path),
             "staged_path": str(self.staged_path.resolve()),
             "staged_sha256": sha256_file(self.staged_path),
+            "test_run_id": self.run_id,
+            "test_scenario_sha256": sha256_file(self.scenario_path),
         }
         with open(state_path(self.staged_path), "w", encoding="utf-8") as file:
             json.dump(self.metadata, file)
@@ -43,8 +61,13 @@ class PromoteWorkbookTests(unittest.TestCase):
             "scenario_path": str(self.scenario_path.resolve()),
             "scenario_sha256": sha256_file(self.scenario_path),
             "passed": True,
+            "run_id": self.run_id,
         }
-        with open(get_test_results_path(self.staged_path, self.test_runs_dir), "w", encoding="utf-8") as file:
+        with open(
+            get_test_results_path(self.staged_path, self.test_runs_dir, self.run_id),
+            "w",
+            encoding="utf-8",
+        ) as file:
             json.dump(self.results, file)
 
     def tearDown(self):
@@ -59,7 +82,11 @@ class PromoteWorkbookTests(unittest.TestCase):
         )
 
     def write_results(self):
-        with open(get_test_results_path(self.staged_path, self.test_runs_dir), "w", encoding="utf-8") as file:
+        with open(
+            get_test_results_path(self.staged_path, self.test_runs_dir, self.run_id),
+            "w",
+            encoding="utf-8",
+        ) as file:
             json.dump(self.results, file)
 
     def test_promotes_passing_candidate_and_preserves_backup(self):
@@ -102,6 +129,170 @@ class PromoteWorkbookTests(unittest.TestCase):
             self.promote()
 
         self.assertEqual(self.production_path.read_bytes(), b"production version")
+
+    def test_rejects_test_result_with_mismatched_run_id(self):
+        self.results["run_id"] = "another/run"
+        self.write_results()
+
+        with self.assertRaisesRegex(RuntimeError, "does not match the release evidence"):
+            self.promote()
+
+        self.assertEqual(self.production_path.read_bytes(), b"production version")
+
+    def test_rejects_test_run_id_that_escapes_archive(self):
+        with self.assertRaisesRegex(ValueError, "invalid test-run identifier"):
+            get_test_results_path(
+                self.staged_path,
+                self.test_runs_dir,
+                Path("..") / "outside",
+            )
+
+    def test_rejects_release_metadata_with_mismatched_scenario_hash(self):
+        self.metadata["test_scenario_sha256"] = "different-scenario-hash"
+        state_path(self.staged_path).write_text(
+            json.dumps(self.metadata), encoding="utf-8"
+        )
+
+        with self.assertRaisesRegex(RuntimeError, "scenario hash"):
+            self.promote()
+
+        self.assertEqual(self.production_path.read_bytes(), b"production version")
+
+
+class TestWorkbookArchiveEvidenceTests(unittest.TestCase):
+    def setUp(self):
+        self.temp_dir = tempfile.TemporaryDirectory()
+        root = Path(self.temp_dir.name)
+        self.production_path = root / "ExcelFiles" / "Sample.xlsm"
+        self.staged_path = root / "StagedExcelFiles" / "Sample.xlsm"
+        self.test_runs_dir = root / ".test_runs"
+        self.scenario_path = root / "scenario.json"
+        self.production_path.parent.mkdir()
+        self.staged_path.parent.mkdir()
+        self.test_runs_dir.mkdir()
+        self.production_path.write_bytes(b"production")
+        self.staged_path.write_bytes(b"staged")
+        self.scenario_path.write_text('{"name": "Sample scenario"}', encoding="utf-8")
+        self.metadata = {
+            "production_path": str(self.production_path.resolve()),
+            "production_sha256": sha256_file(self.production_path),
+            "staged_path": str(self.staged_path.resolve()),
+            "staged_sha256": sha256_file(self.staged_path),
+        }
+        state_path(self.staged_path).write_text(
+            json.dumps(self.metadata), encoding="utf-8"
+        )
+
+    def tearDown(self):
+        self.temp_dir.cleanup()
+
+    def test_test_workbook_archives_result_and_records_run_pointer(self):
+        def run_test(command, cwd, check):
+            run_dir = Path(command[command.index("--artifact-dir") + 1])
+            timestamp = command[command.index("--run-timestamp") + 1]
+            run_id = run_dir.relative_to(self.test_runs_dir).as_posix()
+            results = {
+                "target": self.staged_path.name,
+                "target_path": str(self.staged_path.resolve()),
+                "target_sha256": sha256_file(self.staged_path),
+                "scenario_path": str(self.scenario_path.resolve()),
+                "scenario_sha256": sha256_file(self.scenario_path),
+                "timestamp": timestamp,
+                "scenario": "Sample scenario",
+                "passed": True,
+                "run_id": run_id,
+            }
+            (run_dir / "results.json").write_text(json.dumps(results), encoding="utf-8")
+            return SimpleNamespace(returncode=0)
+
+        with mock.patch(
+            "workbook_release.resolve_staged_workbook",
+            return_value=(self.production_path, self.staged_path),
+        ), mock.patch(
+            "workbook_release.TEST_RUNS_DIR", self.test_runs_dir
+        ), mock.patch(
+            "workbook_release.subprocess.run", side_effect=run_test
+        ):
+            test_workbook(self.staged_path.name, str(self.scenario_path))
+
+        updated_metadata = json.loads(state_path(self.staged_path).read_text(encoding="utf-8"))
+        run_id = updated_metadata["test_run_id"]
+        result_path = get_test_results_path(self.staged_path, self.test_runs_dir, run_id)
+        self.assertTrue(result_path.is_file())
+        self.assertEqual(json.loads(result_path.read_text(encoding="utf-8"))["passed"], True)
+        self.assertEqual(updated_metadata["test_scenario_sha256"], sha256_file(self.scenario_path))
+
+    def test_failed_rerun_replaces_old_passing_evidence(self):
+        old_run = create_run_directory(
+            self.test_runs_dir,
+            self.staged_path,
+            "old scenario",
+            datetime(2026, 10, 14, 21, 30, 0),
+        )
+        self.metadata["test_run_id"] = old_run.relative_to(self.test_runs_dir).as_posix()
+        state_path(self.staged_path).write_text(json.dumps(self.metadata), encoding="utf-8")
+
+        def run_failed_test(command, cwd, check):
+            run_dir = Path(command[command.index("--artifact-dir") + 1])
+            timestamp = command[command.index("--run-timestamp") + 1]
+            run_id = run_dir.relative_to(self.test_runs_dir).as_posix()
+            results = {
+                "target": self.staged_path.name,
+                "target_path": str(self.staged_path.resolve()),
+                "target_sha256": sha256_file(self.staged_path),
+                "scenario_path": str(self.scenario_path.resolve()),
+                "scenario_sha256": sha256_file(self.scenario_path),
+                "timestamp": timestamp,
+                "scenario": "Sample scenario",
+                "passed": False,
+                "run_id": run_id,
+            }
+            (run_dir / "results.json").write_text(json.dumps(results), encoding="utf-8")
+            return SimpleNamespace(returncode=1)
+
+        with mock.patch(
+            "workbook_release.resolve_staged_workbook",
+            return_value=(self.production_path, self.staged_path),
+        ), mock.patch(
+            "workbook_release.TEST_RUNS_DIR", self.test_runs_dir
+        ), mock.patch(
+            "workbook_release.subprocess.run", side_effect=run_failed_test
+        ):
+            with self.assertRaises(SystemExit):
+                test_workbook(self.staged_path.name, str(self.scenario_path))
+
+        updated_metadata = json.loads(state_path(self.staged_path).read_text(encoding="utf-8"))
+        self.assertNotEqual(updated_metadata["test_run_id"], self.metadata["test_run_id"])
+        failed_result = get_test_results_path(
+            self.staged_path,
+            self.test_runs_dir,
+            updated_metadata["test_run_id"],
+        )
+        self.assertFalse(json.loads(failed_result.read_text(encoding="utf-8"))["passed"])
+
+
+class StagePreservesArchivedEvidenceTests(unittest.TestCase):
+    def test_staging_keeps_previous_test_json(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            production_dir = root / "ExcelFiles"
+            source_dir = root / "VBAFiles" / "Sample"
+            staging_dir = root / "StagedExcelFiles"
+            test_runs_dir = root / ".test_runs"
+            production_dir.mkdir()
+            source_dir.mkdir(parents=True)
+            test_runs_dir.mkdir()
+            production_path = production_dir / "Sample.xlsm"
+            production_path.write_bytes(b"production")
+            test_result = test_runs_dir / "Sample.xlsm_test_results.json"
+            test_result.write_text('{"passed": true}', encoding="utf-8")
+
+            with mock.patch("write_macros.PRODUCTION_DIR", production_dir), mock.patch(
+                "write_macros.write_vba_to_workbook", return_value=(0, 0)
+            ):
+                stage_single_workbook(production_path, source_dir, staging_dir)
+
+            self.assertEqual(test_result.read_text(encoding="utf-8"), '{"passed": true}')
 
 
 class FindChangedVbaTargetsTests(unittest.TestCase):
