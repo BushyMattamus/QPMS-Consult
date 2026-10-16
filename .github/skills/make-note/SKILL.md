@@ -9,6 +9,12 @@ user-invocable: true
 
 Record the detail the user asks to note in the repository's daily job notes.
 
+## Scope
+
+- Log only details about Excel workbooks and the project at hand: VBA, workbook data, test results, releases, and the business process they support.
+- Ignore pipeline, structural, and instruction changes, such as edits to copilot instructions, skills, agent or prompt files, CI, folder layout, or tooling. Do not log them, even if the user asks.
+- If a request is out of scope, do not write to the daily file. Tell the user it was skipped and why.
+
 ## Procedure
 
 1. Use the current local date to locate `JobNotes\YYYY-MM-DD.md` from the repository root.

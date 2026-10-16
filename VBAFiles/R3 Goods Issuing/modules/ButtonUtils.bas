@@ -54,9 +54,13 @@ Public Sub ButtSaveGoodsIssue()
     Debug.Print "[R3 Goods Issue] END LoadQCNumberData; elapsed " & Format$(ElapsedSeconds(stageStartedAt), "0.000") & " seconds"
 
     stageStartedAt = Timer
-    Debug.Print "[R3 Goods Issue] START FGBatchDetails at " & Format$(Now, "hh:nn:ss")
-    BusLogDataLoads.FGBatchDetails
-    Debug.Print "[R3 Goods Issue] END FGBatchDetails; elapsed " & Format$(ElapsedSeconds(stageStartedAt), "0.000") & " seconds"
+    If BusLogIssueGoods.goodsIssueChangedBatchStatus Then
+        Debug.Print "[R3 Goods Issue] START FGBatchDetails at " & Format$(Now, "hh:nn:ss")
+        BusLogDataLoads.FGBatchDetails
+        Debug.Print "[R3 Goods Issue] END FGBatchDetails; elapsed " & Format$(ElapsedSeconds(stageStartedAt), "0.000") & " seconds"
+    Else
+        Debug.Print "[R3 Goods Issue] SKIP FGBatchDetails; batch status unchanged"
+    End If
     
     stageStartedAt = Timer
     Debug.Print "[R3 Goods Issue] START ClearIssuingRM at " & Format$(Now, "hh:nn:ss")

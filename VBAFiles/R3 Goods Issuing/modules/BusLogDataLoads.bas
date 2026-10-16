@@ -259,29 +259,43 @@ Private Sub PopulateQuickCodeFromMaster(ByVal wsBatchDetails As Worksheet, ByVal
     On Error GoTo ErrHandler
 
     Dim wsMaster As Worksheet
+    Dim masterLastRow As Long
+    Dim masterData As Variant
+    Dim batchData As Variant
+    Dim quickOut() As Variant
+    Dim quickCodes As Object
     Dim i As Long
     Dim pmiNumber As String
     Dim pmiVersion As String
     Dim lookupKey As String
-    Dim masterRow As Long
-    Dim quickCode As String
+
+    If lastRow < 2 Then GoTo CleanExit
 
     Set wsMaster = ThisWorkbook.Worksheets("FG_Master")
+    masterLastRow = wsMaster.Cells(wsMaster.Rows.Count, 1).End(xlUp).Row
+    If masterLastRow < 2 Then GoTo CleanExit
 
-    For i = 2 To lastRow
-        pmiNumber = wsBatchDetails.Cells(i, 2).value
-        pmiVersion = wsBatchDetails.Cells(i, 3).value
-        
+    ' Read master once: columns A (PMI), B (version), E (quick code). First match wins.
+    masterData = wsMaster.Range(wsMaster.Cells(2, 1), wsMaster.Cells(masterLastRow, 5)).Value
+    Set quickCodes = CreateObject("Scripting.Dictionary")
+    For i = 1 To UBound(masterData, 1)
+        lookupKey = CStr(masterData(i, 1)) & "|" & CStr(masterData(i, 2))
+        If Not quickCodes.Exists(lookupKey) Then quickCodes.Add lookupKey, masterData(i, 5)
+    Next i
+
+    ' Read batch rows once: columns B to P. Column P (index 15) keeps its value when there is no match.
+    batchData = wsBatchDetails.Range(wsBatchDetails.Cells(2, 2), wsBatchDetails.Cells(lastRow, 16)).Value
+    ReDim quickOut(1 To lastRow - 1, 1 To 1)
+    For i = 1 To lastRow - 1
+        quickOut(i, 1) = batchData(i, 15)
+        pmiNumber = CStr(batchData(i, 1))
+        pmiVersion = CStr(batchData(i, 2))
         If pmiNumber <> "" And pmiVersion <> "" Then
             lookupKey = pmiNumber & "|" & pmiVersion
-            masterRow = FindMasterRow(wsMaster, pmiNumber, pmiVersion)
-            
-            If masterRow > 0 Then
-                quickCode = wsMaster.Cells(masterRow, 5).value
-                wsBatchDetails.Cells(i, 16).value = quickCode
-            End If
+            If quickCodes.Exists(lookupKey) Then quickOut(i, 1) = quickCodes(lookupKey)
         End If
     Next i
+    wsBatchDetails.Cells(2, 16).Resize(lastRow - 1, 1).Value = quickOut
 
     GoTo CleanExit
 
@@ -291,24 +305,10 @@ ErrHandler:
 
 CleanExit:
     Set wsMaster = Nothing
+    Set quickCodes = Nothing
     Exit Sub
 End Sub
 
-Private Function FindMasterRow(ByVal wsMaster As Worksheet, ByVal pmiCode As String, ByVal pmiVersion As String) As Long
-    Dim i As Long
-    Dim masterLastRow As Long
-
-    masterLastRow = wsMaster.Cells(wsMaster.Rows.Count, 1).End(xlUp).Row
-
-    For i = 2 To masterLastRow
-        If wsMaster.Cells(i, 1).value = pmiCode And wsMaster.Cells(i, 2).value = pmiVersion Then
-            FindMasterRow = i
-            Exit Function
-        End If
-    Next i
-
-    FindMasterRow = 0
-End Function
 
 Public Sub FGMasterDataLoad()
     On Error GoTo ErrHandler

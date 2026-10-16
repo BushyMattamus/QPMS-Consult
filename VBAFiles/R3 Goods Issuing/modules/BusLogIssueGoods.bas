@@ -8,10 +8,14 @@ Attribute VB_Name = "BusLogIssueGoods"
 
 Option Explicit
 
+' True when the last SaveGoodsIssue call wrote a batch status change to FinishedGoodsBatchNumberMasterFile.csv
+Public goodsIssueChangedBatchStatus As Boolean
+
 ' Main procedure to save goods issue (consumption) transaction
 ' Validates QC status, retest dates, balance, converts UoM, and writes to RM_Trans.csv
 Public Sub SaveGoodsIssue()
     On Error GoTo ErrorHandler
+    goodsIssueChangedBatchStatus = False
     
     Dim batchNumber As String
     Dim rmCode As String
@@ -478,6 +482,7 @@ Public Sub SaveGoodsIssue()
             updateComments:="Goods Issue - QC Number: " & qcNumber _
         )
         
+        goodsIssueChangedBatchStatus = batchUpdateSuccess
         If Not batchUpdateSuccess Then
             MsgBox "Warning: Goods Issue completed but batch status update failed.", vbExclamation, "Batch Update Warning"
         End If

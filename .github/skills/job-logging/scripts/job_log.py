@@ -25,10 +25,6 @@ CSV_FIELDS = (
 )
 TIMER_TYPE = "Timed"
 MANUAL_TYPE = "Manual"
-_DURATION_PATTERN = re.compile(
-    r"^\s*(?:(\d+)\s*h)?\s*(?:(\d+)\s*m)?\s*(?:(\d+)\s*s)?\s*$",
-    re.IGNORECASE,
-)
 
 
 def log_path(log_directory, timestamp):
@@ -177,17 +173,18 @@ def _active_timers(log_directory):
     return active
 
 
-def parse_duration(value):
-    """Parse a positive duration such as 90m, 1h30m, or 45s."""
-    match = _DURATION_PATTERN.fullmatch(value)
-    if match is None or not any(match.groups()):
-        raise ValueError("Duration must use h, m, or s units (examples: 90m, 1h30m, 45s).")
-
-    hours, minutes, seconds = (int(part or 0) for part in match.groups())
-    total_seconds = hours * 3600 + minutes * 60 + seconds
-    if total_seconds <= 0:
-        raise ValueError("Duration must be greater than zero.")
-    return total_seconds
+def _parse_timestamp(value, reference):
+    """Parse HH:MM (on the reference date) or YYYY-MM-DD HH:MM."""
+    text = value.strip()
+    for pattern in ("%Y-%m-%d %H:%M", "%Y-%m-%d %H:%M:%S", "%H:%M", "%H:%M:%S"):
+        try:
+            parsed = datetime.strptime(text, pattern)
+        except ValueError:
+            continue
+        if pattern.startswith("%H"):
+            return reference.replace(hour=parsed.hour, minute=parsed.minute, second=parsed.second, microsecond=0)
+        return parsed
+    raise ValueError(f"Time '{value}' must be HH:MM or YYYY-MM-DD HH:MM.")
 
 
 def start_job(description, log_directory=LOG_DIRECTORY, now=None):
@@ -237,24 +234,30 @@ def stop_job(log_directory=LOG_DIRECTORY, now=None):
     return row["Description"], duration, path
 
 
-def log_manual(description, duration, log_directory=LOG_DIRECTORY, now=None):
-    """Append a manually supplied duration for completed work."""
+def log_manual(description, start, end, log_directory=LOG_DIRECTORY, now=None):
+    """Append a completed job with a required start and end time."""
     _migrate_legacy_logs(log_directory)
     description = description.strip()
     if not description:
         raise ValueError("Job description cannot be empty.")
 
-    total_seconds = parse_duration(duration)
-    timestamp = now or datetime.now()
-    formatted_duration = _display_duration(total_seconds)
+    reference = now or datetime.now()
+    started_at = _parse_timestamp(start, reference)
+    ended_at = _parse_timestamp(end, reference)
+    elapsed = int((ended_at - started_at).total_seconds())
+    if elapsed <= 0:
+        raise ValueError("The end time must be later than the start time.")
+
     row = _row(
-        timestamp,
+        started_at,
         description,
-        duration_seconds=total_seconds,
+        start=started_at,
+        end=ended_at,
+        duration_seconds=elapsed,
         entry_type=MANUAL_TYPE,
     )
-    path = _append_row(log_directory, timestamp, row)
-    return formatted_duration, path
+    path = _append_row(log_directory, started_at, row)
+    return _display_duration(elapsed), path
 
 
 def show_status(log_directory=LOG_DIRECTORY, now=None):
@@ -284,8 +287,9 @@ def main():
     commands.add_parser("stop", help="Stop the active job timer.")
     commands.add_parser("status", help="Show the active job timer.")
 
-    log_parser = commands.add_parser("log", help="Record a manually supplied duration.")
-    log_parser.add_argument("--duration", required=True, help="Duration such as 90m, 1h30m, or 45s.")
+    log_parser = commands.add_parser("log", help="Record a completed job with start and end times.")
+    log_parser.add_argument("--start", required=True, help="Start time: HH:MM or YYYY-MM-DD HH:MM.")
+    log_parser.add_argument("--end", required=True, help="End time: HH:MM or YYYY-MM-DD HH:MM.")
     log_parser.add_argument("description", help="Short description of the completed job.")
 
     args = parser.parse_args()
@@ -307,8 +311,8 @@ def main():
             print(f"[ACTIVE] {description} - started {started_at:%Y-%m-%d %H:%M:%S}, elapsed {duration}")
             print(f"[LOG] {path}")
         else:
-            duration, path = log_manual(args.description, args.duration)
-            print(f"[LOGGED] {args.description.strip()} - duration {duration}")
+            duration, path = log_manual(args.description, args.start, args.end)
+            print(f"[LOGGED] {args.description.strip()} - {args.start} to {args.end}, duration {duration}")
             print(f"[LOG] {path}")
     except (OSError, RuntimeError, ValueError) as error:
         print(f"[ERROR] {error}")

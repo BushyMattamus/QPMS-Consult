@@ -7,6 +7,8 @@
     { "sheet": "Batch_Details", "cell": "A1", "expected": "Batch_Number" },
     { "sheet": "Batch_Details", "cell": "A2", "expected": "G190126" },
     { "sheet": "RM_Master", "cell": "A1", "expected": "RM_Code" },
-    { "sheet": "RM_Master", "cell": "A2", "expected": "0010" }
+    { "sheet": "RM_Master", "cell": "A2", "expected": "0010" },
+    { "sheet": "Batch_Details", "cell": "P1", "expected": "Quick_Code" },
+    { "sheet": "Batch_Details", "cell": "P2", "expected": "Sundry" }
   ]
 }

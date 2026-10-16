@@ -1,0 +1,3 @@
+﻿Date,Description,Start,End,Duration,DurationSeconds,DurationHours,Type
+2026-10-16,Goods issue delay,2026-10-16T21:18:05,2026-10-16T22:13:26,00:55:21,3321,0.922500,Timed
+2026-10-16,Investigate QC number duplicate risk,2026-10-16T22:13:26,2026-10-16T22:28:01,00:14:35,875,0.243056,Manual

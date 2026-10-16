@@ -6043,3 +6043,4 @@ Batch_Number,PMI_Number,PMI_Version,Product_Description,Shelf_life_No,Shelf_Life
 "D140426","ACI-007","0","ACETIC ACID 6% 1L (LAM)","18","Months","2026-10-15","2028-04-15","2026-10-14","07:42:45","Created","SuL","2026-10-14 07:55:22","SuL","Incomplete PMI Print (Label + PDF) - Label cancelled","","B006040"
 "D140426","ACI-007","0","ACETIC ACID 6% 1L (LAM)","18","Months","2026-10-15","2028-04-15","2026-10-14","07:42:45","Printed","SuL","2026-10-14 07:55:53","SuL","Original PMI Print (Label + PDF)","","B006041"
 "M300626","SUS-028","2","CLOPIDOGREL 5mg/mL   90mL","42","days","2026-06-30","2026-08-11","2026-06-30","12:15:12","InProgress","KistenreddyV","2026-10-14 22:52:52","mattc","Goods Issue - QC Number: 260245","x","B006042"
+"M300526","CRE-005","13","AQUEOUS + SALICYLIC ACID 5% + SULPHUR 5%   100g","18","month","2026-06-30","2027-12-30","2026-06-30","10:42:28","InProgress","SuL","2026-10-16 21:53:42","mattc","Goods Issue - QC Number: 260244","","B006043"
