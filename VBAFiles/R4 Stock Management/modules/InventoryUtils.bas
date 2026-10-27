@@ -446,6 +446,7 @@ End Function
 ' Sums all Quantity values for the specified QC Number
 ' ========================================================================
 Public Function GetQCBalanceADO(ByVal qcNumber As String) As Double
+    Dim tBlock As Double
     ' --- Error handling setup ---
     On Error GoTo ErrHandler
     
@@ -471,6 +472,8 @@ Public Function GetQCBalanceADO(ByVal qcNumber As String) As Double
     ' --- Create FSO ---
     Set fso = CreateObject("Scripting.FileSystemObject")
     
+    tBlock = PerfTimerNow()
+
     ' --- Create temporary file copy ---
     tempPath = CreateTemporaryFileCopy(FILE_RM_TRANS)
     
@@ -478,6 +481,9 @@ Public Function GetQCBalanceADO(ByVal qcNumber As String) As Double
         GoTo CleanExit
     End If
     
+    PerfTimerLog "BALANCE", "copy RM_Trans", tBlock
+    tBlock = PerfTimerNow()
+
     ' --- Extract folder and file name ---
     folderPath = fso.GetParentFolderName(tempPath)
     fileName = fso.GetFileName(tempPath)
@@ -489,6 +495,9 @@ Public Function GetQCBalanceADO(ByVal qcNumber As String) As Double
         GoTo CleanExit
     End If
     
+    PerfTimerLog "BALANCE", "ADO open", tBlock
+    tBlock = PerfTimerNow()
+
     ' --- Build and execute SQL query ---
     sql = "SELECT SUM([" & RMT_HEADER_QUANTITY & "]) AS TotalQty " & _
           "FROM [" & fileName & "] " & _
@@ -503,6 +512,7 @@ Public Function GetQCBalanceADO(ByVal qcNumber As String) As Double
         End If
     End If
     
+    PerfTimerLog "BALANCE", "query and read", tBlock
     GetQCBalanceADO = balance
     GoTo CleanExit
 

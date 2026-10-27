@@ -113,23 +113,35 @@ Public Function StocktakeQCNumEntry( _
     Dim updateNilStock As Boolean
     Dim qcTransID As String
     Dim updateResult As Boolean
+    Dim tBlock As Double
     
     On Error GoTo ErrHandler
     StocktakeQCNumEntry = False
+    tBlock = PerfTimerNow()
     
     If IsQCCountedThisMonth(qcNumber) Then
         GoTo CleanExit
     End If
     
+    PerfTimerLog "STOCKTAKE", "6a IsQCCountedThisMonth", tBlock
+    tBlock = PerfTimerNow()
+
     If Trim$(piNumber) = "" Then
         piNo = GetNextPINumber()
     Else
         piNo = piNumber
     End If
 
+    PerfTimerLog "STOCKTAKE", "6b GetNextPINumber (if no PI passed)", tBlock
+    tBlock = PerfTimerNow()
+
     bookQty = GetQCBalanceADO(qcNumber)
+    PerfTimerLog "STOCKTAKE", "6c Book balance (GetQCBalanceADO)", tBlock
+    tBlock = PerfTimerNow()
            
     convertedQty = ConvertToMasterUoM(countedQty, countedUoM, masterUoM, wtPerML)
+    PerfTimerLog "STOCKTAKE", "6d ConvertToMasterUoM", tBlock
+    tBlock = PerfTimerNow()
     
     zeroAdjustment = (Round(convertedQty, 6) = Round(bookQty, 6))
     
@@ -176,6 +188,9 @@ Public Function StocktakeQCNumEntry( _
         End If
     End If
     
+    PerfTimerLog "STOCKTAKE", "6e Adjustment or nil stock update", tBlock
+    tBlock = PerfTimerNow()
+
     If Trim$(newRetestDate) <> "" Then
         currentRetestDate = GetQCRetestDate(qcNumber)
         If DateToANSI(newRetestDate) <> currentRetestDate Then
@@ -183,6 +198,9 @@ Public Function StocktakeQCNumEntry( _
         End If
     End If
     
+    PerfTimerLog "STOCKTAKE", "6f Retest/expiry update", tBlock
+    tBlock = PerfTimerNow()
+
     If retestQCTransID <> "" Then
         finalQCTransID = retestQCTransID
     ElseIf updateNilStock And qcTransID <> "" Then
@@ -204,6 +222,8 @@ Public Function StocktakeQCNumEntry( _
     End If
 
     desc = GetQCDescription(qcNumber)
+    PerfTimerLog "STOCKTAKE", "6g GetQCDescription", tBlock
+    tBlock = PerfTimerNow()
     
     line = """" & piNo & """," & _
            """" & countedBy & """," & _
@@ -219,6 +239,7 @@ Public Function StocktakeQCNumEntry( _
     ts.WriteLine line
     ts.Close
     
+    PerfTimerLog "STOCKTAKE", "6h Physical inventory append", tBlock
     StocktakeQCNumEntry = True
     GoTo CleanExit
 
