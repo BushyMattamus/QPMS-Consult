@@ -240,6 +240,7 @@ def write_vba_to_workbook(excel_path, vba_source_dir, backup=True):
 
         print(f"\nSaving changes to {excel_file.name}...")
         workbook.Save()
+        excel_app.EnableEvents = True  # Re-enable events so Workbook_Open fires on next open
         print("[SUCCESS] Workbook saved successfully!")
         print(f"Summary: {obj_updated} Excel object(s) updated, {mod_updated} module(s) updated.\n")
 

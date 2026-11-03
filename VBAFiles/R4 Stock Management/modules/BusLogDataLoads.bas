@@ -6,8 +6,6 @@ Option Explicit
 ' Reuses public helpers: FindHeaderCol, RM_Pad4, MakeTempSheetName, SheetExists
 
 Public Sub LoadQCNumberData()
-    Dim tBlock As Double
-    tBlock = PerfTimerNow()
     Dim qcCsvPath As String
     Dim wsDest As Worksheet
     Dim importSuccess As Boolean
@@ -30,9 +28,6 @@ Public Sub LoadQCNumberData()
 
      lastRow = wsDest.Cells(wsDest.Rows.count, 1).End(xlUp).row
     
-    PerfTimerLog "STOCKTAKE", "7a Temp copy + OpenText import", tBlock
-    tBlock = PerfTimerNow()
-
     If lastRow >= 2 Then
         wsDest.Columns(1).NumberFormat = "@"
         For r = 2 To lastRow
@@ -47,9 +42,6 @@ Public Sub LoadQCNumberData()
             End If
         Next r
     End If
-
-    PerfTimerLog "STOCKTAKE", "7b Normalise loop col A", tBlock
-    tBlock = PerfTimerNow()
 
     wsDest.Columns(2).NumberFormat = "@"
     If lastRow >= 2 Then
@@ -66,16 +58,11 @@ Public Sub LoadQCNumberData()
         Next r
     End If
     
-    PerfTimerLog "STOCKTAKE", "7c Normalise loop col B", tBlock
-    tBlock = PerfTimerNow()
-
     ' --- Update named ranges ---
     If lastRow >= 2 Then
         ThisWorkbook.Names("NRqcNumStdName").RefersTo = wsDest.Range("C2:C" & lastRow)
     End If
     
-
-    PerfTimerLog "STOCKTAKE", "7d Named range update", tBlock
 
     GoTo CleanExit
 

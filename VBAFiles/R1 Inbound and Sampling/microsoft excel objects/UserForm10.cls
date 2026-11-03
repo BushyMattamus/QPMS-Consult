@@ -6,7 +6,6 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = True
 Attribute VB_TemplateDerived = False
 Attribute VB_Customizable = True
-
 Private Sub Worksheet_Change(ByVal Target As Range)
     ' Clear RM code on Standard Name change
     If Not Intersect(Target, Me.Range("D5")) Is Nothing Then

@@ -138,15 +138,6 @@ Public Function GetDataRoot() As String
     GetDataRoot = cachedRoot
 End Function
 
-' Test mode: QPMS_TEST_MODE = "1", or a data root on the local C: drive (manual testing).
-Public Function IsTestMode() As Boolean
-    If Trim$(Environ$("QPMS_TEST_MODE")) = "1" Then
-        IsTestMode = True
-    Else
-        IsTestMode = (UCase$(Left$(GetDataRoot(), 3)) = "C:\")
-    End If
-End Function
-
 ' <root>\Master Data\ (or the workbook folder when the location is undetected)
 Public Function GetMasterDataRootPath() As String
     ResolveLocation

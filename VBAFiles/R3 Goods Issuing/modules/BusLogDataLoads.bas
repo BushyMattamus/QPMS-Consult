@@ -276,7 +276,7 @@ Private Sub PopulateQuickCodeFromMaster(ByVal wsBatchDetails As Worksheet, ByVal
     If masterLastRow < 2 Then GoTo CleanExit
 
     ' Read master once: columns A (PMI), B (version), E (quick code). First match wins.
-    masterData = wsMaster.Range(wsMaster.Cells(2, 1), wsMaster.Cells(masterLastRow, 5)).Value
+    masterData = wsMaster.Range(wsMaster.Cells(2, 1), wsMaster.Cells(masterLastRow, 5)).value
     Set quickCodes = CreateObject("Scripting.Dictionary")
     For i = 1 To UBound(masterData, 1)
         lookupKey = CStr(masterData(i, 1)) & "|" & CStr(masterData(i, 2))
@@ -284,7 +284,7 @@ Private Sub PopulateQuickCodeFromMaster(ByVal wsBatchDetails As Worksheet, ByVal
     Next i
 
     ' Read batch rows once: columns B to P. Column P (index 15) keeps its value when there is no match.
-    batchData = wsBatchDetails.Range(wsBatchDetails.Cells(2, 2), wsBatchDetails.Cells(lastRow, 16)).Value
+    batchData = wsBatchDetails.Range(wsBatchDetails.Cells(2, 2), wsBatchDetails.Cells(lastRow, 16)).value
     ReDim quickOut(1 To lastRow - 1, 1 To 1)
     For i = 1 To lastRow - 1
         quickOut(i, 1) = batchData(i, 15)
@@ -295,7 +295,7 @@ Private Sub PopulateQuickCodeFromMaster(ByVal wsBatchDetails As Worksheet, ByVal
             If quickCodes.Exists(lookupKey) Then quickOut(i, 1) = quickCodes(lookupKey)
         End If
     Next i
-    wsBatchDetails.Cells(2, 16).Resize(lastRow - 1, 1).Value = quickOut
+    wsBatchDetails.Cells(2, 16).Resize(lastRow - 1, 1).value = quickOut
 
     GoTo CleanExit
 

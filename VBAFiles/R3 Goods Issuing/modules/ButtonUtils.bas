@@ -51,13 +51,13 @@ Public Sub ButtSaveGoodsIssue()
     stageStartedAt = Timer
     Debug.Print "[R3 Goods Issue] START LoadQCNumberData at " & Format$(Now, "hh:nn:ss")
     BusLogDataLoads.LoadQCNumberData
-    Debug.Print "[R3 Goods Issue] END LoadQCNumberData; elapsed " & Format$(ElapsedSeconds(stageStartedAt), "0.000") & " seconds"
+    Debug.Print "[R3 Goods Issue] END LoadQCNumberData; elapsed " & Format$(elapsedSeconds(stageStartedAt), "0.000") & " seconds"
 
     stageStartedAt = Timer
     If BusLogIssueGoods.goodsIssueChangedBatchStatus Then
         Debug.Print "[R3 Goods Issue] START FGBatchDetails at " & Format$(Now, "hh:nn:ss")
         BusLogDataLoads.FGBatchDetails
-        Debug.Print "[R3 Goods Issue] END FGBatchDetails; elapsed " & Format$(ElapsedSeconds(stageStartedAt), "0.000") & " seconds"
+        Debug.Print "[R3 Goods Issue] END FGBatchDetails; elapsed " & Format$(elapsedSeconds(stageStartedAt), "0.000") & " seconds"
     Else
         Debug.Print "[R3 Goods Issue] SKIP FGBatchDetails; batch status unchanged"
     End If
@@ -65,7 +65,7 @@ Public Sub ButtSaveGoodsIssue()
     stageStartedAt = Timer
     Debug.Print "[R3 Goods Issue] START ClearIssuingRM at " & Format$(Now, "hh:nn:ss")
     RangeClearing.ClearIssuingRM
-    Debug.Print "[R3 Goods Issue] END ClearIssuingRM; elapsed " & Format$(ElapsedSeconds(stageStartedAt), "0.000") & " seconds"
+    Debug.Print "[R3 Goods Issue] END ClearIssuingRM; elapsed " & Format$(elapsedSeconds(stageStartedAt), "0.000") & " seconds"
     
     GoTo CleanExit
 
@@ -77,13 +77,13 @@ CleanExit:
     Debug.Print "[R3 Goods Issue] START final protection and app-state restore at " & Format$(Now, "hh:nn:ss")
     FormUtils.ProtectActiveSheet
     AppStateUtils.RestoreAppState
-    Debug.Print "[R3 Goods Issue] END final protection and app-state restore; elapsed " & Format$(ElapsedSeconds(stageStartedAt), "0.000") & " seconds"
+    Debug.Print "[R3 Goods Issue] END final protection and app-state restore; elapsed " & Format$(elapsedSeconds(stageStartedAt), "0.000") & " seconds"
 
 End Sub
 
-Private Function ElapsedSeconds(ByVal startedAt As Double) As Double
-    ElapsedSeconds = Timer - startedAt
-    If ElapsedSeconds < 0 Then ElapsedSeconds = ElapsedSeconds + 86400#
+Private Function elapsedSeconds(ByVal startedAt As Double) As Double
+    elapsedSeconds = Timer - startedAt
+    If elapsedSeconds < 0 Then elapsedSeconds = elapsedSeconds + 86400#
 End Function
 
 Public Sub ButtGenerateWhereUsedReport()

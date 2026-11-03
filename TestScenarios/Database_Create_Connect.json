@@ -1,0 +1,11 @@
+{
+  "name": "Database_Create_Connect Full Build",
+  "description": "Tests opening the workbook (which triggers InitializeDatabase) and validates database connectivity via TestConnection macro.",
+  "workbook": "StagedExcelFiles/Database_Create_Connect.xlsm",
+  "dialogs": [],
+  "macros": [
+    {
+      "name": "Access_Connection_Manager.TestConnection"
+    }
+  ]
+}

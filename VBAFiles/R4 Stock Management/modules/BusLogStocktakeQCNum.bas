@@ -26,16 +26,9 @@ Public Sub SubmitStocktakeQCNum()
     Dim nilStockFlagDate As String
     Dim lastCountDateLookup As Object
     Dim lastCountDate As String
-    Dim tTotal As Double
-    Dim tBlock As Double
-    Dim tDialog As Double
-    Dim dialogSec As Double
     
     ' --- Error handling setup ---
     On Error GoTo ErrHandler
-    tTotal = PerfTimerNow()
-    tBlock = tTotal
-    dialogSec = 0
             
     ' --- STEP 1: Get all field values from form ---
     standardName = Trim$(GetFieldValByLabelC("Standard Name:"))
@@ -46,8 +39,6 @@ Public Sub SubmitStocktakeQCNum()
     notes = Trim$(GetFieldValByLabelC("Notes:"))
     newRetestDate = Trim$(GetFieldValByLabelC("Actual Expiry/Retest Date:"))
     countedBy = Environ$("Username")
-    PerfTimerLog "STOCKTAKE", "1 Read form fields", tBlock
-    tBlock = PerfTimerNow()
     
     ' --- STEP 2: Validate mandatory fields ---
     If qcNumber = "" Then
@@ -73,18 +64,12 @@ Public Sub SubmitStocktakeQCNum()
     If Not ValidateNoCommas(notes, "Notes") Then GoTo CleanExit
     
     countedQty = CDbl(GetFieldValByLabelC("Count Quantity:"))
-    PerfTimerLog "STOCKTAKE", "2 Validate inputs", tBlock
-    tBlock = PerfTimerNow()
     
     ' --- STEP 3: Check nil stock exclusion logic ---
     nilStockFlagDate = GetQCNilStockFlagDate(qcNumber)
-    PerfTimerLog "STOCKTAKE", "3a Nil stock flag lookup", tBlock
-    tBlock = PerfTimerNow()
     
     If nilStockFlagDate <> "" Then
         Set lastCountDateLookup = GetLastCountDateLookup()
-        PerfTimerLog "STOCKTAKE", "3b Last count date lookup", tBlock
-        tBlock = PerfTimerNow()
         
         If lastCountDateLookup.Exists(qcNumber) Then
             lastCountDate = CStr(lastCountDateLookup(qcNumber))
@@ -107,13 +92,9 @@ Public Sub SubmitStocktakeQCNum()
                vbExclamation, "Duplicate Count"
         GoTo CleanExit
     End If
-    PerfTimerLog "STOCKTAKE", "4 Monthly count check (incl. nil stock compare)", tBlock
-    tBlock = PerfTimerNow()
         
     ' --- STEP 4: Get current balance from ADO connection ---
     qcBalance = GetQCBalanceADO(qcNumber)
-    PerfTimerLog "STOCKTAKE", "4b Balance lookup (ADO)", tBlock
-    tBlock = PerfTimerNow()
         
     ' Calculate difference
     difference = countedQty - qcBalance
@@ -129,18 +110,10 @@ Public Sub SubmitStocktakeQCNum()
                  "Counted By: " & countedBy & vbCrLf & vbCrLf & _
                  "Do you want to post this count?"
     
-    ' --- Confirmation dialog timing starts here ---
-    tDialog = PerfTimerNow()
     If MsgBox(confirmMsg, vbYesNo + vbQuestion, "Confirm Stocktake Entry") = vbNo Then
-        dialogSec = dialogSec + (PerfTimerNow() - tDialog)
         GoTo CleanExit
     End If
         
-    dialogSec = dialogSec + (PerfTimerNow() - tDialog)
-        
-    PerfTimerLog "STOCKTAKE", "5 Confirmation dialog (user wait)", tBlock
-    tBlock = PerfTimerNow()
-
     ' --- STEP 6: Submit the stocktake entry ---
     ok = StocktakeQCNumEntry( _
         qcNumber:=qcNumber, _
@@ -151,35 +124,24 @@ Public Sub SubmitStocktakeQCNum()
         newRetestDate:=newRetestDate _
     )
         
-    PerfTimerLog "STOCKTAKE", "6 StocktakeQCNumEntry write", tBlock
-    tBlock = PerfTimerNow()
-    
     If Not ok Then
         MsgBox "Failed to post stocktake entry. Please check the input and try again.", _
                vbCritical, "Stocktake Failed"
         GoTo CleanExit
     End If
     
-    tDialog = PerfTimerNow()
     MsgBox "Stocktake entry posted successfully!" & vbCrLf & vbCrLf & _
            "QC Number: " & qcNumber & vbCrLf & _
            "Counted Quantity: " & Format$(countedQty, "0.000") & " " & countedUoM & vbCrLf & _
            "Book Quantity: " & Format$(qcBalance, "0.000") & " " & masterUoM & vbCrLf & _
            "Difference: " & Format$(difference, "0.000"), _
            vbInformation, "Stocktake Complete"
-    dialogSec = dialogSec + (PerfTimerNow() - tDialog)
-    PerfTimerLog "STOCKTAKE", "5b Success dialog (user wait)", tDialog
     
     ' Refresh data
-    tBlock = PerfTimerNow()
     BusLogDataLoads.LoadQCNumberData
-
-    PerfTimerLog "STOCKTAKE", "7 Refresh QC number data", tBlock
-    tBlock = PerfTimerNow()
 
     ' Clear the form
     ClearStocktakeQC
-    PerfTimerLog "STOCKTAKE", "8 Clear form", tBlock
     
     GoTo CleanExit
     
@@ -188,9 +150,6 @@ ErrHandler:
     GoTo CleanExit
     
 CleanExit:
-    PerfTimerLog "STOCKTAKE", "TOTAL (includes dialog waits)", tTotal
-    Debug.Print "[STOCKTAKE TIMER] CODE-ONLY TOTAL (excludes dialog waits): " & _
-                Format$(((PerfTimerNow() - tTotal) - dialogSec) * 1000#, "0.000") & " ms"
     Set lastCountDateLookup = Nothing
     Exit Sub
 End Sub

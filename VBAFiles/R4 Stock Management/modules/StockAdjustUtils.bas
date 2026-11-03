@@ -51,7 +51,6 @@ Public Function ProcessStockUpdate( _
     Dim logStocktake As Boolean
     Dim stocktakeLogPath As String
     Dim tsLog As Object
-    Dim tBlock As Double
 
     On Error GoTo ErrorHandler
     
@@ -81,8 +80,6 @@ Public Function ProcessStockUpdate( _
         GoTo CleanExit
     End If
     
-    tBlock = PerfTimerNow()
-
     ' --- STEP 2: Validate QC Number exists and get RM Code, Nil Stock Flag, and QC Status ---
     If Not GetRMCodeFromQCNumber(qcNumber, rmCode, currentNilStockFlag, currentQCStatus) Then
         result.ErrorMessage = "QC Number '" & qcNumber & "' not found in database."
@@ -97,9 +94,6 @@ Public Function ProcessStockUpdate( _
         End If
     End If
     
-    PerfTimerLog "STOCKTAKE", "6e-1 GetRMCodeFromQCNumber", tBlock
-    tBlock = PerfTimerNow()
-
     ' --- STEP 3: Get Master UoM and conversion factor ---
     If Not GetMasterUoMAndConversionFactor(rmCode, masterUoM, wtPerML) Then
         result.ErrorMessage = "Unable to retrieve master UoM for RM Code '" & rmCode & "'."
@@ -108,9 +102,6 @@ Public Function ProcessStockUpdate( _
     
     result.masterUoM = masterUoM
     
-    PerfTimerLog "STOCKTAKE", "6e-2 GetMasterUoMAndConversionFactor", tBlock
-    tBlock = PerfTimerNow()
-
     ' --- STEP 4: Convert input quantity to master UoM ---
     ' Handle zero qty specially (no conversion needed, just use zero)
     If inputQty = 0 Then
@@ -125,8 +116,6 @@ Public Function ProcessStockUpdate( _
     
     ' --- STEP 5: Get current balance from RM_Trans.csv ---
     currentBalance = GetQCBalanceADO(qcNumber)
-    PerfTimerLog "STOCKTAKE", "6e-3 Balance read (GetQCBalanceADO)", tBlock
-    tBlock = PerfTimerNow()
     
     result.PreviousBalance = currentBalance
     
@@ -174,16 +163,10 @@ Public Function ProcessStockUpdate( _
     newBalance = currentBalance + transactionQty
     result.newBalance = newBalance
     
-    PerfTimerLog "STOCKTAKE", "6e-4 Adjustment calc and validation", tBlock
-    tBlock = PerfTimerNow()
-
     ' --- STEP 9: Generate QC_Trans_ID ---
     qcTransID = GetNextQCTransactionID()
     result.qcTransID = qcTransID
     
-    PerfTimerLog "STOCKTAKE", "6e-5 GetNextQCTransactionID", tBlock
-    tBlock = PerfTimerNow()
-
     ' --- STEP 10: Write Transaction to RM_Trans.csv ---
     If adjustmentType = "WRITE-OFF" Then
         transType = TRANS_TYPE_WRITE_OFF
@@ -202,8 +185,6 @@ Public Function ProcessStockUpdate( _
         adjNote:=reason, _
         qcTransID:=qcTransID, _
         piTransID:=IIf(piNumber <> "", piNumber, "NA"))
-    PerfTimerLog "STOCKTAKE", "6e-6 WriteRMConsumptionTransaction", tBlock
-    tBlock = PerfTimerNow()
         
     ' --- STEP 11: Update QC_Number.csv ---
     Dim updateResult As Boolean
@@ -261,9 +242,6 @@ Public Function ProcessStockUpdate( _
             changeReason:=piNumber & " " & reason, _
             qcTransID:=qcTransID)
     End If
-
-    PerfTimerLog "STOCKTAKE", "6e-7 UpdateQCNumberRecord (QC_Number.csv)", tBlock
-    tBlock = PerfTimerNow()
 
     If Not updateResult Then
         result.ErrorMessage = "Failed to update QC_Number.csv file."

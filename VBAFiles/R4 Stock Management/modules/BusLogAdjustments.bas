@@ -7,17 +7,11 @@ Public Sub SaveStockAdjustment()
     Dim adjType As String
     Dim adjustQty As Double
     Dim result As StockUpdateResult
-    Dim tTotal As Double
-    Dim tBlock As Double
     
     On Error GoTo ErrorHandler
-    tTotal = PerfTimerNow()
 
     BusLogDataLoads.LoadQCNumberData
     
-    PerfTimerLog "ADJUST", "Load QC number data", tTotal
-    tBlock = PerfTimerNow()
-
     ' Get Fields
     qcNumber = Trim$(GetFieldValByLabelC("QC Number:"))
     adjustQtyStr = Trim$(GetFieldValByLabelC("Adjustment Quantity:"))
@@ -41,9 +35,6 @@ Public Sub SaveStockAdjustment()
     
     adjustQty = CDbl(adjustQtyStr)
     
-    PerfTimerLog "ADJUST", "Read fields, validate, parse quantity", tBlock
-    tBlock = PerfTimerNow()
-
     ' Call centralized stock update function
     result = ProcessStockUpdate( _
         qcNumber:=qcNumber, _
@@ -54,23 +45,16 @@ Public Sub SaveStockAdjustment()
         confirmNilStock:=True _
     )
     
-    PerfTimerLog "ADJUST", "ProcessStockUpdate", tBlock
-    tBlock = PerfTimerNow()
-
     If Not result.Success Then
-        PerfTimerLog "ADJUST", "TOTAL (failed, incl. dialog)", tTotal
-                MsgBox result.ErrorMessage, vbExclamation, "Stock Adjustment Failed"
+        MsgBox result.ErrorMessage, vbExclamation, "Stock Adjustment Failed"
         Exit Sub
     End If
     
     ' Reload and cleanup
     BusLogDataLoads.LoadQCNumberData
     RangeClearing.ClearStockAdjust
-    PerfTimerLog "ADJUST", "Reload and clear form", tBlock
-    tBlock = PerfTimerNow()
     
-    ' Show confirmation (suppressed in test mode; see IsTestMode in PathResolver)
-    PerfTimerLog "ADJUST", "TOTAL (excl. completion dialog)", tTotal
+    ' Show confirmation (suppressed in sandbox test runs; see QPMS_TEST_MODE)
     Dim actionDesc As String
     actionDesc = IIf(result.adjustmentType = "WRITE-OFF", "written off", "written on")
     
@@ -81,7 +65,7 @@ Public Sub SaveStockAdjustment()
            "Previous Balance: " & Format$(result.PreviousBalance, "0.000") & vbCrLf & _
            "New Balance: " & Format$(result.newBalance, "0.000")
     
-    If IsTestMode() Then
+    If Trim$(Environ$("QPMS_TEST_MODE")) = "1" Then
         Debug.Print "Adjustment Complete (test mode): " & Replace$(confirmMsg, vbCrLf, " ")
     Else
         MsgBox confirmMsg, vbInformation, "Adjustment Complete"
@@ -93,7 +77,6 @@ ErrorHandler:
     MsgBox "Error saving stock adjustment: " & Err.Description, vbCritical
     
 CleanExit:
-    PerfTimerLog "ADJUST", "TOTAL (error path, incl. dialog)", tTotal
     ' No object variables to release in this procedure.
     Exit Sub
 End Sub
