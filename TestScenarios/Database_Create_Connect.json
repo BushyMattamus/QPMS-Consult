@@ -1,11 +1,16 @@
 {
   "name": "Database_Create_Connect Full Build",
-  "description": "Tests opening the workbook (which triggers InitializeDatabase) and validates database connectivity via TestConnection macro.",
+  "description": "Runs a clean database rebuild and requires both rebuild and connection macros to return true. All database and source-data changes are isolated to the test sandbox.",
   "workbook": "StagedExcelFiles/Database_Create_Connect.xlsm",
   "dialogs": [],
   "macros": [
     {
-      "name": "Access_Connection_Manager.TestConnection"
+      "name": "Database_Initialization.ReinitializeDatabase",
+      "expected_result": true
+    },
+    {
+      "name": "Access_Connection_Manager.TestConnection",
+      "expected_result": true
     }
   ]
 }

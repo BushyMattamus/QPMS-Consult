@@ -102,7 +102,8 @@ Public Function ReinitializeDatabase() As Boolean
             cntRM = Access_ImportRawMaterial.ImportRawMaterialMaster(dbPath)
             cntRMC = Access_ImportRawMaterial.ImportRMChanges(dbPath)
             
-            If cntFG < 0 Or cntAT < 0 Or cntRM < 0 Or cntRMC < 0 Then
+            PathResolver.LogTestMessage "Import counts: MasterDataFinishedGoods=" & cntFG & " AuditTrail=" & cntAT & " RawMaterialMaster=" & cntRM & " RMChanges=" & cntRMC, "Reinitialization"
+                        If cntFG <= 0 Or cntAT <= 0 Or cntRM <= 0 Or cntRMC <= 0 Then
                 PathResolver.ShowMessage "Failed to import CSV data.", vbCritical, "Reinitialization Failed"
                 ReinitializeDatabase = False
                 Exit Function

@@ -22,7 +22,7 @@ Public Function ImportRawMaterialMaster(dbPath As String) As Long
     Dim i As Integer, j As Integer
     Dim line As String
     Dim recordCount As Long
-    Dim values() As Variant
+    Dim values() As String
     Dim sqlFields() As String
     Dim sqlValues() As String
     
@@ -40,6 +40,7 @@ Public Function ImportRawMaterialMaster(dbPath As String) As Long
     
     ' Clear existing data
     Dim sql As String
+    Dim insertErrors As Long, firstInsertError As String
     sql = "DELETE FROM [RawMaterialMaster]"
     conn.Execute sql
     
@@ -91,11 +92,17 @@ Public Function ImportRawMaterialMaster(dbPath As String) As Long
             fieldList = Join(sqlFields, ", ")
             valueList = Join(sqlValues, ", ")
             
+            valueList = ApplyYesNoLiterals(valueList)
             sql = "INSERT INTO [RawMaterialMaster] (" & fieldList & ") VALUES (" & valueList & ")"
             
             On Error Resume Next
             conn.Execute sql
-            If Err.Number = 0 Then recordCount = recordCount + 1
+            If Err.Number = 0 Then
+                recordCount = recordCount + 1
+            Else
+                insertErrors = insertErrors + 1
+                If insertErrors = 1 Then firstInsertError = Err.Number & " " & Err.Description
+            End If
             On Error GoTo ErrorHandler
         End If
     Loop
@@ -105,11 +112,14 @@ Public Function ImportRawMaterialMaster(dbPath As String) As Long
     conn.Close
     Set conn = Nothing
     
+    If insertErrors > 0 Then PathResolver.LogTestMessage insertErrors & " insert(s) failed. First error: " & firstInsertError, "Import RawMaterialMaster"
+    PathResolver.LogTestMessage "Imported " & recordCount & " row(s)", "Import RawMaterialMaster"
     ImportRawMaterialMaster = recordCount
     
     Exit Function
     
 ErrorHandler:
+    PathResolver.LogTestMessage "Failed " & Err.Number & " " & Err.Description, "Import RawMaterialMaster"
     ImportRawMaterialMaster = -1
 End Function
 
@@ -128,7 +138,7 @@ Public Function ImportRMChanges(dbPath As String) As Long
     Dim i As Integer, j As Integer
     Dim line As String
     Dim recordCount As Long
-    Dim values() As Variant
+    Dim values() As String
     Dim sqlFields() As String
     Dim sqlValues() As String
     
@@ -146,6 +156,7 @@ Public Function ImportRMChanges(dbPath As String) As Long
     
     ' Clear existing data
     Dim sql As String
+    Dim insertErrors As Long, firstInsertError As String
     sql = "DELETE FROM [RMChanges]"
     conn.Execute sql
     
@@ -197,11 +208,17 @@ Public Function ImportRMChanges(dbPath As String) As Long
             fieldList = Join(sqlFields, ", ")
             valueList = Join(sqlValues, ", ")
             
+            valueList = ApplyYesNoLiterals(valueList)
             sql = "INSERT INTO [RMChanges] (" & fieldList & ") VALUES (" & valueList & ")"
             
             On Error Resume Next
             conn.Execute sql
-            If Err.Number = 0 Then recordCount = recordCount + 1
+            If Err.Number = 0 Then
+                recordCount = recordCount + 1
+            Else
+                insertErrors = insertErrors + 1
+                If insertErrors = 1 Then firstInsertError = Err.Number & " " & Err.Description
+            End If
             On Error GoTo ErrorHandler
         End If
     Loop
@@ -211,10 +228,27 @@ Public Function ImportRMChanges(dbPath As String) As Long
     conn.Close
     Set conn = Nothing
     
+    If insertErrors > 0 Then PathResolver.LogTestMessage insertErrors & " insert(s) failed. First error: " & firstInsertError, "Import RMChanges"
+    PathResolver.LogTestMessage "Imported " & recordCount & " row(s)", "Import RMChanges"
     ImportRMChanges = recordCount
     
     Exit Function
     
 ErrorHandler:
+    PathResolver.LogTestMessage "Failed " & Err.Number & " " & Err.Description, "Import RMChanges"
     ImportRMChanges = -1
+End Function
+
+' Splits on ", " because CSV values contain no commas
+Public Function ApplyYesNoLiterals(ByVal valueList As String) As String
+    Dim parts() As String
+    Dim k As Long
+    parts = Split(valueList, ", ")
+    For k = 0 To UBound(parts)
+        Select Case UCase(parts(k))
+            Case "'Y'": parts(k) = "True"
+            Case "'N'": parts(k) = "False"
+        End Select
+    Next k
+    ApplyYesNoLiterals = Join(parts, ", ")
 End Function

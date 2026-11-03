@@ -164,3 +164,14 @@ When assisting in this codebase, adhere strictly to the following protocols:
    - Excel workbooks cannot be overwritten if they are currently locked or open in an external Excel window. If a write-back error occurs, verify that no orphaned background `EXCEL.EXE` process is holding a file lock.
 6. **Test Workbook Changes:**
    - Run a scenario against the staged workbook and require a zero exit code before promotion. Review its report and machine-readable test results; do not promote a failed or untested workbook.
+
+---
+
+## 6. Planned Tooling: DataFiles CSV Sanitizer (Notes Only, Not Yet Built)
+
+Matt wants a dedicated Python script to prepare the `DataFiles/` CSVs before VBA import. Do not build it until Matt asks. The VBA importers split lines on `,` without honouring quotes and hide insert errors with `On Error Resume Next`, so this script is a data-prep workaround until a quote-aware parser exists.
+
+Planned steps, in order:
+1. **Strip the UTF-8 BOM** (`EF BB BF`) from every `DataFiles/**/*.csv`. Back up each changed file to `%TEMP%` first and leave line endings unchanged.
+2. **Remove commas inside quoted fields** so that `Split(line, ",")` yields the right field count. This alters cell text, so report every changed row. Matt has already done this by hand for `AuditTrailMasterDataFinishedGoods.csv`.
+3. **Clear extra fields**: trim any row wider than its header to the header width, after step 2. Report each trimmed row. Do not truncate silently.

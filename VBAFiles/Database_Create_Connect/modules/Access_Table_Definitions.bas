@@ -55,7 +55,8 @@ Public Function CreateMasterDataFinishedGoodsTable(dbPath As String) As Boolean
     sql = sql & "[Update_Comments] Text(255), "
     sql = sql & "[PMI_Acronym] Text(50), "
     sql = sql & "[PMI_Number] Number, "
-    sql = sql & "[Old_PMI] Text(50)"
+    sql = sql & "[Old_PMI] Text(50), "
+    sql = sql & "[Prod_ID] Text(50)"
     sql = sql & ")"
     
     conn.Execute sql
@@ -209,7 +210,8 @@ Public Function CreateAuditTrailTable(dbPath As String) As Boolean
     sql = sql & "[Update_Comments] Text(255), "
     sql = sql & "[PMI_Acronym] Text(50), "
     sql = sql & "[PMI_Number] Number, "
-    sql = sql & "[Old_PMI] Text(50)"
+    sql = sql & "[Old_PMI] Text(50), "
+    sql = sql & "[Prod_ID] Text(50)"
     sql = sql & ")"
     
     conn.Execute sql

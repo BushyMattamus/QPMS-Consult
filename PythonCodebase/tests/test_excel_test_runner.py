@@ -8,8 +8,10 @@ from excel_test_runner import (
     evaluate_csv_assertion,
     generate_markdown_report,
     is_ignored_formula_error,
+    macro_result_matches_expected,
     validate_csv_assertions,
     validate_dialog_rules,
+    validate_macro_expectations,
 )
 
 
@@ -96,6 +98,47 @@ class ScenarioDialogRuleTests(unittest.TestCase):
             validate_dialog_rules([
                 {"title": "Confirm", "button": "Yes", "count": 0}
             ])
+
+
+class ScenarioMacroExpectationTests(unittest.TestCase):
+    def test_accepts_scalar_expected_macro_results(self):
+        macros = [{"name": "Database.Initialize", "expected_result": True}]
+
+        self.assertEqual(validate_macro_expectations(macros), macros)
+        self.assertTrue(macro_result_matches_expected(True, True))
+        self.assertFalse(macro_result_matches_expected(False, True))
+        self.assertFalse(macro_result_matches_expected(1, True))
+
+    def test_rejects_non_scalar_expected_macro_results(self):
+        with self.assertRaisesRegex(ValueError, "JSON scalar"):
+            validate_macro_expectations([
+                {"name": "Database.Initialize", "expected_result": []}
+            ])
+
+    def test_report_shows_expected_macro_result(self):
+        report = generate_markdown_report({
+            "target": "Database_Create_Connect.xlsm",
+            "timestamp": "2026-11-03T21:00:00",
+            "sandbox_path": "sandbox.xlsm",
+            "scenario": "Database rebuild",
+            "passed": False,
+            "errors": [],
+            "ignored_formula_errors": [],
+            "macro_results": [
+                {
+                    "name": "Database_Initialization.ReinitializeDatabase",
+                    "success": False,
+                    "result": False,
+                    "expected_result": True,
+                    "result_matches_expected": False,
+                    "dialogs": [],
+                }
+            ],
+            "sheets": [],
+        })
+
+        self.assertIn("Expected Return Value: `True`", report)
+        self.assertIn("Return Value Assertion: ❌ Match=False", report)
 
 
 class CsvAssertionTests(unittest.TestCase):

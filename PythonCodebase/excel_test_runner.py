@@ -46,6 +46,7 @@ SANDBOX_WORKBOOK_DIR = Path(tempfile.gettempdir()) / "QPMS-Consult-test-runs"
 DATA_DIR = REPO_ROOT / "DataFiles"
 DATA_ROOT_ENV_VAR = "QPMS_DATA_ROOT"
 TEST_MODE_ENV_VAR = "QPMS_TEST_MODE"
+TEST_LOG_ENV_VAR = "QPMS_TEST_LOG"
 DIALOG_CLOSE_TIMEOUT_SECONDS = 2.0
 UTF8_BOM = b"\xef\xbb\xbf"
 SCENARIO_DIR = REPO_ROOT / "TestScenarios"
@@ -71,6 +72,29 @@ def validate_dialog_rules(dialog_rules):
                 "button, and a positive integer count."
             )
     return dialog_rules
+
+
+def validate_macro_expectations(macros):
+    """Validate optional scalar return-value expectations on scenario macros."""
+    if not isinstance(macros, list):
+        raise ValueError("Scenario 'macros' must be a list.")
+
+    for macro in macros:
+        if not isinstance(macro, dict):
+            raise ValueError("Each scenario macro must be an object.")
+        if isinstance(macro.get("expected_result"), (list, dict)):
+            raise ValueError(
+                f"Macro '{macro.get('name')}' expected_result must be a JSON scalar "
+                "(true, false, number, or string)."
+            )
+    return macros
+
+
+def macro_result_matches_expected(result, expected):
+    """Compare macro return values; booleans must match booleans so 1 never equals True."""
+    if isinstance(result, bool) or isinstance(expected, bool):
+        return isinstance(result, bool) and isinstance(expected, bool) and result == expected
+    return result == expected
 
 
 def validate_csv_assertions(assertions):
@@ -451,6 +475,8 @@ class ExcelSession:
         self.previous_data_root = None
         self.previous_test_mode = None
         self.test_mode_set = False
+        self.test_log_path = None
+        self.previous_test_log = None
         self.dialog_rules = []
 
     def __enter__(self):
@@ -464,6 +490,10 @@ class ExcelSession:
             self.previous_test_mode = os.environ.get(TEST_MODE_ENV_VAR)
             os.environ[TEST_MODE_ENV_VAR] = "1"
             self.test_mode_set = True
+            # Test-mode VBA ShowMessage calls are appended here instead of shown as MsgBoxes.
+            self.previous_test_log = os.environ.get(TEST_LOG_ENV_VAR)
+            self.test_log_path = SANDBOX_WORKBOOK_DIR / f"messages_{timestamp}.log"
+            os.environ[TEST_LOG_ENV_VAR] = str(self.test_log_path)
             # The sandboxed workbook lives outside the repo, so give it a private
             # copy of DataFiles and point the VBA PathResolver at it.
             if DATA_DIR.is_dir():
@@ -510,6 +540,22 @@ class ExcelSession:
                 os.environ.pop(DATA_ROOT_ENV_VAR, None)
             else:
                 os.environ[DATA_ROOT_ENV_VAR] = self.previous_data_root
+        if self.test_log_path:
+            self.test_log_path.unlink(missing_ok=True)
+            self.test_log_path = None
+            if self.previous_test_log is None:
+                os.environ.pop(TEST_LOG_ENV_VAR, None)
+            else:
+                os.environ[TEST_LOG_ENV_VAR] = self.previous_test_log
+
+    def take_test_messages(self):
+        """Return and clear the messages that test-mode VBA ShowMessage calls logged."""
+        if not self.test_log_path or not self.test_log_path.exists():
+            return []
+        # VBA Print # writes the system ANSI code page, so read it back the same way.
+        content = self.test_log_path.read_text(encoding="mbcs", errors="replace")
+        self.test_log_path.unlink(missing_ok=True)
+        return [line for line in content.splitlines() if line.strip()]
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         if self.wb:
@@ -585,6 +631,8 @@ class ExcelSession:
 
     def run_macro(self, macro_name, *args):
         """Executes a VBA macro in the open workbook."""
+        # Discard messages logged before this macro so each result reports only its own.
+        self.take_test_messages()
         watcher = None
         macro_result = None
         macro_error = None
@@ -603,6 +651,7 @@ class ExcelSession:
             if watcher:
                 watcher.stop()
 
+        messages = self.take_test_messages()
         dialogs = watcher.events if watcher else []
         if watcher:
             dialog_errors = watcher.validation_errors()
@@ -614,6 +663,7 @@ class ExcelSession:
             "result": macro_result,
             "error": macro_error,
             "dialogs": dialogs,
+            "messages": messages,
         }
 
     def format_range(self, sheet_name, cell_ref, bg_color=None, font_color=None, bold=None, italic=None, font_size=None):
@@ -687,6 +737,10 @@ def generate_markdown_report(report_data):
             md.append(f"- **{m['name']}**: {status_icon} Success={m['success']}")
             if m.get("result") is not None:
                 md.append(f"  - Return Value: `{m['result']}`")
+            if "expected_result" in m:
+                match_icon = "✅" if m.get("result_matches_expected") else "❌"
+                md.append(f"  - Expected Return Value: `{m['expected_result']}`")
+                md.append(f"  - Return Value Assertion: {match_icon} Match={m.get('result_matches_expected')}")
             if m.get("error"):
                 md.append(f"  - **Error:** `{m['error']}`")
             for dialog in m.get("dialogs", []):
@@ -695,6 +749,8 @@ def generate_markdown_report(report_data):
                     f"{'expected' if dialog['expected'] else 'unexpected'}; "
                     f"clicked **{dialog['button']}**."
                 )
+            for message in m.get("messages", []):
+                md.append(f"  - Logged message: `{message}`")
         md.append("")
 
     csv_assertions = report_data.get("csv_assertions", [])
@@ -791,6 +847,8 @@ def run_test_scenario(
     csv_assertions = validate_csv_assertions(
         scenario_data.get("csv_assertions", []) if scenario_data else []
     )
+    if scenario_data and "macros" in scenario_data:
+        validate_macro_expectations(scenario_data["macros"])
     if scenario_data and "active_sheet" in scenario_data:
         if not isinstance(scenario_data["active_sheet"], str) or not scenario_data["active_sheet"]:
             raise ValueError("Scenario 'active_sheet' must be a non-empty string.")
@@ -842,6 +900,21 @@ def run_test_scenario(
                 results["macro_results"].append(m_res)
                 if not m_res["success"]:
                     results["passed"] = False
+                if "expected_result" in m:
+                    m_res["expected_result"] = m["expected_result"]
+                    m_res["result_matches_expected"] = macro_result_matches_expected(
+                        m_res["result"], m["expected_result"]
+                    )
+                    if not m_res["result_matches_expected"]:
+                        results["passed"] = False
+                        results["errors"].append({
+                            "cell": f"Macro {m_name}",
+                            "text": (
+                                f"Expected return value {m['expected_result']!r}, "
+                                f"got {m_res['result']!r}."
+                            ),
+                            "formula": None,
+                        })
 
         # Recalculate
         session.calculate()

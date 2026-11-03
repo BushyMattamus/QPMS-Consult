@@ -1,6 +1,7 @@
 import sys
 import hashlib
 import json
+import re
 import shutil
 from pathlib import Path
 from datetime import datetime
@@ -8,6 +9,12 @@ from datetime import datetime
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 PRODUCTION_DIR = PROJECT_ROOT / "ExcelFiles"
 STAGING_DIR = PROJECT_ROOT / "StagedExcelFiles"
+
+# Microsoft ActiveX Data Objects 2.8 type library (msado28.tlb)
+ADO_TYPE_LIBRARY_GUID = "{2A75196C-D9EB-4129-B803-931327F72D5C}"
+ADO_TYPE_LIBRARY_MAJOR = 2
+ADO_TYPE_LIBRARY_MINOR = 8
+ADO_TYPE_REFERENCE_PATTERN = re.compile(r"\bADODB\.", re.IGNORECASE)
 
 # Ensure UTF-8 output encoding for Windows terminal compatibility
 if sys.platform == 'win32' and hasattr(sys.stdout, 'reconfigure'):
@@ -112,6 +119,26 @@ def sha256_vba_source(source_dir):
     return digest.hexdigest()
 
 
+def ensure_ado_reference(vb_project, source_dir):
+    """
+    Add the ADO 2.8 reference when VBA sources use early-bound ADODB types.
+    Returns True only when a reference was added.
+    """
+    uses_ado = any(
+        ADO_TYPE_REFERENCE_PATTERN.search(source_file.read_text(encoding="utf-8", errors="replace"))
+        for source_file in vba_source_files(source_dir)
+    )
+    if not uses_ado:
+        return False
+
+    references = vb_project.References
+    if any(reference.Name == "ADODB" for reference in references):
+        return False
+
+    references.AddFromGuid(ADO_TYPE_LIBRARY_GUID, ADO_TYPE_LIBRARY_MAJOR, ADO_TYPE_LIBRARY_MINOR)
+    return True
+
+
 def write_vba_to_workbook(excel_path, vba_source_dir, backup=True):
     """
     Writes extracted/edited VBA files from vba_source_dir back into excel_path.
@@ -179,6 +206,9 @@ def write_vba_to_workbook(excel_path, vba_source_dir, backup=True):
     try:
         workbook = excel_app.Workbooks.Open(str(excel_file))
         vb_project = workbook.VBProject
+
+        if ensure_ado_reference(vb_project, vba_dir):
+            print("  [Reference]    Added ADO 2.8 reference (ADODB) for early-bound sources")
 
         # Map existing components by case-insensitive name
         components = {comp.Name.lower(): comp for comp in vb_project.VBComponents}

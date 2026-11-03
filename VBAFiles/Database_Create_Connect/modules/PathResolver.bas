@@ -9,6 +9,7 @@ Option Explicit
 
 Private Const ENV_VAR_DATA_ROOT As String = "QPMS_DATA_ROOT"
 Private Const ENV_VAR_TEST_MODE As String = "QPMS_TEST_MODE"
+Private Const ENV_VAR_TEST_LOG As String = "QPMS_TEST_LOG"
 Private Const FOLDER_DATAFILES As String = "DataFiles"
 Private Const FOLDER_MASTER_DATA_NAME As String = "Master Data"
 Private Const FOLDER_TABLES_NAME As String = "Tables"
@@ -123,6 +124,25 @@ Public Function IsTestMode() As Boolean
 End Function
 
 Public Sub ShowMessage(ByVal prompt As String, Optional ByVal buttons As VbMsgBoxStyle = vbOKOnly, Optional ByVal title As String = "")
-    If IsTestMode() Then Exit Sub
+    If IsTestMode() Then
+        LogTestMessage prompt, title
+        Exit Sub
+    End If
     MsgBox prompt, buttons, title
+End Sub
+
+' Test mode has no MsgBox, so the runner names a log file to capture messages.
+Public Sub LogTestMessage(ByVal prompt As String, ByVal title As String)
+    Dim logPath As String
+    Dim fileNum As Integer
+
+    logPath = Trim$(Environ$(ENV_VAR_TEST_LOG))
+    If Len(logPath) = 0 Then Exit Sub
+
+    fileNum = FreeFile
+    On Error Resume Next
+    Open logPath For Append As #fileNum
+    Print #fileNum, "[" & title & "] " & Replace(Replace(prompt, vbCrLf, " | "), vbLf, " | ")
+    Close #fileNum
+    On Error GoTo 0
 End Sub

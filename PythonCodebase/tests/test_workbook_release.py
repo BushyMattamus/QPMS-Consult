@@ -7,6 +7,10 @@ from types import SimpleNamespace
 from unittest import mock
 
 from write_macros import (
+    ADO_TYPE_LIBRARY_GUID,
+    ADO_TYPE_LIBRARY_MAJOR,
+    ADO_TYPE_LIBRARY_MINOR,
+    ensure_ado_reference,
     find_changed_vba_targets,
     sha256_vba_source,
     stage_single_workbook,
@@ -19,6 +23,50 @@ from workbook_release import (
     test_workbook,
     test_results_path as get_test_results_path,
 )
+
+
+class EnsureAdoReferenceTests(unittest.TestCase):
+    class References(list):
+        def AddFromGuid(self, guid, major, minor):
+            self.added = (guid, major, minor)
+            self.append(SimpleNamespace(Name="ADODB"))
+
+    def test_adds_reference_for_early_bound_ado_sources_only_once(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            source_dir = Path(temp_dir) / "VBAFiles" / "Database"
+            modules_dir = source_dir / "modules"
+            modules_dir.mkdir(parents=True)
+            (modules_dir / "Database.bas").write_text(
+                "Dim connection As ADODB.Connection\n", encoding="utf-8"
+            )
+            references = self.References()
+            vb_project = SimpleNamespace(References=references)
+
+            self.assertTrue(ensure_ado_reference(vb_project, source_dir))
+            self.assertEqual(
+                references.added,
+                (
+                    ADO_TYPE_LIBRARY_GUID,
+                    ADO_TYPE_LIBRARY_MAJOR,
+                    ADO_TYPE_LIBRARY_MINOR,
+                ),
+            )
+            self.assertFalse(ensure_ado_reference(vb_project, source_dir))
+            self.assertEqual(len(references), 1)
+
+    def test_does_not_add_reference_when_source_does_not_use_ado(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            source_dir = Path(temp_dir) / "VBAFiles" / "Sample"
+            modules_dir = source_dir / "modules"
+            modules_dir.mkdir(parents=True)
+            (modules_dir / "Module.bas").write_text(
+                "Sub Run()\nEnd Sub\n", encoding="utf-8"
+            )
+            references = self.References()
+            vb_project = SimpleNamespace(References=references)
+
+            self.assertFalse(ensure_ado_reference(vb_project, source_dir))
+            self.assertEqual(len(references), 0)
 
 
 class PromoteWorkbookTests(unittest.TestCase):

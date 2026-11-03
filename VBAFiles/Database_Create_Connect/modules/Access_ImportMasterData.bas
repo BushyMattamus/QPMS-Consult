@@ -6,7 +6,7 @@ Public Function ImportMasterDataFinishedGoods(dbPath As String) As Long
     
     Dim conn As ADODB.Connection, fso As Object, csvFile As Object
     Dim line As String, recordCount As Long
-    Dim fieldNames() As String, values() As Variant
+    Dim fieldNames() As String, values() As String
     Dim j As Integer, fieldValue As String
     Dim sql As String
     Dim fieldsStr As String, valsStr As String
@@ -22,6 +22,7 @@ Public Function ImportMasterDataFinishedGoods(dbPath As String) As Long
     End If
     On Error GoTo ErrorHandler
     
+    Dim insertErrors As Long, firstInsertError As String
     sql = "DELETE FROM [MasterDataFinishedGoods]"
     conn.Execute sql
     
@@ -58,11 +59,17 @@ Public Function ImportMasterDataFinishedGoods(dbPath As String) As Long
                 End If
             Next j
             
+            valsStr = Access_ImportRawMaterial.ApplyYesNoLiterals(valsStr)
             sql = "INSERT INTO [MasterDataFinishedGoods] (" & fieldsStr & ") VALUES (" & valsStr & ")"
             
             On Error Resume Next
             conn.Execute sql
-            If Err.Number = 0 Then recordCount = recordCount + 1
+            If Err.Number = 0 Then
+                recordCount = recordCount + 1
+            Else
+                insertErrors = insertErrors + 1
+                If insertErrors = 1 Then firstInsertError = Err.Number & " " & Err.Description
+            End If
             On Error GoTo ErrorHandler
         End If
     Loop
@@ -72,11 +79,14 @@ Public Function ImportMasterDataFinishedGoods(dbPath As String) As Long
     conn.Close
     Set conn = Nothing
     
+    If insertErrors > 0 Then PathResolver.LogTestMessage insertErrors & " insert(s) failed. First error: " & firstInsertError, "Import MasterDataFinishedGoods"
+    PathResolver.LogTestMessage "Imported " & recordCount & " row(s)", "Import MasterDataFinishedGoods"
     ImportMasterDataFinishedGoods = recordCount
     
     Exit Function
     
 ErrorHandler:
+    PathResolver.LogTestMessage "Failed " & Err.Number & " " & Err.Description, "Import MasterDataFinishedGoods"
     ImportMasterDataFinishedGoods = -1
 End Function
 
@@ -85,7 +95,7 @@ Public Function ImportAuditTrail(dbPath As String) As Long
     
     Dim conn As ADODB.Connection, fso As Object, csvFile As Object
     Dim line As String, recordCount As Long
-    Dim fieldNames() As String, values() As Variant
+    Dim fieldNames() As String, values() As String
     Dim j As Integer, fieldValue As String
     Dim sql As String
     Dim fieldsStr As String, valsStr As String
@@ -101,6 +111,7 @@ Public Function ImportAuditTrail(dbPath As String) As Long
     End If
     On Error GoTo ErrorHandler
     
+    Dim insertErrors As Long, firstInsertError As String
     sql = "DELETE FROM [AuditTrail]"
     conn.Execute sql
     
@@ -137,11 +148,17 @@ Public Function ImportAuditTrail(dbPath As String) As Long
                 End If
             Next j
             
+            valsStr = Access_ImportRawMaterial.ApplyYesNoLiterals(valsStr)
             sql = "INSERT INTO [AuditTrail] (" & fieldsStr & ") VALUES (" & valsStr & ")"
             
             On Error Resume Next
             conn.Execute sql
-            If Err.Number = 0 Then recordCount = recordCount + 1
+            If Err.Number = 0 Then
+                recordCount = recordCount + 1
+            Else
+                insertErrors = insertErrors + 1
+                If insertErrors = 1 Then firstInsertError = Err.Number & " " & Err.Description
+            End If
             On Error GoTo ErrorHandler
         End If
     Loop
@@ -151,10 +168,13 @@ Public Function ImportAuditTrail(dbPath As String) As Long
     conn.Close
     Set conn = Nothing
     
+    If insertErrors > 0 Then PathResolver.LogTestMessage insertErrors & " insert(s) failed. First error: " & firstInsertError, "Import AuditTrail"
+    PathResolver.LogTestMessage "Imported " & recordCount & " row(s)", "Import AuditTrail"
     ImportAuditTrail = recordCount
     
     Exit Function
     
 ErrorHandler:
+    PathResolver.LogTestMessage "Failed " & Err.Number & " " & Err.Description, "Import AuditTrail"
     ImportAuditTrail = -1
 End Function
