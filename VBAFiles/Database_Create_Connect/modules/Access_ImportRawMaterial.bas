@@ -1,4 +1,4 @@
-﻿Attribute VB_Name = "Access_ImportRawMaterial"
+Attribute VB_Name = "Access_ImportRawMaterial"
 '=============================================================================
 ' Module: Access_ImportRawMaterial
 ' Purpose: Import RawMaterialMaster and RMChanges CSV files into Access
